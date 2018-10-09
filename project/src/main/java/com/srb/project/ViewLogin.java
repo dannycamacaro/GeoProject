@@ -10,8 +10,8 @@ import com.vaadin.ui.themes.ValoTheme;
 @SpringUI (path = ViewLogin.APP_ROOT)
 @SpringViewDisplay
 public class ViewLogin extends UI {
-    static final String  APP_ROOT = "/project";
-    static final String  MENU_VIEW = "Menu";
+    public static final String  APP_ROOT = "/project";
+    public static final String  MENU_VIEW = "Menu";
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         getUI().getNavigator().addView(ViewMenu.VIEW_NAME,new ViewUsers());

@@ -1,5 +1,6 @@
 package com.srb.project;
 
+import com.srb.project.view.ViewMaintenanceRol;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -25,9 +26,13 @@ public class ViewMenu  extends VerticalLayout implements View {
         Label users = new Label("Users");
         title.addStyleName(ValoTheme.MENU_TITLE);
 
-        Button viewusers = new Button("Users", e -> getUI().getNavigator().navigateTo(ViewUsers.VIEW_NAME));
-        view1.addStyleName(ValoTheme.BUTTON_LINK);
-        this.addComponent(viewusers);
+        Button buttonUser = new Button("Users", e -> getUI().getNavigator().navigateTo(ViewUsers.VIEW_NAME));
+        buttonUser.addStyleName(ValoTheme.BUTTON_LINK);
+        this.addComponent(buttonUser);
+
+        Button buttonRol = new Button("Roles", e -> getUI().getNavigator().navigateTo(ViewMaintenanceRol.VIEW_NAME));
+        buttonRol.addStyleName(ValoTheme.BUTTON_LINK);
+        this.addComponent(buttonRol);
 
     }
 }
