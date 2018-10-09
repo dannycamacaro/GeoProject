@@ -3,7 +3,7 @@ package com.srb.project.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users", schema = "srb", catalog = "")
+@Table(name = "users", schema = "srb")
 @IdClass(UsersEntityPK.class)
 public class UsersEntity {
     private int idusers;

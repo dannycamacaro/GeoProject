@@ -3,7 +3,7 @@ package com.srb.project.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "vehicle", schema = "srb", catalog = "")
+@Table(name = "vehicle", schema = "srb")
 public class VehicleEntity {
     private int idVehicle;
     private String mark;

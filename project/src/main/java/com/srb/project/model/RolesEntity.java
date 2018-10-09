@@ -3,7 +3,7 @@ package com.srb.project.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles", schema = "srb", catalog = "")
+@Table(name = "roles", schema = "srb")
 public class RolesEntity {
     private int idroles;
     private String role;

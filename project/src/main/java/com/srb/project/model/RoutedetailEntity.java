@@ -3,7 +3,7 @@ package com.srb.project.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "routedetail", schema = "srb", catalog = "")
+@Table(name = "routedetail", schema = "srb")
 public class RoutedetailEntity {
     private int idRoutedetail;
     private Integer idroute;

@@ -3,7 +3,7 @@ package com.srb.project.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "device", schema = "srb", catalog = "")
+@Table(name = "device", schema = "srb")
 @IdClass(DeviceEntityPK.class)
 public class DeviceEntity {
     private int idDevice;
@@ -11,7 +11,6 @@ public class DeviceEntity {
     private String model;
     private String imei;
     private String phonenumber;
-    private Integer iddriver;
     private int usersIdusers;
     private int usersRolesIdroles;
     private int vehicleIdVehicle;
@@ -66,16 +65,6 @@ public class DeviceEntity {
         this.phonenumber = phonenumber;
     }
 
-    @Basic
-    @Column(name = "IDDRIVER", nullable = true)
-    public Integer getIddriver() {
-        return iddriver;
-    }
-
-    public void setIddriver(Integer iddriver) {
-        this.iddriver = iddriver;
-    }
-
     @Id
     @Column(name = "users_idusers", nullable = false)
     public int getUsersIdusers() {
@@ -121,7 +110,6 @@ public class DeviceEntity {
         if (model != null ? !model.equals(that.model) : that.model != null) return false;
         if (imei != null ? !imei.equals(that.imei) : that.imei != null) return false;
         if (phonenumber != null ? !phonenumber.equals(that.phonenumber) : that.phonenumber != null) return false;
-        if (iddriver != null ? !iddriver.equals(that.iddriver) : that.iddriver != null) return false;
 
         return true;
     }
@@ -133,7 +121,6 @@ public class DeviceEntity {
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (imei != null ? imei.hashCode() : 0);
         result = 31 * result + (phonenumber != null ? phonenumber.hashCode() : 0);
-        result = 31 * result + (iddriver != null ? iddriver.hashCode() : 0);
         result = 31 * result + usersIdusers;
         result = 31 * result + usersRolesIdroles;
         result = 31 * result + vehicleIdVehicle;

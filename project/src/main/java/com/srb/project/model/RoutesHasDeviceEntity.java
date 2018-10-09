@@ -1,27 +1,29 @@
 package com.srb.project.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.*;
 
-public class RoutesEntityPK implements Serializable {
-    private int idRoutes;
+@Entity
+@Table(name = "routes_has_device", schema = "srb")
+@IdClass(RoutesHasDeviceEntityPK.class)
+public class RoutesHasDeviceEntity {
+    private int routesIdRoutes;
     private int deviceIdDevice;
     private int deviceUsersIdusers;
     private int deviceUsersRolesIdroles;
+    private int deviceVehicleIdVehicle;
 
-    @Column(name = "idROUTES", nullable = false)
     @Id
-    public int getIdRoutes() {
-        return idRoutes;
+    @Column(name = "routes_idROUTES", nullable = false)
+    public int getRoutesIdRoutes() {
+        return routesIdRoutes;
     }
 
-    public void setIdRoutes(int idRoutes) {
-        this.idRoutes = idRoutes;
+    public void setRoutesIdRoutes(int routesIdRoutes) {
+        this.routesIdRoutes = routesIdRoutes;
     }
 
+    @Id
     @Column(name = "device_idDEVICE", nullable = false)
-    @Id
     public int getDeviceIdDevice() {
         return deviceIdDevice;
     }
@@ -30,8 +32,8 @@ public class RoutesEntityPK implements Serializable {
         this.deviceIdDevice = deviceIdDevice;
     }
 
-    @Column(name = "device_users_idusers", nullable = false)
     @Id
+    @Column(name = "device_users_idusers", nullable = false)
     public int getDeviceUsersIdusers() {
         return deviceUsersIdusers;
     }
@@ -40,8 +42,8 @@ public class RoutesEntityPK implements Serializable {
         this.deviceUsersIdusers = deviceUsersIdusers;
     }
 
-    @Column(name = "device_users_roles_idroles", nullable = false)
     @Id
+    @Column(name = "device_users_roles_idroles", nullable = false)
     public int getDeviceUsersRolesIdroles() {
         return deviceUsersRolesIdroles;
     }
@@ -50,27 +52,39 @@ public class RoutesEntityPK implements Serializable {
         this.deviceUsersRolesIdroles = deviceUsersRolesIdroles;
     }
 
+    @Id
+    @Column(name = "device_vehicle_idVEHICLE", nullable = false)
+    public int getDeviceVehicleIdVehicle() {
+        return deviceVehicleIdVehicle;
+    }
+
+    public void setDeviceVehicleIdVehicle(int deviceVehicleIdVehicle) {
+        this.deviceVehicleIdVehicle = deviceVehicleIdVehicle;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RoutesEntityPK that = (RoutesEntityPK) o;
+        RoutesHasDeviceEntity that = (RoutesHasDeviceEntity) o;
 
-        if (idRoutes != that.idRoutes) return false;
+        if (routesIdRoutes != that.routesIdRoutes) return false;
         if (deviceIdDevice != that.deviceIdDevice) return false;
         if (deviceUsersIdusers != that.deviceUsersIdusers) return false;
         if (deviceUsersRolesIdroles != that.deviceUsersRolesIdroles) return false;
+        if (deviceVehicleIdVehicle != that.deviceVehicleIdVehicle) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idRoutes;
+        int result = routesIdRoutes;
         result = 31 * result + deviceIdDevice;
         result = 31 * result + deviceUsersIdusers;
         result = 31 * result + deviceUsersRolesIdroles;
+        result = 31 * result + deviceVehicleIdVehicle;
         return result;
     }
 }
