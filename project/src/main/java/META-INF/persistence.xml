@@ -3,25 +3,27 @@
 
     <persistence-unit name="NewPersistenceUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.srb.project.model.AssignedroutesEntity</class>
+        <class>com.srb.project.model.AssignedvehicleEntity</class>
         <class>com.srb.project.model.AuditsEntity</class>
         <class>com.srb.project.model.DeviceEntity</class>
         <class>com.srb.project.model.LocationEntity</class>
         <class>com.srb.project.model.RolesEntity</class>
         <class>com.srb.project.model.RoutedetailEntity</class>
         <class>com.srb.project.model.RoutesEntity</class>
-        <class>com.srb.project.model.RoutesHasDeviceEntity</class>
         <class>com.srb.project.model.UsersEntity</class>
         <class>com.srb.project.model.VehicleEntity</class>
-        <class>com.srb.project.model.VehicleHasUsersEntity</class>
+
+
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/srb"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.username" value="danny"/>
             <property name="hibernate.connection.password" value="danny"/>
             <property name="hibernate.archive.autodetection" value="class"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hbm2ddl.auto" value="update"/>
+            <!--<property name="hibernate.show_sql" value="true"/>-->
+            <!--<property name="hibernate.format_sql" value="true"/>-->
+            <!--<property name="hbm2ddl.auto" value="update"/>-->
         </properties>
     </persistence-unit>
 </persistence>

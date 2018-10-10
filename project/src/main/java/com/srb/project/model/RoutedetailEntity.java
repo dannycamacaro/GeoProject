@@ -5,30 +5,30 @@ import javax.persistence.*;
 @Entity
 @Table(name = "routedetail", schema = "srb")
 public class RoutedetailEntity {
-    private int idRoutedetail;
-    private Integer idroute;
+    private int idroutedetail;
+    private Integer idroutes;
     private String routelatitude;
     private String routelength;
     private String description;
 
     @Id
-    @Column(name = "idROUTEDETAIL", nullable = false)
-    public int getIdRoutedetail() {
-        return idRoutedetail;
+    @Column(name = "IDROUTEDETAIL", nullable = false)
+    public int getIdroutedetail() {
+        return idroutedetail;
     }
 
-    public void setIdRoutedetail(int idRoutedetail) {
-        this.idRoutedetail = idRoutedetail;
+    public void setIdroutedetail(int idroutedetail) {
+        this.idroutedetail = idroutedetail;
     }
 
     @Basic
-    @Column(name = "IDROUTE", nullable = true)
-    public Integer getIdroute() {
-        return idroute;
+    @Column(name = "IDROUTES", nullable = true)
+    public Integer getIdroutes() {
+        return idroutes;
     }
 
-    public void setIdroute(Integer idroute) {
-        this.idroute = idroute;
+    public void setIdroutes(Integer idroutes) {
+        this.idroutes = idroutes;
     }
 
     @Basic
@@ -68,8 +68,8 @@ public class RoutedetailEntity {
 
         RoutedetailEntity that = (RoutedetailEntity) o;
 
-        if (idRoutedetail != that.idRoutedetail) return false;
-        if (idroute != null ? !idroute.equals(that.idroute) : that.idroute != null) return false;
+        if (idroutedetail != that.idroutedetail) return false;
+        if (idroutes != null ? !idroutes.equals(that.idroutes) : that.idroutes != null) return false;
         if (routelatitude != null ? !routelatitude.equals(that.routelatitude) : that.routelatitude != null)
             return false;
         if (routelength != null ? !routelength.equals(that.routelength) : that.routelength != null) return false;
@@ -80,8 +80,8 @@ public class RoutedetailEntity {
 
     @Override
     public int hashCode() {
-        int result = idRoutedetail;
-        result = 31 * result + (idroute != null ? idroute.hashCode() : 0);
+        int result = idroutedetail;
+        result = 31 * result + (idroutes != null ? idroutes.hashCode() : 0);
         result = 31 * result + (routelatitude != null ? routelatitude.hashCode() : 0);
         result = 31 * result + (routelength != null ? routelength.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);

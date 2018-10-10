@@ -4,22 +4,21 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users", schema = "srb")
-@IdClass(UsersEntityPK.class)
 public class UsersEntity {
     private int idusers;
-    private String userName;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String identityDocument;
+    private String username;
+    private String password2;
+    private String firstname;
+    private String lastname;
+    private String identitydocument;
     private Integer age;
-    private String phoneNumber;
+    private String phonenumber;
     private String email;
-    private int rolesIdroles;
-    private int assignedvehicleIdAssignedvehicle;
+    private int idrol;
+    private int idassignedvehicle;
 
     @Id
-    @Column(name = "idusers", nullable = false)
+    @Column(name = "IDUSERS", nullable = false)
     public int getIdusers() {
         return idusers;
     }
@@ -29,57 +28,57 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "userName", nullable = true, length = 100)
-    public String getUserName() {
-        return userName;
+    @Column(name = "USERNAME", nullable = true, length = 100)
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Basic
-    @Column(name = "password", nullable = true, length = 45)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Basic
-    @Column(name = "firstName", nullable = true, length = 100)
-    public String getFirstName() {
-        return firstName;
+    @Column(name = "PASSWORD2", nullable = true, length = 45)
+    public String getPassword2() {
+        return password2;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @Basic
-    @Column(name = "LastName", nullable = true, length = 45)
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword2(String password2) {
+        this.password2 = password2;
     }
 
     @Basic
-    @Column(name = "IdentityDocument", nullable = true, length = 45)
-    public String getIdentityDocument() {
-        return identityDocument;
+    @Column(name = "FIRSTNAME", nullable = true, length = 100)
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setIdentityDocument(String identityDocument) {
-        this.identityDocument = identityDocument;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     @Basic
-    @Column(name = "age", nullable = true)
+    @Column(name = "LASTNAME", nullable = true, length = 45)
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    @Basic
+    @Column(name = "IDENTITYDOCUMENT", nullable = true, length = 45)
+    public String getIdentitydocument() {
+        return identitydocument;
+    }
+
+    public void setIdentitydocument(String identitydocument) {
+        this.identitydocument = identitydocument;
+    }
+
+    @Basic
+    @Column(name = "AGE", nullable = true)
     public Integer getAge() {
         return age;
     }
@@ -89,17 +88,17 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "phoneNumber", nullable = true, length = 45)
-    public String getPhoneNumber() {
-        return phoneNumber;
+    @Column(name = "PHONENUMBER", nullable = true, length = 45)
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     @Basic
-    @Column(name = "Email", nullable = true, length = 200)
+    @Column(name = "EMAIL", nullable = true, length = 200)
     public String getEmail() {
         return email;
     }
@@ -108,24 +107,24 @@ public class UsersEntity {
         this.email = email;
     }
 
-    @Id
-    @Column(name = "roles_idroles", nullable = false)
-    public int getRolesIdroles() {
-        return rolesIdroles;
+    @Basic
+    @Column(name = "IDROL", nullable = false)
+    public int getIdrol() {
+        return idrol;
     }
 
-    public void setRolesIdroles(int rolesIdroles) {
-        this.rolesIdroles = rolesIdroles;
+    public void setIdrol(int idrol) {
+        this.idrol = idrol;
     }
 
-    @Id
-    @Column(name = "assignedvehicle_idASSIGNEDVEHICLE", nullable = false)
-    public int getAssignedvehicleIdAssignedvehicle() {
-        return assignedvehicleIdAssignedvehicle;
+    @Basic
+    @Column(name = "IDASSIGNEDVEHICLE", nullable = false)
+    public int getIdassignedvehicle() {
+        return idassignedvehicle;
     }
 
-    public void setAssignedvehicleIdAssignedvehicle(int assignedvehicleIdAssignedvehicle) {
-        this.assignedvehicleIdAssignedvehicle = assignedvehicleIdAssignedvehicle;
+    public void setIdassignedvehicle(int idassignedvehicle) {
+        this.idassignedvehicle = idassignedvehicle;
     }
 
     @Override
@@ -136,16 +135,16 @@ public class UsersEntity {
         UsersEntity that = (UsersEntity) o;
 
         if (idusers != that.idusers) return false;
-        if (rolesIdroles != that.rolesIdroles) return false;
-        if (assignedvehicleIdAssignedvehicle != that.assignedvehicleIdAssignedvehicle) return false;
-        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (identityDocument != null ? !identityDocument.equals(that.identityDocument) : that.identityDocument != null)
+        if (idrol != that.idrol) return false;
+        if (idassignedvehicle != that.idassignedvehicle) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
+        if (password2 != null ? !password2.equals(that.password2) : that.password2 != null) return false;
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        if (identitydocument != null ? !identitydocument.equals(that.identitydocument) : that.identitydocument != null)
             return false;
         if (age != null ? !age.equals(that.age) : that.age != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
+        if (phonenumber != null ? !phonenumber.equals(that.phonenumber) : that.phonenumber != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
 
         return true;
@@ -154,16 +153,16 @@ public class UsersEntity {
     @Override
     public int hashCode() {
         int result = idusers;
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (identityDocument != null ? identityDocument.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password2 != null ? password2.hashCode() : 0);
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (identitydocument != null ? identitydocument.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (phonenumber != null ? phonenumber.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + rolesIdroles;
-        result = 31 * result + assignedvehicleIdAssignedvehicle;
+        result = 31 * result + idrol;
+        result = 31 * result + idassignedvehicle;
         return result;
     }
 }

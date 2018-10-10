@@ -4,25 +4,32 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "device", schema = "srb")
-@IdClass(DeviceEntityPK.class)
 public class DeviceEntity {
-    private int idDevice;
+    private int iddevice;
+    private int idvehicle;
     private String mark;
     private String model;
     private String imei;
     private String phonenumber;
-    private int usersIdusers;
-    private int usersRolesIdroles;
-    private int vehicleIdVehicle;
 
     @Id
-    @Column(name = "idDEVICE", nullable = false)
-    public int getIdDevice() {
-        return idDevice;
+    @Column(name = "IDDEVICE", nullable = false)
+    public int getIddevice() {
+        return iddevice;
     }
 
-    public void setIdDevice(int idDevice) {
-        this.idDevice = idDevice;
+    public void setIddevice(int iddevice) {
+        this.iddevice = iddevice;
+    }
+
+    @Basic
+    @Column(name = "IDVEHICLE", nullable = false)
+    public int getIdvehicle() {
+        return idvehicle;
+    }
+
+    public void setIdvehicle(int idvehicle) {
+        this.idvehicle = idvehicle;
     }
 
     @Basic
@@ -65,36 +72,6 @@ public class DeviceEntity {
         this.phonenumber = phonenumber;
     }
 
-    @Id
-    @Column(name = "users_idusers", nullable = false)
-    public int getUsersIdusers() {
-        return usersIdusers;
-    }
-
-    public void setUsersIdusers(int usersIdusers) {
-        this.usersIdusers = usersIdusers;
-    }
-
-    @Id
-    @Column(name = "users_roles_idroles", nullable = false)
-    public int getUsersRolesIdroles() {
-        return usersRolesIdroles;
-    }
-
-    public void setUsersRolesIdroles(int usersRolesIdroles) {
-        this.usersRolesIdroles = usersRolesIdroles;
-    }
-
-    @Id
-    @Column(name = "vehicle_idVEHICLE", nullable = false)
-    public int getVehicleIdVehicle() {
-        return vehicleIdVehicle;
-    }
-
-    public void setVehicleIdVehicle(int vehicleIdVehicle) {
-        this.vehicleIdVehicle = vehicleIdVehicle;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,10 +79,8 @@ public class DeviceEntity {
 
         DeviceEntity that = (DeviceEntity) o;
 
-        if (idDevice != that.idDevice) return false;
-        if (usersIdusers != that.usersIdusers) return false;
-        if (usersRolesIdroles != that.usersRolesIdroles) return false;
-        if (vehicleIdVehicle != that.vehicleIdVehicle) return false;
+        if (iddevice != that.iddevice) return false;
+        if (idvehicle != that.idvehicle) return false;
         if (mark != null ? !mark.equals(that.mark) : that.mark != null) return false;
         if (model != null ? !model.equals(that.model) : that.model != null) return false;
         if (imei != null ? !imei.equals(that.imei) : that.imei != null) return false;
@@ -116,14 +91,12 @@ public class DeviceEntity {
 
     @Override
     public int hashCode() {
-        int result = idDevice;
+        int result = iddevice;
+        result = 31 * result + idvehicle;
         result = 31 * result + (mark != null ? mark.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (imei != null ? imei.hashCode() : 0);
         result = 31 * result + (phonenumber != null ? phonenumber.hashCode() : 0);
-        result = 31 * result + usersIdusers;
-        result = 31 * result + usersRolesIdroles;
-        result = 31 * result + vehicleIdVehicle;
         return result;
     }
 }

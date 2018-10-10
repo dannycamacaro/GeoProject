@@ -6,20 +6,20 @@ import java.sql.Date;
 @Entity
 @Table(name = "location", schema = "srb")
 public class LocationEntity {
-    private int idLocation;
+    private int idlocation;
     private Integer idvehicle;
     private String locationlatitude;
     private String locationlength;
-    private Date date;
+    private Date locationdate;
 
     @Id
-    @Column(name = "idLOCATION", nullable = false)
-    public int getIdLocation() {
-        return idLocation;
+    @Column(name = "IDLOCATION", nullable = false)
+    public int getIdlocation() {
+        return idlocation;
     }
 
-    public void setIdLocation(int idLocation) {
-        this.idLocation = idLocation;
+    public void setIdlocation(int idlocation) {
+        this.idlocation = idlocation;
     }
 
     @Basic
@@ -53,13 +53,13 @@ public class LocationEntity {
     }
 
     @Basic
-    @Column(name = "DATE", nullable = true)
-    public Date getDate() {
-        return date;
+    @Column(name = "LOCATIONDATE", nullable = true)
+    public Date getLocationdate() {
+        return locationdate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setLocationdate(Date locationdate) {
+        this.locationdate = locationdate;
     }
 
     @Override
@@ -69,24 +69,24 @@ public class LocationEntity {
 
         LocationEntity that = (LocationEntity) o;
 
-        if (idLocation != that.idLocation) return false;
+        if (idlocation != that.idlocation) return false;
         if (idvehicle != null ? !idvehicle.equals(that.idvehicle) : that.idvehicle != null) return false;
         if (locationlatitude != null ? !locationlatitude.equals(that.locationlatitude) : that.locationlatitude != null)
             return false;
         if (locationlength != null ? !locationlength.equals(that.locationlength) : that.locationlength != null)
             return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (locationdate != null ? !locationdate.equals(that.locationdate) : that.locationdate != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idLocation;
+        int result = idlocation;
         result = 31 * result + (idvehicle != null ? idvehicle.hashCode() : 0);
         result = 31 * result + (locationlatitude != null ? locationlatitude.hashCode() : 0);
         result = 31 * result + (locationlength != null ? locationlength.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (locationdate != null ? locationdate.hashCode() : 0);
         return result;
     }
 }

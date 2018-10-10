@@ -5,38 +5,38 @@ import javax.persistence.*;
 @Entity
 @Table(name = "roles", schema = "srb")
 public class RolesEntity {
-    private int idroles;
-    private String role;
-    private String descriptionRole;
+    private int idrol;
+    private String namerole;
+    private String descriptionrole;
 
     @Id
-    @Column(name = "idroles", nullable = false)
-    public int getIdroles() {
-        return idroles;
+    @Column(name = "IDROL", nullable = false)
+    public int getIdrol() {
+        return idrol;
     }
 
-    public void setIdroles(int idroles) {
-        this.idroles = idroles;
-    }
-
-    @Basic
-    @Column(name = "role", nullable = true, length = 45)
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setIdrol(int idrol) {
+        this.idrol = idrol;
     }
 
     @Basic
-    @Column(name = "DescriptionRole", nullable = true, length = 400)
-    public String getDescriptionRole() {
-        return descriptionRole;
+    @Column(name = "NAMEROLE", nullable = true, length = 45)
+    public String getNamerole() {
+        return namerole;
     }
 
-    public void setDescriptionRole(String descriptionRole) {
-        this.descriptionRole = descriptionRole;
+    public void setNamerole(String namerole) {
+        this.namerole = namerole;
+    }
+
+    @Basic
+    @Column(name = "DESCRIPTIONROLE", nullable = true, length = 400)
+    public String getDescriptionrole() {
+        return descriptionrole;
+    }
+
+    public void setDescriptionrole(String descriptionrole) {
+        this.descriptionrole = descriptionrole;
     }
 
     @Override
@@ -46,9 +46,9 @@ public class RolesEntity {
 
         RolesEntity that = (RolesEntity) o;
 
-        if (idroles != that.idroles) return false;
-        if (role != null ? !role.equals(that.role) : that.role != null) return false;
-        if (descriptionRole != null ? !descriptionRole.equals(that.descriptionRole) : that.descriptionRole != null)
+        if (idrol != that.idrol) return false;
+        if (namerole != null ? !namerole.equals(that.namerole) : that.namerole != null) return false;
+        if (descriptionrole != null ? !descriptionrole.equals(that.descriptionrole) : that.descriptionrole != null)
             return false;
 
         return true;
@@ -56,9 +56,9 @@ public class RolesEntity {
 
     @Override
     public int hashCode() {
-        int result = idroles;
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (descriptionRole != null ? descriptionRole.hashCode() : 0);
+        int result = idrol;
+        result = 31 * result + (namerole != null ? namerole.hashCode() : 0);
+        result = 31 * result + (descriptionrole != null ? descriptionrole.hashCode() : 0);
         return result;
     }
 }

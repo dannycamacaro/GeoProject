@@ -5,18 +5,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "routes", schema = "srb")
 public class RoutesEntity {
-    private int idRoutes;
+    private int idroutes;
     private String nameroutes;
     private String description;
 
     @Id
-    @Column(name = "idROUTES", nullable = false)
-    public int getIdRoutes() {
-        return idRoutes;
+    @Column(name = "IDROUTES", nullable = false)
+    public int getIdroutes() {
+        return idroutes;
     }
 
-    public void setIdRoutes(int idRoutes) {
-        this.idRoutes = idRoutes;
+    public void setIdroutes(int idroutes) {
+        this.idroutes = idroutes;
     }
 
     @Basic
@@ -46,7 +46,7 @@ public class RoutesEntity {
 
         RoutesEntity that = (RoutesEntity) o;
 
-        if (idRoutes != that.idRoutes) return false;
+        if (idroutes != that.idroutes) return false;
         if (nameroutes != null ? !nameroutes.equals(that.nameroutes) : that.nameroutes != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
@@ -55,7 +55,7 @@ public class RoutesEntity {
 
     @Override
     public int hashCode() {
-        int result = idRoutes;
+        int result = idroutes;
         result = 31 * result + (nameroutes != null ? nameroutes.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;

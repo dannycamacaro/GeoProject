@@ -6,41 +6,48 @@ import java.sql.Time;
 
 @Entity
 @Table(name = "audits", schema = "srb")
-@IdClass(AuditsEntityPK.class)
 public class AuditsEntity {
-    private int idAudits;
-    private String operation;
+    private int idaudits;
+    private int idusers;
+    private String typeoperation;
     private String ip;
-    private Date date;
-    private Time time;
-    private Integer statusOperation;
-    private String conten;
-    private int usersIdusers;
-    private int usersRolesIdroles;
-    private int usersAssignedvehicleIdAssignedvehicle;
+    private Date auditsdate;
+    private Time timeaudit;
+    private Integer statusoperation;
+    private String content;
 
     @Id
-    @Column(name = "idAudits", nullable = false)
-    public int getIdAudits() {
-        return idAudits;
+    @Column(name = "IDAUDITS", nullable = false)
+    public int getIdaudits() {
+        return idaudits;
     }
 
-    public void setIdAudits(int idAudits) {
-        this.idAudits = idAudits;
-    }
-
-    @Basic
-    @Column(name = "Operation", nullable = true, length = 45)
-    public String getOperation() {
-        return operation;
-    }
-
-    public void setOperation(String operation) {
-        this.operation = operation;
+    public void setIdaudits(int idaudits) {
+        this.idaudits = idaudits;
     }
 
     @Basic
-    @Column(name = "ip", nullable = true, length = 45)
+    @Column(name = "IDUSERS", nullable = false)
+    public int getIdusers() {
+        return idusers;
+    }
+
+    public void setIdusers(int idusers) {
+        this.idusers = idusers;
+    }
+
+    @Basic
+    @Column(name = "TYPEOPERATION", nullable = true, length = 45)
+    public String getTypeoperation() {
+        return typeoperation;
+    }
+
+    public void setTypeoperation(String typeoperation) {
+        this.typeoperation = typeoperation;
+    }
+
+    @Basic
+    @Column(name = "IP", nullable = true, length = 45)
     public String getIp() {
         return ip;
     }
@@ -50,73 +57,43 @@ public class AuditsEntity {
     }
 
     @Basic
-    @Column(name = "date", nullable = true)
-    public Date getDate() {
-        return date;
+    @Column(name = "AUDITSDATE", nullable = true)
+    public Date getAuditsdate() {
+        return auditsdate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    @Basic
-    @Column(name = "time", nullable = true)
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
+    public void setAuditsdate(Date auditsdate) {
+        this.auditsdate = auditsdate;
     }
 
     @Basic
-    @Column(name = "statusOperation", nullable = true)
-    public Integer getStatusOperation() {
-        return statusOperation;
+    @Column(name = "TIMEAUDIT", nullable = true)
+    public Time getTimeaudit() {
+        return timeaudit;
     }
 
-    public void setStatusOperation(Integer statusOperation) {
-        this.statusOperation = statusOperation;
+    public void setTimeaudit(Time timeaudit) {
+        this.timeaudit = timeaudit;
     }
 
     @Basic
-    @Column(name = "conten", nullable = true, length = 3000)
-    public String getConten() {
-        return conten;
+    @Column(name = "STATUSOPERATION", nullable = true)
+    public Integer getStatusoperation() {
+        return statusoperation;
     }
 
-    public void setConten(String conten) {
-        this.conten = conten;
+    public void setStatusoperation(Integer statusoperation) {
+        this.statusoperation = statusoperation;
     }
 
-    @Id
-    @Column(name = "users_idusers", nullable = false)
-    public int getUsersIdusers() {
-        return usersIdusers;
+    @Basic
+    @Column(name = "CONTENT", nullable = true, length = 3000)
+    public String getContent() {
+        return content;
     }
 
-    public void setUsersIdusers(int usersIdusers) {
-        this.usersIdusers = usersIdusers;
-    }
-
-    @Id
-    @Column(name = "users_roles_idroles", nullable = false)
-    public int getUsersRolesIdroles() {
-        return usersRolesIdroles;
-    }
-
-    public void setUsersRolesIdroles(int usersRolesIdroles) {
-        this.usersRolesIdroles = usersRolesIdroles;
-    }
-
-    @Id
-    @Column(name = "users_assignedvehicle_idASSIGNEDVEHICLE", nullable = false)
-    public int getUsersAssignedvehicleIdAssignedvehicle() {
-        return usersAssignedvehicleIdAssignedvehicle;
-    }
-
-    public void setUsersAssignedvehicleIdAssignedvehicle(int usersAssignedvehicleIdAssignedvehicle) {
-        this.usersAssignedvehicleIdAssignedvehicle = usersAssignedvehicleIdAssignedvehicle;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
@@ -126,33 +103,30 @@ public class AuditsEntity {
 
         AuditsEntity that = (AuditsEntity) o;
 
-        if (idAudits != that.idAudits) return false;
-        if (usersIdusers != that.usersIdusers) return false;
-        if (usersRolesIdroles != that.usersRolesIdroles) return false;
-        if (usersAssignedvehicleIdAssignedvehicle != that.usersAssignedvehicleIdAssignedvehicle) return false;
-        if (operation != null ? !operation.equals(that.operation) : that.operation != null) return false;
-        if (ip != null ? !ip.equals(that.ip) : that.ip != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
-        if (time != null ? !time.equals(that.time) : that.time != null) return false;
-        if (statusOperation != null ? !statusOperation.equals(that.statusOperation) : that.statusOperation != null)
+        if (idaudits != that.idaudits) return false;
+        if (idusers != that.idusers) return false;
+        if (typeoperation != null ? !typeoperation.equals(that.typeoperation) : that.typeoperation != null)
             return false;
-        if (conten != null ? !conten.equals(that.conten) : that.conten != null) return false;
+        if (ip != null ? !ip.equals(that.ip) : that.ip != null) return false;
+        if (auditsdate != null ? !auditsdate.equals(that.auditsdate) : that.auditsdate != null) return false;
+        if (timeaudit != null ? !timeaudit.equals(that.timeaudit) : that.timeaudit != null) return false;
+        if (statusoperation != null ? !statusoperation.equals(that.statusoperation) : that.statusoperation != null)
+            return false;
+        if (content != null ? !content.equals(that.content) : that.content != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idAudits;
-        result = 31 * result + (operation != null ? operation.hashCode() : 0);
+        int result = idaudits;
+        result = 31 * result + idusers;
+        result = 31 * result + (typeoperation != null ? typeoperation.hashCode() : 0);
         result = 31 * result + (ip != null ? ip.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
-        result = 31 * result + (statusOperation != null ? statusOperation.hashCode() : 0);
-        result = 31 * result + (conten != null ? conten.hashCode() : 0);
-        result = 31 * result + usersIdusers;
-        result = 31 * result + usersRolesIdroles;
-        result = 31 * result + usersAssignedvehicleIdAssignedvehicle;
+        result = 31 * result + (auditsdate != null ? auditsdate.hashCode() : 0);
+        result = 31 * result + (timeaudit != null ? timeaudit.hashCode() : 0);
+        result = 31 * result + (statusoperation != null ? statusoperation.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
     }
 }

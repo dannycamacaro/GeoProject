@@ -5,20 +5,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "vehicle", schema = "srb")
 public class VehicleEntity {
-    private int idVehicle;
+    private int idvehicle;
     private String mark;
     private String licenseplate;
-    private Integer year;
+    private Integer vehicleyear;
     private Integer ton;
 
     @Id
-    @Column(name = "idVEHICLE", nullable = false)
-    public int getIdVehicle() {
-        return idVehicle;
+    @Column(name = "IDVEHICLE", nullable = false)
+    public int getIdvehicle() {
+        return idvehicle;
     }
 
-    public void setIdVehicle(int idVehicle) {
-        this.idVehicle = idVehicle;
+    public void setIdvehicle(int idvehicle) {
+        this.idvehicle = idvehicle;
     }
 
     @Basic
@@ -42,13 +42,13 @@ public class VehicleEntity {
     }
 
     @Basic
-    @Column(name = "YEAR", nullable = true)
-    public Integer getYear() {
-        return year;
+    @Column(name = "VEHICLEYEAR", nullable = true)
+    public Integer getVehicleyear() {
+        return vehicleyear;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setVehicleyear(Integer vehicleyear) {
+        this.vehicleyear = vehicleyear;
     }
 
     @Basic
@@ -68,10 +68,10 @@ public class VehicleEntity {
 
         VehicleEntity that = (VehicleEntity) o;
 
-        if (idVehicle != that.idVehicle) return false;
+        if (idvehicle != that.idvehicle) return false;
         if (mark != null ? !mark.equals(that.mark) : that.mark != null) return false;
         if (licenseplate != null ? !licenseplate.equals(that.licenseplate) : that.licenseplate != null) return false;
-        if (year != null ? !year.equals(that.year) : that.year != null) return false;
+        if (vehicleyear != null ? !vehicleyear.equals(that.vehicleyear) : that.vehicleyear != null) return false;
         if (ton != null ? !ton.equals(that.ton) : that.ton != null) return false;
 
         return true;
@@ -79,10 +79,10 @@ public class VehicleEntity {
 
     @Override
     public int hashCode() {
-        int result = idVehicle;
+        int result = idvehicle;
         result = 31 * result + (mark != null ? mark.hashCode() : 0);
         result = 31 * result + (licenseplate != null ? licenseplate.hashCode() : 0);
-        result = 31 * result + (year != null ? year.hashCode() : 0);
+        result = 31 * result + (vehicleyear != null ? vehicleyear.hashCode() : 0);
         result = 31 * result + (ton != null ? ton.hashCode() : 0);
         return result;
     }
