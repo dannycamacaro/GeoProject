@@ -11,6 +11,20 @@ public class AssignedvehicleEntity {
     private int idvehicle;
     private Date initialdate;
     private Date finishdate;
+    private UsersEntity usersByIdusers;
+    private VehicleEntity vehicleByIdvehicle;
+
+    public void setIdassignedvehicle(Integer idassignedvehicle) {
+        this.idassignedvehicle = idassignedvehicle;
+    }
+
+    public void setIdusers(Integer idusers) {
+        this.idusers = idusers;
+    }
+
+    public void setIdvehicle(Integer idvehicle) {
+        this.idvehicle = idvehicle;
+    }
 
     @Id
     @Column(name = "IDASSIGNEDVEHICLE", nullable = false)
@@ -86,5 +100,25 @@ public class AssignedvehicleEntity {
         result = 31 * result + (initialdate != null ? initialdate.hashCode() : 0);
         result = 31 * result + (finishdate != null ? finishdate.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
+    public UsersEntity getUsersByIdusers() {
+        return usersByIdusers;
+    }
+
+    public void setUsersByIdusers(UsersEntity usersByIdusers) {
+        this.usersByIdusers = usersByIdusers;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
+    public VehicleEntity getVehicleByIdvehicle() {
+        return vehicleByIdvehicle;
+    }
+
+    public void setVehicleByIdvehicle(VehicleEntity vehicleByIdvehicle) {
+        this.vehicleByIdvehicle = vehicleByIdvehicle;
     }
 }

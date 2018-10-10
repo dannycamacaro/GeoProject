@@ -8,6 +8,20 @@ public class AssignedroutesEntity {
     private int idassignedroutes;
     private int iddevice;
     private int idroutes;
+    private DeviceEntity deviceByIddevice;
+    private RoutesEntity routesByIdroutes;
+
+    public void setIdassignedroutes(Integer idassignedroutes) {
+        this.idassignedroutes = idassignedroutes;
+    }
+
+    public void setIddevice(Integer iddevice) {
+        this.iddevice = iddevice;
+    }
+
+    public void setIdroutes(Integer idroutes) {
+        this.idroutes = idroutes;
+    }
 
     @Id
     @Column(name = "IDASSIGNEDROUTES", nullable = false)
@@ -59,5 +73,25 @@ public class AssignedroutesEntity {
         result = 31 * result + iddevice;
         result = 31 * result + idroutes;
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDDEVICE", referencedColumnName = "IDDEVICE",insertable = false, updatable = false, nullable = false)
+    public DeviceEntity getDeviceByIddevice() {
+        return deviceByIddevice;
+    }
+
+    public void setDeviceByIddevice(DeviceEntity deviceByIddevice) {
+        this.deviceByIddevice = deviceByIddevice;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES",insertable = false, updatable = false, nullable = false)
+    public RoutesEntity getRoutesByIdroutes() {
+        return routesByIdroutes;
+    }
+
+    public void setRoutesByIdroutes(RoutesEntity routesByIdroutes) {
+        this.routesByIdroutes = routesByIdroutes;
     }
 }

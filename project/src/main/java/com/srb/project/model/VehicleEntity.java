@@ -1,6 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "vehicle", schema = "srb")
@@ -10,6 +11,13 @@ public class VehicleEntity {
     private String licenseplate;
     private Integer vehicleyear;
     private Integer ton;
+    private Collection<AssignedvehicleEntity> assignedvehiclesByIdvehicle;
+    private Collection<DeviceEntity> devicesByIdvehicle;
+    private Collection<LocationEntity> locationsByIdvehicle;
+
+    public void setIdvehicle(Integer idvehicle) {
+        this.idvehicle = idvehicle;
+    }
 
     @Id
     @Column(name = "IDVEHICLE", nullable = false)
@@ -85,5 +93,32 @@ public class VehicleEntity {
         result = 31 * result + (vehicleyear != null ? vehicleyear.hashCode() : 0);
         result = 31 * result + (ton != null ? ton.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "vehicleByIdvehicle")
+    public Collection<AssignedvehicleEntity> getAssignedvehiclesByIdvehicle() {
+        return assignedvehiclesByIdvehicle;
+    }
+
+    public void setAssignedvehiclesByIdvehicle(Collection<AssignedvehicleEntity> assignedvehiclesByIdvehicle) {
+        this.assignedvehiclesByIdvehicle = assignedvehiclesByIdvehicle;
+    }
+
+    @OneToMany(mappedBy = "vehicleByIdvehicle")
+    public Collection<DeviceEntity> getDevicesByIdvehicle() {
+        return devicesByIdvehicle;
+    }
+
+    public void setDevicesByIdvehicle(Collection<DeviceEntity> devicesByIdvehicle) {
+        this.devicesByIdvehicle = devicesByIdvehicle;
+    }
+
+    @OneToMany(mappedBy = "vehicleByIdvehicle")
+    public Collection<LocationEntity> getLocationsByIdvehicle() {
+        return locationsByIdvehicle;
+    }
+
+    public void setLocationsByIdvehicle(Collection<LocationEntity> locationsByIdvehicle) {
+        this.locationsByIdvehicle = locationsByIdvehicle;
     }
 }

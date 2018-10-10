@@ -1,6 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "routes", schema = "srb")
@@ -8,6 +9,12 @@ public class RoutesEntity {
     private int idroutes;
     private String nameroutes;
     private String description;
+    private Collection<AssignedroutesEntity> assignedroutesByIdroutes;
+    private Collection<RoutedetailEntity> routedetailsByIdroutes;
+
+    public void setIdroutes(Integer idroutes) {
+        this.idroutes = idroutes;
+    }
 
     @Id
     @Column(name = "IDROUTES", nullable = false)
@@ -59,5 +66,23 @@ public class RoutesEntity {
         result = 31 * result + (nameroutes != null ? nameroutes.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "routesByIdroutes")
+    public Collection<AssignedroutesEntity> getAssignedroutesByIdroutes() {
+        return assignedroutesByIdroutes;
+    }
+
+    public void setAssignedroutesByIdroutes(Collection<AssignedroutesEntity> assignedroutesByIdroutes) {
+        this.assignedroutesByIdroutes = assignedroutesByIdroutes;
+    }
+
+    @OneToMany(mappedBy = "routesByIdroutes")
+    public Collection<RoutedetailEntity> getRoutedetailsByIdroutes() {
+        return routedetailsByIdroutes;
+    }
+
+    public void setRoutedetailsByIdroutes(Collection<RoutedetailEntity> routedetailsByIdroutes) {
+        this.routedetailsByIdroutes = routedetailsByIdroutes;
     }
 }

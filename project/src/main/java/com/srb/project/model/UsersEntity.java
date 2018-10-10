@@ -1,6 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "users", schema = "srb")
@@ -16,6 +17,21 @@ public class UsersEntity {
     private String email;
     private int idrol;
     private int idassignedvehicle;
+    private Collection<AssignedvehicleEntity> assignedvehiclesByIdusers;
+    private Collection<AuditsEntity> auditsByIdusers;
+    private RolesEntity rolesByIdrol;
+
+    public void setIdusers(Integer idusers) {
+        this.idusers = idusers;
+    }
+
+    public void setIdrol(Integer idrol) {
+        this.idrol = idrol;
+    }
+
+    public void setIdassignedvehicle(Integer idassignedvehicle) {
+        this.idassignedvehicle = idassignedvehicle;
+    }
 
     @Id
     @Column(name = "IDUSERS", nullable = false)
@@ -164,5 +180,33 @@ public class UsersEntity {
         result = 31 * result + idrol;
         result = 31 * result + idassignedvehicle;
         return result;
+    }
+
+    @OneToMany(mappedBy = "usersByIdusers")
+    public Collection<AssignedvehicleEntity> getAssignedvehiclesByIdusers() {
+        return assignedvehiclesByIdusers;
+    }
+
+    public void setAssignedvehiclesByIdusers(Collection<AssignedvehicleEntity> assignedvehiclesByIdusers) {
+        this.assignedvehiclesByIdusers = assignedvehiclesByIdusers;
+    }
+
+    @OneToMany(mappedBy = "usersByIdusers")
+    public Collection<AuditsEntity> getAuditsByIdusers() {
+        return auditsByIdusers;
+    }
+
+    public void setAuditsByIdusers(Collection<AuditsEntity> auditsByIdusers) {
+        this.auditsByIdusers = auditsByIdusers;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDROL", referencedColumnName = "IDROL",insertable = false, updatable = false, nullable = false)
+    public RolesEntity getRolesByIdrol() {
+        return rolesByIdrol;
+    }
+
+    public void setRolesByIdrol(RolesEntity rolesByIdrol) {
+        this.rolesByIdrol = rolesByIdrol;
     }
 }

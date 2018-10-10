@@ -1,6 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "roles", schema = "srb")
@@ -8,6 +9,11 @@ public class RolesEntity {
     private int idrol;
     private String namerole;
     private String descriptionrole;
+    private Collection<UsersEntity> usersByIdrol;
+
+    public void setIdrol(Integer idrol) {
+        this.idrol = idrol;
+    }
 
     @Id
     @Column(name = "IDROL", nullable = false)
@@ -60,5 +66,14 @@ public class RolesEntity {
         result = 31 * result + (namerole != null ? namerole.hashCode() : 0);
         result = 31 * result + (descriptionrole != null ? descriptionrole.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "rolesByIdrol")
+    public Collection<UsersEntity> getUsersByIdrol() {
+        return usersByIdrol;
+    }
+
+    public void setUsersByIdrol(Collection<UsersEntity> usersByIdrol) {
+        this.usersByIdrol = usersByIdrol;
     }
 }

@@ -15,6 +15,15 @@ public class AuditsEntity {
     private Time timeaudit;
     private Integer statusoperation;
     private String content;
+    private UsersEntity usersByIdusers;
+
+    public void setIdaudits(Integer idaudits) {
+        this.idaudits = idaudits;
+    }
+
+    public void setIdusers(Integer idusers) {
+        this.idusers = idusers;
+    }
 
     @Id
     @Column(name = "IDAUDITS", nullable = false)
@@ -128,5 +137,15 @@ public class AuditsEntity {
         result = 31 * result + (statusoperation != null ? statusoperation.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
+    public UsersEntity getUsersByIdusers() {
+        return usersByIdusers;
+    }
+
+    public void setUsersByIdusers(UsersEntity usersByIdusers) {
+        this.usersByIdusers = usersByIdusers;
     }
 }

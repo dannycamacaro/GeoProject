@@ -11,6 +11,11 @@ public class LocationEntity {
     private String locationlatitude;
     private String locationlength;
     private Date locationdate;
+    private VehicleEntity vehicleByIdvehicle;
+
+    public void setIdlocation(Integer idlocation) {
+        this.idlocation = idlocation;
+    }
 
     @Id
     @Column(name = "IDLOCATION", nullable = false)
@@ -88,5 +93,15 @@ public class LocationEntity {
         result = 31 * result + (locationlength != null ? locationlength.hashCode() : 0);
         result = 31 * result + (locationdate != null ? locationdate.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
+    public VehicleEntity getVehicleByIdvehicle() {
+        return vehicleByIdvehicle;
+    }
+
+    public void setVehicleByIdvehicle(VehicleEntity vehicleByIdvehicle) {
+        this.vehicleByIdvehicle = vehicleByIdvehicle;
     }
 }

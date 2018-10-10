@@ -51,9 +51,9 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 nameLayout.addComponents(nameRolField, descriptionField,createButton,cancelButton);
                 RolesEntity rolesEntity  = new RolesEntity();
-                rolesEntity.setRole(nameRolField.getValue());
-                rolesEntity.setDescriptionRole(descriptionField.getValue());
-                rolesEntity.setIdroles(3);
+                rolesEntity.setNamerole(nameRolField.getValue());
+                rolesEntity.setDescriptionrole(descriptionField.getValue());
+                rolesEntity.setIdrol(3);
             }
         });
 

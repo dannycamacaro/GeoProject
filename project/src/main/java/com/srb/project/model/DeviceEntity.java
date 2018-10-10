@@ -1,6 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "device", schema = "srb")
@@ -11,6 +12,16 @@ public class DeviceEntity {
     private String model;
     private String imei;
     private String phonenumber;
+    private Collection<AssignedroutesEntity> assignedroutesByIddevice;
+    private VehicleEntity vehicleByIdvehicle;
+
+    public void setIddevice(Integer iddevice) {
+        this.iddevice = iddevice;
+    }
+
+    public void setIdvehicle(Integer idvehicle) {
+        this.idvehicle = idvehicle;
+    }
 
     @Id
     @Column(name = "IDDEVICE", nullable = false)
@@ -98,5 +109,24 @@ public class DeviceEntity {
         result = 31 * result + (imei != null ? imei.hashCode() : 0);
         result = 31 * result + (phonenumber != null ? phonenumber.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "deviceByIddevice")
+    public Collection<AssignedroutesEntity> getAssignedroutesByIddevice() {
+        return assignedroutesByIddevice;
+    }
+
+    public void setAssignedroutesByIddevice(Collection<AssignedroutesEntity> assignedroutesByIddevice) {
+        this.assignedroutesByIddevice = assignedroutesByIddevice;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
+    public VehicleEntity getVehicleByIdvehicle() {
+        return vehicleByIdvehicle;
+    }
+
+    public void setVehicleByIdvehicle(VehicleEntity vehicleByIdvehicle) {
+        this.vehicleByIdvehicle = vehicleByIdvehicle;
     }
 }

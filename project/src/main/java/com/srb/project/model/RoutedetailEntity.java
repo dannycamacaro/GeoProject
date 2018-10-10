@@ -10,6 +10,11 @@ public class RoutedetailEntity {
     private String routelatitude;
     private String routelength;
     private String description;
+    private RoutesEntity routesByIdroutes;
+
+    public void setIdroutedetail(Integer idroutedetail) {
+        this.idroutedetail = idroutedetail;
+    }
 
     @Id
     @Column(name = "IDROUTEDETAIL", nullable = false)
@@ -86,5 +91,15 @@ public class RoutedetailEntity {
         result = 31 * result + (routelength != null ? routelength.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES",insertable = false, updatable = false, nullable = false)
+    public RoutesEntity getRoutesByIdroutes() {
+        return routesByIdroutes;
+    }
+
+    public void setRoutesByIdroutes(RoutesEntity routesByIdroutes) {
+        this.routesByIdroutes = routesByIdroutes;
     }
 }
