@@ -1,4 +1,4 @@
-package com.srb.project.EnumConstans;
+package com.srb.project.enumConstans;
 
 public enum EnumOperation {
 
