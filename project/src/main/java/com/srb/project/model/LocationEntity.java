@@ -6,19 +6,39 @@ import java.sql.Date;
 @Entity
 @Table(name = "location", schema = "srb")
 public class LocationEntity {
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "IDLOCATION", nullable = false)
     private int idlocation;
+
+    @Basic
+    @Column(name = "IDVEHICLE", nullable = true)
     private Integer idvehicle;
+
+    @Basic
+    @Column(name = "LOCATIONLATITUDE", nullable = true, length = 100)
     private String locationlatitude;
+
+    @Basic
+    @Column(name = "LOCATIONLENGTH", nullable = true, length = 100)
     private String locationlength;
+    @Basic
+    @Column(name = "LOCATIONDATE", nullable = true)
     private Date locationdate;
+
+    @ManyToOne
+    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
     private VehicleEntity vehicleByIdvehicle;
+
+    @Basic
+    @Column(name = "STATEDELETE")
+    private Byte statedelete;
 
     public void setIdlocation(Integer idlocation) {
         this.idlocation = idlocation;
     }
 
-    @Id
-    @Column(name = "IDLOCATION", nullable = false)
+
     public int getIdlocation() {
         return idlocation;
     }
@@ -27,8 +47,7 @@ public class LocationEntity {
         this.idlocation = idlocation;
     }
 
-    @Basic
-    @Column(name = "IDVEHICLE", nullable = true)
+
     public Integer getIdvehicle() {
         return idvehicle;
     }
@@ -37,8 +56,7 @@ public class LocationEntity {
         this.idvehicle = idvehicle;
     }
 
-    @Basic
-    @Column(name = "LOCATIONLATITUDE", nullable = true, length = 100)
+
     public String getLocationlatitude() {
         return locationlatitude;
     }
@@ -47,8 +65,7 @@ public class LocationEntity {
         this.locationlatitude = locationlatitude;
     }
 
-    @Basic
-    @Column(name = "LOCATIONLENGTH", nullable = true, length = 100)
+
     public String getLocationlength() {
         return locationlength;
     }
@@ -57,8 +74,7 @@ public class LocationEntity {
         this.locationlength = locationlength;
     }
 
-    @Basic
-    @Column(name = "LOCATIONDATE", nullable = true)
+
     public Date getLocationdate() {
         return locationdate;
     }
@@ -95,13 +111,21 @@ public class LocationEntity {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
+
     public VehicleEntity getVehicleByIdvehicle() {
         return vehicleByIdvehicle;
     }
 
     public void setVehicleByIdvehicle(VehicleEntity vehicleByIdvehicle) {
         this.vehicleByIdvehicle = vehicleByIdvehicle;
+    }
+
+
+    public Byte getStatedelete() {
+        return statedelete;
+    }
+
+    public void setStatedelete(Byte statedelete) {
+        this.statedelete = statedelete;
     }
 }

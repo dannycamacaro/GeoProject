@@ -5,19 +5,36 @@ import javax.persistence.*;
 @Entity
 @Table(name = "routedetail", schema = "srb")
 public class RoutedetailEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDROUTEDETAIL", nullable = false)
     private int idroutedetail;
+
+    @Basic
+    @Column(name = "IDROUTES", nullable = true)
     private Integer idroutes;
+
+    @Basic
+    @Column(name = "ROUTELATITUDE", nullable = true, length = 200)
     private String routelatitude;
+
+    @Basic
+    @Column(name = "ROUTELENGTH", nullable = true, length = 200)
     private String routelength;
+
+    @Basic
+    @Column(name = "DESCRIPTION", nullable = true, length = 150)
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES",insertable = false, updatable = false, nullable = false)
     private RoutesEntity routesByIdroutes;
 
     public void setIdroutedetail(Integer idroutedetail) {
         this.idroutedetail = idroutedetail;
     }
 
-    @Id
-    @Column(name = "IDROUTEDETAIL", nullable = false)
+
     public int getIdroutedetail() {
         return idroutedetail;
     }
@@ -26,8 +43,7 @@ public class RoutedetailEntity {
         this.idroutedetail = idroutedetail;
     }
 
-    @Basic
-    @Column(name = "IDROUTES", nullable = true)
+
     public Integer getIdroutes() {
         return idroutes;
     }
@@ -36,8 +52,7 @@ public class RoutedetailEntity {
         this.idroutes = idroutes;
     }
 
-    @Basic
-    @Column(name = "ROUTELATITUDE", nullable = true, length = 200)
+
     public String getRoutelatitude() {
         return routelatitude;
     }
@@ -46,8 +61,7 @@ public class RoutedetailEntity {
         this.routelatitude = routelatitude;
     }
 
-    @Basic
-    @Column(name = "ROUTELENGTH", nullable = true, length = 200)
+
     public String getRoutelength() {
         return routelength;
     }
@@ -56,8 +70,7 @@ public class RoutedetailEntity {
         this.routelength = routelength;
     }
 
-    @Basic
-    @Column(name = "DESCRIPTION", nullable = true, length = 150)
+
     public String getDescription() {
         return description;
     }
@@ -93,9 +106,7 @@ public class RoutedetailEntity {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES",insertable = false, updatable = false, nullable = false)
-    public RoutesEntity getRoutesByIdroutes() {
+        public RoutesEntity getRoutesByIdroutes() {
         return routesByIdroutes;
     }
 

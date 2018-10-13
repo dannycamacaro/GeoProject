@@ -14,12 +14,13 @@ public class LoginServices implements Serializable {
     @PersistenceContext
     EntityManager entityManager;
 
-    public static final String QUERY_USER = "from UsersEntity where userName=:userName AND password2=:password2";
+    public static final String QUERY_USER = "from UsersEntity where userName=:userName AND password=:password";
 
     public Boolean findUser(UsersEntity user) {
         Boolean expression = false;
         List<UsersEntity> entityList = entityManager.createQuery(QUERY_USER, UsersEntity.class)
-                .setParameter("userName", user.getUsername()).setParameter("password2", user.getPassword2()).getResultList();
+                .setParameter("userName", user.getUsername()).setParameter("password", user.getPassword()).getResultList();
+
         if (!entityList.isEmpty()) {
             expression = true;
         }else {
@@ -31,7 +32,7 @@ public class LoginServices implements Serializable {
     public Boolean findUser(String user, String password) {
         Boolean expression = false;
         List<UsersEntity> entityList = entityManager.createQuery(QUERY_USER, UsersEntity.class)
-                .setParameter("userName", user).setParameter("password2", password).getResultList();
+                .setParameter("userName", user).setParameter("password", password).getResultList();
         if (!entityList.isEmpty()) {
             expression = true;
         }else {

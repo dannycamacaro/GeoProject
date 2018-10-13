@@ -7,14 +7,39 @@ import java.sql.Time;
 @Entity
 @Table(name = "audits", schema = "srb")
 public class AuditsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDAUDITS", nullable = false)
     private int idaudits;
+
+    @Basic
+    @Column(name = "IDUSERS", nullable = false)
     private int idusers;
+
+    @Basic
+    @Column(name = "TYPEOPERATION", nullable = true, length = 45)
     private String typeoperation;
+
+    @Basic
+    @Column(name = "IP", nullable = true, length = 45)
     private String ip;
+    @Basic
+    @Column(name = "AUDITSDATE", nullable = true)
     private Date auditsdate;
+
+    @Basic
+    @Column(name = "TIMEAUDIT", nullable = true)
     private Time timeaudit;
+
+    @Basic
+    @Column(name = "STATUSOPERATION", nullable = true)
     private Integer statusoperation;
+    @Basic
+    @Column(name = "CONTENT", nullable = true, length = 3000)
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
     private UsersEntity usersByIdusers;
 
     public void setIdaudits(Integer idaudits) {
@@ -25,8 +50,7 @@ public class AuditsEntity {
         this.idusers = idusers;
     }
 
-    @Id
-    @Column(name = "IDAUDITS", nullable = false)
+
     public int getIdaudits() {
         return idaudits;
     }
@@ -35,8 +59,7 @@ public class AuditsEntity {
         this.idaudits = idaudits;
     }
 
-    @Basic
-    @Column(name = "IDUSERS", nullable = false)
+
     public int getIdusers() {
         return idusers;
     }
@@ -45,8 +68,7 @@ public class AuditsEntity {
         this.idusers = idusers;
     }
 
-    @Basic
-    @Column(name = "TYPEOPERATION", nullable = true, length = 45)
+
     public String getTypeoperation() {
         return typeoperation;
     }
@@ -55,8 +77,7 @@ public class AuditsEntity {
         this.typeoperation = typeoperation;
     }
 
-    @Basic
-    @Column(name = "IP", nullable = true, length = 45)
+
     public String getIp() {
         return ip;
     }
@@ -65,8 +86,7 @@ public class AuditsEntity {
         this.ip = ip;
     }
 
-    @Basic
-    @Column(name = "AUDITSDATE", nullable = true)
+
     public Date getAuditsdate() {
         return auditsdate;
     }
@@ -75,8 +95,7 @@ public class AuditsEntity {
         this.auditsdate = auditsdate;
     }
 
-    @Basic
-    @Column(name = "TIMEAUDIT", nullable = true)
+
     public Time getTimeaudit() {
         return timeaudit;
     }
@@ -85,8 +104,7 @@ public class AuditsEntity {
         this.timeaudit = timeaudit;
     }
 
-    @Basic
-    @Column(name = "STATUSOPERATION", nullable = true)
+
     public Integer getStatusoperation() {
         return statusoperation;
     }
@@ -95,8 +113,7 @@ public class AuditsEntity {
         this.statusoperation = statusoperation;
     }
 
-    @Basic
-    @Column(name = "CONTENT", nullable = true, length = 3000)
+
     public String getContent() {
         return content;
     }
@@ -139,8 +156,7 @@ public class AuditsEntity {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
+
     public UsersEntity getUsersByIdusers() {
         return usersByIdusers;
     }

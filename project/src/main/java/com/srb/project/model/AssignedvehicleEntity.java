@@ -6,12 +6,30 @@ import java.sql.Date;
 @Entity
 @Table(name = "assignedvehicle", schema = "srb")
 public class AssignedvehicleEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDASSIGNEDVEHICLE", nullable = false)
     private int idassignedvehicle;
+
+    @Basic
+    @Column(name = "IDUSERS", nullable = false)
     private int idusers;
+    @Basic
+    @Column(name = "IDVEHICLE", nullable = false)
     private int idvehicle;
+
+    @Basic
+    @Column(name = "INITIALDATE", nullable = true)
     private Date initialdate;
+
+    @Basic
+    @Column(name = "FINISHDATE", nullable = true)
     private Date finishdate;
+    @ManyToOne
+    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
     private UsersEntity usersByIdusers;
+    @ManyToOne
+    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
     private VehicleEntity vehicleByIdvehicle;
 
     public void setIdassignedvehicle(Integer idassignedvehicle) {
@@ -26,8 +44,7 @@ public class AssignedvehicleEntity {
         this.idvehicle = idvehicle;
     }
 
-    @Id
-    @Column(name = "IDASSIGNEDVEHICLE", nullable = false)
+
     public int getIdassignedvehicle() {
         return idassignedvehicle;
     }
@@ -36,8 +53,6 @@ public class AssignedvehicleEntity {
         this.idassignedvehicle = idassignedvehicle;
     }
 
-    @Basic
-    @Column(name = "IDUSERS", nullable = false)
     public int getIdusers() {
         return idusers;
     }
@@ -46,8 +61,7 @@ public class AssignedvehicleEntity {
         this.idusers = idusers;
     }
 
-    @Basic
-    @Column(name = "IDVEHICLE", nullable = false)
+
     public int getIdvehicle() {
         return idvehicle;
     }
@@ -56,8 +70,7 @@ public class AssignedvehicleEntity {
         this.idvehicle = idvehicle;
     }
 
-    @Basic
-    @Column(name = "INITIALDATE", nullable = true)
+
     public Date getInitialdate() {
         return initialdate;
     }
@@ -66,8 +79,7 @@ public class AssignedvehicleEntity {
         this.initialdate = initialdate;
     }
 
-    @Basic
-    @Column(name = "FINISHDATE", nullable = true)
+
     public Date getFinishdate() {
         return finishdate;
     }
@@ -102,8 +114,7 @@ public class AssignedvehicleEntity {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
+
     public UsersEntity getUsersByIdusers() {
         return usersByIdusers;
     }
@@ -112,8 +123,7 @@ public class AssignedvehicleEntity {
         this.usersByIdusers = usersByIdusers;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
+
     public VehicleEntity getVehicleByIdvehicle() {
         return vehicleByIdvehicle;
     }

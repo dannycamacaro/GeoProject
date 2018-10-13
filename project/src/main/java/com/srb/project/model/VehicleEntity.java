@@ -6,21 +6,38 @@ import java.util.Collection;
 @Entity
 @Table(name = "vehicle", schema = "srb")
 public class VehicleEntity {
+    @Id
+    @Column(name = "IDVEHICLE", nullable = false)
     private int idvehicle;
+    @Basic
+    @Column(name = "MARK", nullable = true, length = 45)
     private String mark;
+
+    @Basic
+    @Column(name = "LICENSEPLATE", nullable = true, length = 45)
     private String licenseplate;
+    @Basic
+    @Column(name = "VEHICLEYEAR", nullable = true)
     private Integer vehicleyear;
+    @Basic
+    @Column(name = "TON", nullable = true)
     private Integer ton;
+    @OneToMany(mappedBy = "vehicleByIdvehicle")
     private Collection<AssignedvehicleEntity> assignedvehiclesByIdvehicle;
+    @OneToMany(mappedBy = "vehicleByIdvehicle")
     private Collection<DeviceEntity> devicesByIdvehicle;
+    @OneToMany(mappedBy = "vehicleByIdvehicle")
     private Collection<LocationEntity> locationsByIdvehicle;
+
+    @Basic
+    @Column(name = "STATEDELETE")
+    private Byte statedelete;
 
     public void setIdvehicle(Integer idvehicle) {
         this.idvehicle = idvehicle;
     }
 
-    @Id
-    @Column(name = "IDVEHICLE", nullable = false)
+
     public int getIdvehicle() {
         return idvehicle;
     }
@@ -29,8 +46,7 @@ public class VehicleEntity {
         this.idvehicle = idvehicle;
     }
 
-    @Basic
-    @Column(name = "MARK", nullable = true, length = 45)
+
     public String getMark() {
         return mark;
     }
@@ -39,8 +55,7 @@ public class VehicleEntity {
         this.mark = mark;
     }
 
-    @Basic
-    @Column(name = "LICENSEPLATE", nullable = true, length = 45)
+
     public String getLicenseplate() {
         return licenseplate;
     }
@@ -49,8 +64,7 @@ public class VehicleEntity {
         this.licenseplate = licenseplate;
     }
 
-    @Basic
-    @Column(name = "VEHICLEYEAR", nullable = true)
+
     public Integer getVehicleyear() {
         return vehicleyear;
     }
@@ -59,8 +73,7 @@ public class VehicleEntity {
         this.vehicleyear = vehicleyear;
     }
 
-    @Basic
-    @Column(name = "TON", nullable = true)
+
     public Integer getTon() {
         return ton;
     }
@@ -95,7 +108,7 @@ public class VehicleEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "vehicleByIdvehicle")
+
     public Collection<AssignedvehicleEntity> getAssignedvehiclesByIdvehicle() {
         return assignedvehiclesByIdvehicle;
     }
@@ -104,7 +117,7 @@ public class VehicleEntity {
         this.assignedvehiclesByIdvehicle = assignedvehiclesByIdvehicle;
     }
 
-    @OneToMany(mappedBy = "vehicleByIdvehicle")
+
     public Collection<DeviceEntity> getDevicesByIdvehicle() {
         return devicesByIdvehicle;
     }
@@ -113,12 +126,21 @@ public class VehicleEntity {
         this.devicesByIdvehicle = devicesByIdvehicle;
     }
 
-    @OneToMany(mappedBy = "vehicleByIdvehicle")
+
     public Collection<LocationEntity> getLocationsByIdvehicle() {
         return locationsByIdvehicle;
     }
 
     public void setLocationsByIdvehicle(Collection<LocationEntity> locationsByIdvehicle) {
         this.locationsByIdvehicle = locationsByIdvehicle;
+    }
+
+
+    public Byte getStatedelete() {
+        return statedelete;
+    }
+
+    public void setStatedelete(Byte statedelete) {
+        this.statedelete = statedelete;
     }
 }

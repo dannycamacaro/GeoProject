@@ -6,17 +6,32 @@ import java.util.Collection;
 @Entity
 @Table(name = "roles", schema = "srb")
 public class RolesEntity {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "IDROL", nullable = false)
     private int idrol;
+
+    @Basic
+    @Column(name = "NAMEROLE", nullable = true, length = 45)
     private String namerole;
+    @Basic
+    @Column(name = "DESCRIPTIONROLE", nullable = true, length = 400)
     private String descriptionrole;
+    @OneToMany(mappedBy = "rolesByIdrol")
     private Collection<UsersEntity> usersByIdrol;
+
+    @Basic
+    @Column(name = "STATEDELETE")
+    private Byte statedelete;
+    @OneToMany(mappedBy = "rolesByIdrol")
+    private Collection<UsersEntity> userssByIdrol;
 
     public void setIdrol(Integer idrol) {
         this.idrol = idrol;
     }
 
-    @Id
-    @Column(name = "IDROL", nullable = false)
+
     public int getIdrol() {
         return idrol;
     }
@@ -25,8 +40,7 @@ public class RolesEntity {
         this.idrol = idrol;
     }
 
-    @Basic
-    @Column(name = "NAMEROLE", nullable = true, length = 45)
+
     public String getNamerole() {
         return namerole;
     }
@@ -35,8 +49,7 @@ public class RolesEntity {
         this.namerole = namerole;
     }
 
-    @Basic
-    @Column(name = "DESCRIPTIONROLE", nullable = true, length = 400)
+
     public String getDescriptionrole() {
         return descriptionrole;
     }
@@ -68,12 +81,30 @@ public class RolesEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "rolesByIdrol")
+
     public Collection<UsersEntity> getUsersByIdrol() {
         return usersByIdrol;
     }
 
     public void setUsersByIdrol(Collection<UsersEntity> usersByIdrol) {
         this.usersByIdrol = usersByIdrol;
+    }
+
+
+    public Byte getStatedelete() {
+        return statedelete;
+    }
+
+    public void setStatedelete(Byte statedelete) {
+        this.statedelete = statedelete;
+    }
+
+
+    public Collection<UsersEntity> getUserssByIdrol() {
+        return userssByIdrol;
+    }
+
+    public void setUserssByIdrol(Collection<UsersEntity> userssByIdrol) {
+        this.userssByIdrol = userssByIdrol;
     }
 }

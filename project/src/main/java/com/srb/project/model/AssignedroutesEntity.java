@@ -5,10 +5,24 @@ import javax.persistence.*;
 @Entity
 @Table(name = "assignedroutes", schema = "srb")
 public class AssignedroutesEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDASSIGNEDROUTES", nullable = false)
     private int idassignedroutes;
+
+    @Basic
+    @Column(name = "IDDEVICE", nullable = false)
     private int iddevice;
+
+    @Basic
+    @Column(name = "IDROUTES", nullable = false)
     private int idroutes;
+    @ManyToOne
+    @JoinColumn(name = "IDDEVICE", referencedColumnName = "IDDEVICE", insertable = false, updatable = false, nullable = false)
     private DeviceEntity deviceByIddevice;
+
+    @ManyToOne
+    @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES", insertable = false, updatable = false, nullable = false)
     private RoutesEntity routesByIdroutes;
 
     public void setIdassignedroutes(Integer idassignedroutes) {
@@ -23,8 +37,7 @@ public class AssignedroutesEntity {
         this.idroutes = idroutes;
     }
 
-    @Id
-    @Column(name = "IDASSIGNEDROUTES", nullable = false)
+
     public int getIdassignedroutes() {
         return idassignedroutes;
     }
@@ -33,8 +46,7 @@ public class AssignedroutesEntity {
         this.idassignedroutes = idassignedroutes;
     }
 
-    @Basic
-    @Column(name = "IDDEVICE", nullable = false)
+
     public int getIddevice() {
         return iddevice;
     }
@@ -43,8 +55,7 @@ public class AssignedroutesEntity {
         this.iddevice = iddevice;
     }
 
-    @Basic
-    @Column(name = "IDROUTES", nullable = false)
+
     public int getIdroutes() {
         return idroutes;
     }
@@ -75,8 +86,6 @@ public class AssignedroutesEntity {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDDEVICE", referencedColumnName = "IDDEVICE",insertable = false, updatable = false, nullable = false)
     public DeviceEntity getDeviceByIddevice() {
         return deviceByIddevice;
     }
@@ -85,8 +94,6 @@ public class AssignedroutesEntity {
         this.deviceByIddevice = deviceByIddevice;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES",insertable = false, updatable = false, nullable = false)
     public RoutesEntity getRoutesByIdroutes() {
         return routesByIdroutes;
     }

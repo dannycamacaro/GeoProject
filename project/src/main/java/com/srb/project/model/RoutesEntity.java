@@ -6,18 +6,32 @@ import java.util.Collection;
 @Entity
 @Table(name = "routes", schema = "srb")
 public class RoutesEntity {
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "IDROUTES", nullable = false)
     private int idroutes;
+
+    @Basic
+    @Column(name = "NAMEROUTES", nullable = true, length = 100)
     private String nameroutes;
+
+    @Basic
+    @Column(name = "DESCRIPTION", nullable = true, length = 400)
     private String description;
+    @OneToMany(mappedBy = "routesByIdroutes")
     private Collection<AssignedroutesEntity> assignedroutesByIdroutes;
+    @OneToMany(mappedBy = "routesByIdroutes")
     private Collection<RoutedetailEntity> routedetailsByIdroutes;
+
+    @Basic
+    @Column(name = "STATEDELETE")
+    private Byte statedelete;
 
     public void setIdroutes(Integer idroutes) {
         this.idroutes = idroutes;
     }
 
-    @Id
-    @Column(name = "IDROUTES", nullable = false)
+
     public int getIdroutes() {
         return idroutes;
     }
@@ -26,8 +40,7 @@ public class RoutesEntity {
         this.idroutes = idroutes;
     }
 
-    @Basic
-    @Column(name = "NAMEROUTES", nullable = true, length = 100)
+
     public String getNameroutes() {
         return nameroutes;
     }
@@ -36,8 +49,7 @@ public class RoutesEntity {
         this.nameroutes = nameroutes;
     }
 
-    @Basic
-    @Column(name = "DESCRIPTION", nullable = true, length = 400)
+
     public String getDescription() {
         return description;
     }
@@ -68,7 +80,7 @@ public class RoutesEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "routesByIdroutes")
+
     public Collection<AssignedroutesEntity> getAssignedroutesByIdroutes() {
         return assignedroutesByIdroutes;
     }
@@ -77,12 +89,21 @@ public class RoutesEntity {
         this.assignedroutesByIdroutes = assignedroutesByIdroutes;
     }
 
-    @OneToMany(mappedBy = "routesByIdroutes")
+
     public Collection<RoutedetailEntity> getRoutedetailsByIdroutes() {
         return routedetailsByIdroutes;
     }
 
     public void setRoutedetailsByIdroutes(Collection<RoutedetailEntity> routedetailsByIdroutes) {
         this.routedetailsByIdroutes = routedetailsByIdroutes;
+    }
+
+
+    public Byte getStatedelete() {
+        return statedelete;
+    }
+
+    public void setStatedelete(Byte statedelete) {
+        this.statedelete = statedelete;
     }
 }

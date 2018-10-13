@@ -6,14 +6,39 @@ import java.util.Collection;
 @Entity
 @Table(name = "device", schema = "srb")
 public class DeviceEntity {
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "IDDEVICE", nullable = false)
     private int iddevice;
+
+    @Basic
+    @Column(name = "IDVEHICLE", nullable = false)
     private int idvehicle;
+
+    @Basic
+    @Column(name = "MARK", nullable = true, length = 150)
     private String mark;
+
+    @Basic
+    @Column(name = "MODEL", nullable = true, length = 150)
     private String model;
+
+    @Basic
+    @Column(name = "IMEI", nullable = true, length = 100)
     private String imei;
+
+    @Basic
+    @Column(name = "PHONENUMBER", nullable = true, length = 45)
     private String phonenumber;
+    @OneToMany(mappedBy = "deviceByIddevice")
     private Collection<AssignedroutesEntity> assignedroutesByIddevice;
+    @ManyToOne
+    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
     private VehicleEntity vehicleByIdvehicle;
+
+    @Basic
+    @Column(name = "STATEDELETE")
+    private Byte statedelete;
 
     public void setIddevice(Integer iddevice) {
         this.iddevice = iddevice;
@@ -23,8 +48,7 @@ public class DeviceEntity {
         this.idvehicle = idvehicle;
     }
 
-    @Id
-    @Column(name = "IDDEVICE", nullable = false)
+
     public int getIddevice() {
         return iddevice;
     }
@@ -33,8 +57,7 @@ public class DeviceEntity {
         this.iddevice = iddevice;
     }
 
-    @Basic
-    @Column(name = "IDVEHICLE", nullable = false)
+
     public int getIdvehicle() {
         return idvehicle;
     }
@@ -43,8 +66,7 @@ public class DeviceEntity {
         this.idvehicle = idvehicle;
     }
 
-    @Basic
-    @Column(name = "MARK", nullable = true, length = 150)
+
     public String getMark() {
         return mark;
     }
@@ -53,8 +75,7 @@ public class DeviceEntity {
         this.mark = mark;
     }
 
-    @Basic
-    @Column(name = "MODEL", nullable = true, length = 150)
+
     public String getModel() {
         return model;
     }
@@ -63,8 +84,7 @@ public class DeviceEntity {
         this.model = model;
     }
 
-    @Basic
-    @Column(name = "IMEI", nullable = true, length = 100)
+
     public String getImei() {
         return imei;
     }
@@ -73,8 +93,7 @@ public class DeviceEntity {
         this.imei = imei;
     }
 
-    @Basic
-    @Column(name = "PHONENUMBER", nullable = true, length = 45)
+
     public String getPhonenumber() {
         return phonenumber;
     }
@@ -111,7 +130,7 @@ public class DeviceEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "deviceByIddevice")
+
     public Collection<AssignedroutesEntity> getAssignedroutesByIddevice() {
         return assignedroutesByIddevice;
     }
@@ -120,13 +139,20 @@ public class DeviceEntity {
         this.assignedroutesByIddevice = assignedroutesByIddevice;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
-    public VehicleEntity getVehicleByIdvehicle() {
+        public VehicleEntity getVehicleByIdvehicle() {
         return vehicleByIdvehicle;
     }
 
     public void setVehicleByIdvehicle(VehicleEntity vehicleByIdvehicle) {
         this.vehicleByIdvehicle = vehicleByIdvehicle;
+    }
+
+
+    public Byte getStatedelete() {
+        return statedelete;
+    }
+
+    public void setStatedelete(Byte statedelete) {
+        this.statedelete = statedelete;
     }
 }
