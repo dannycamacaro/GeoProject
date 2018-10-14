@@ -1,7 +1,7 @@
 package com.srb.project;
 
 
-import com.srb.project.persister.LoginServices;
+import com.srb.project.persister.ServicesLogin;
 import com.srb.project.view.ViewMenu;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
@@ -17,7 +17,7 @@ public class ViewLogin extends UI {
     public static final String APP_ROOT = "/project";
     public static final String MENU_VIEW = "Menu";
     @Autowired
-    LoginServices loginServices;
+    ServicesLogin loginServices;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -48,6 +48,7 @@ public class ViewLogin extends UI {
         txtUser.setValue("Ericka");
         txtPassword.setValue("123456");
         Button btnEntrar = new Button();
+        btnEntrar.setCaption("Iniciar sesion");
         btnEntrar.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

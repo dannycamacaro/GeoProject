@@ -10,11 +10,11 @@ import java.io.Serializable;
 import java.util.List;
 
 @Service
-public class LoginServices implements Serializable {
+public class ServicesLogin implements Serializable {
     @PersistenceContext
     EntityManager entityManager;
 
-    public static final String QUERY_USER = "from UsersEntity where userName=:userName AND password=:password";
+    public static final String QUERY_USER = "from UsersEntity where username=:userName AND password=:password";
 
     public Boolean findUser(UsersEntity user) {
         Boolean expression = false;
