@@ -2,6 +2,7 @@ package com.srb.project;
 
 
 import com.srb.project.persister.LoginServices;
+import com.srb.project.view.ViewMenu;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
@@ -10,26 +11,31 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@SpringUI (path = ViewLogin.APP_ROOT)
+@SpringUI(path = ViewLogin.APP_ROOT)
 @SpringViewDisplay
 public class ViewLogin extends UI {
-    public static final String  APP_ROOT = "/project";
-    public static final String  MENU_VIEW = "Menu";
+    public static final String APP_ROOT = "/project";
+    public static final String MENU_VIEW = "Menu";
     @Autowired
     LoginServices loginServices;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        Navigator navigator= new Navigator(this,this);
-        navigator.addView(ViewMenu.VIEW_NAME,new ViewUsers());
+        Navigator navigator = new Navigator(this, this);
+        navigator.addView(ViewMenu.VIEW_NAME, new ViewMenu());
 
         VerticalLayout root = new VerticalLayout();
+
+        root.addStyleName(ValoTheme.PANEL_BORDERLESS);
         //Formulario de login
         FormLayout loginForm = new FormLayout();
-        loginForm.setCaption("Login");
+        loginForm.addStyleName(ValoTheme.LABEL_COLORED);
+        Label lblTitle = new Label("Login");
+        lblTitle.setSizeFull();
+//        loginForm.setCaption("Login");
         loginForm.setWidth("600px");
         loginForm.setHeight("200px");
-        loginForm.addStyleNames(ValoTheme.LAYOUT_CARD,ValoTheme.LABEL_H3,ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
+        loginForm.addStyleNames(ValoTheme.LAYOUT_CARD, ValoTheme.LABEL_H3, ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
 
 
         TextField txtUser = new TextField();
@@ -39,13 +45,15 @@ public class ViewLogin extends UI {
         txtUser.addStyleName(ValoTheme.TEXTFIELD_LARGE);
         txtPassword.setCaption("Contraseña");
 
+        txtUser.setValue("Ericka");
+        txtPassword.setValue("123456");
         Button btnEntrar = new Button();
         btnEntrar.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                if (loginServices.validateInfo(txtUser.getValue(),txtPassword.getValue())){
-                    getUI().getNavigator().navigateTo(ViewMenu.VIEW_NAME);
-                }else {
+                if (loginServices.validateInfo(txtUser.getValue(), txtPassword.getValue())) {
+                    navigator.navigateTo(ViewMenu.VIEW_NAME);
+                } else {
                     Notification.show("Verificar sus datos.", Notification.Type.ERROR_MESSAGE);
                 }
             }
@@ -53,9 +61,11 @@ public class ViewLogin extends UI {
         btnEntrar.addStyleName(ValoTheme.BUTTON_PRIMARY);
         btnEntrar.setWidth("200px");
 
+        loginForm.addComponent(lblTitle);
         loginForm.addComponent(txtUser);
         loginForm.addComponent(txtPassword);
         loginForm.addComponent(btnEntrar);
+        loginForm.setComponentAlignment(lblTitle, Alignment.MIDDLE_CENTER);
 
         root.addComponent(loginForm);
         root.setSizeFull();

@@ -1,4 +1,4 @@
-package com.srb.project;
+package com.srb.project.view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
