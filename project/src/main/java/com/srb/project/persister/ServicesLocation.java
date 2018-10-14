@@ -1,15 +1,18 @@
 package com.srb.project.persister;
 
-import com.srb.project.model.VehicleEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+/**
+ * Created by Ericka on 13-10-2018.
+ */
 @Service
-public class ServicesVehicle {
-    @Autowired
+public class ServicesLocation {
+
+    @PersistenceContext
     EntityManager entityManager;
 
     @Transactional
@@ -27,12 +30,6 @@ public class ServicesVehicle {
         entityManager.remove(object);
     }
 
-    public VehicleEntity findById(Integer idVehicle) {
-        VehicleEntity vehicleEntity;
-        vehicleEntity =entityManager.find(VehicleEntity.class, idVehicle);
 
-
-        return vehicleEntity;
-    }
 
 }

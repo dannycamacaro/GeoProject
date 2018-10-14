@@ -1,18 +1,18 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "location", schema = "srb")
 public class LocationEntity {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDLOCATION", nullable = false)
     private int idlocation;
 
     @Basic
-    @Column(name = "IDVEHICLE", nullable = true)
+    @Column(name = "IDVEHICLE", nullable = false)
     private Integer idvehicle;
 
     @Basic
@@ -23,10 +23,11 @@ public class LocationEntity {
     @Column(name = "LOCATIONLENGTH", nullable = true, length = 100)
     private String locationlength;
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LOCATIONDATE", nullable = true)
     private Date locationdate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
     private VehicleEntity vehicleByIdvehicle;
 
@@ -34,10 +35,23 @@ public class LocationEntity {
     @Column(name = "STATEDELETE")
     private Byte statedelete;
 
+    public LocationEntity (){}
+
+    public LocationEntity(String locationlatitude, String locationlength, int idvehicle, Byte statedelete) {
+        this.locationlatitude = locationlatitude;
+        this.locationlength = locationlength;
+        this.idvehicle = idvehicle;
+        this.statedelete = statedelete;
+    }
+    @PrePersist
+    public void prePersist() {
+        locationdate =  new Date();
+    }
+
+
     public void setIdlocation(Integer idlocation) {
         this.idlocation = idlocation;
     }
-
 
     public int getIdlocation() {
         return idlocation;
@@ -46,16 +60,6 @@ public class LocationEntity {
     public void setIdlocation(int idlocation) {
         this.idlocation = idlocation;
     }
-
-
-    public Integer getIdvehicle() {
-        return idvehicle;
-    }
-
-    public void setIdvehicle(Integer idvehicle) {
-        this.idvehicle = idvehicle;
-    }
-
 
     public String getLocationlatitude() {
         return locationlatitude;

@@ -1,8 +1,11 @@
 package com.srb.project;
 
+import com.srb.project.model.LocationEntity;
 import com.srb.project.model.RolesEntity;
-import com.srb.project.model.UsersEntity;
+import com.srb.project.model.VehicleEntity;
+import com.srb.project.persister.ServicesLocation;
 import com.srb.project.persister.ServicesRol;
+import com.srb.project.persister.ServicesVehicle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +17,40 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ProjectApplicationTests {
 	@Autowired
 	ServicesRol servicesRol;
+
+	@Autowired
+	ServicesVehicle servicesVehicle;
+	@Autowired
+	ServicesLocation servicesLocation;
 	@Test
 	public void contextLoads() {
 
 
-		RolesEntity rolEntity= new RolesEntity();
+		/*RolesEntity rolEntity= new RolesEntity();
 
 		rolEntity.setNamerole("CIMUN");
 		rolEntity.setDescriptionrole("valad");
 		if(servicesRol.existelRol(rolEntity.getNamerole())>0){
 			System.out.println("true");
-		}
+		}*/
+		probarInsertLocation();
 
 
 	}
+
+	private void probarInsertLocation (){
+
+		VehicleEntity vehicleEntity = servicesVehicle.findById(50);
+
+		if(vehicleEntity != null) {
+			LocationEntity locationEntity = new LocationEntity("100", "300", vehicleEntity.getIdvehicle(), (byte) 0);
+			servicesLocation.save(locationEntity);
+			System.out.println("Insert Location correcto");
+		}else{
+			System.out.println("No se logro insertar la locacion");
+		}
+
+	}
+
 
 }
