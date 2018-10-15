@@ -24,8 +24,8 @@ public class ServicesDeviceTests {
     @Test
     public void contextLoads() {
 
-//        insertDevice();
-        deleteDevice();
+        insertDevice();
+//        deleteDevice();
     }
 
     private void insertDevice() {

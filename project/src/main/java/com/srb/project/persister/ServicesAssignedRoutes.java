@@ -1,16 +1,20 @@
 package com.srb.project.persister;
 
-import com.srb.project.model.UsersEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+
+/**
+ * Created by Ericka on 13-10-2018.
+ */
 @Service
-public class ServicesUser {
+public class ServicesAssignedRoutes {
 
-    @Autowired
+    @PersistenceContext
     EntityManager entityManager;
 
     @Transactional
@@ -28,9 +32,5 @@ public class ServicesUser {
         entityManager.remove(object);
     }
 
-    public UsersEntity findById(Integer idUsers) {
-        UsersEntity usersEntity;
-        usersEntity = entityManager.find(UsersEntity.class, idUsers);
-        return usersEntity;
-    }
+
 }

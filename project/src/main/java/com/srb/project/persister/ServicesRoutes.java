@@ -1,12 +1,14 @@
 package com.srb.project.persister;
 
+import com.srb.project.model.RoutesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-@Transactional
-public class ServicesRouste {
+@Service
+public class ServicesRoutes {
 
     @Autowired
     EntityManager entityManager;
@@ -24,6 +26,12 @@ public class ServicesRouste {
     @Transactional
     public void delete(Object object) {
         entityManager.remove(object);
+    }
+
+    public RoutesEntity findById(Integer idRoute) {
+        RoutesEntity routesEntity;
+        routesEntity = entityManager.find(RoutesEntity.class, idRoute);
+        return routesEntity;
     }
 
 }
