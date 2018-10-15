@@ -34,9 +34,9 @@ public class ServicesDevice {
         entityManager.merge(object);
     }
 
-    public DeviceEntity findById(Integer idVehicle) {
+    public DeviceEntity findById(Integer idDevice) {
         DeviceEntity deviceEntity;
-        deviceEntity = entityManager.find(DeviceEntity.class, idVehicle);
+        deviceEntity = entityManager.find(DeviceEntity.class, idDevice);
         return deviceEntity;
     }
 
