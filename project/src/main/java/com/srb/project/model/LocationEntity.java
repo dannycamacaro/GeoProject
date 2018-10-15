@@ -132,4 +132,17 @@ public class LocationEntity {
     public void setStatedelete(Byte statedelete) {
         this.statedelete = statedelete;
     }
+
+    @Override
+    public String toString() {
+        return "LocationEntity{" +
+                "idlocation=" + idlocation +
+                ", idvehicle=" + idvehicle +
+                ", locationlatitude='" + locationlatitude + '\'' +
+                ", locationlength='" + locationlength + '\'' +
+                ", locationdate=" + locationdate +
+//                ", vehicleByIdvehicle=" + vehicleByIdvehicle +
+                ", statedelete=" + statedelete +
+                '}';
+    }
 }
