@@ -29,9 +29,7 @@ public class ServicesVehicle {
 
     public VehicleEntity findById(Integer idVehicle) {
         VehicleEntity vehicleEntity;
-        vehicleEntity =entityManager.find(VehicleEntity.class, idVehicle);
-
-
+        vehicleEntity = entityManager.find(VehicleEntity.class, idVehicle);
         return vehicleEntity;
     }
 
