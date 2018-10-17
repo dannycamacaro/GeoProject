@@ -30,7 +30,7 @@ public class ProjectApplicationTests {
 
 		rolEntity.setNamerole("CIMUN");
 		rolEntity.setDescriptionrole("valad");
-		if(servicesRol.existelRol(rolEntity.getNamerole())>0){
+		if(servicesRol.loadRolByName(rolEntity.getNamerole())>0){
 			System.out.println("true");
 		}*/
 	}
