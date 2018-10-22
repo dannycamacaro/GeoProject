@@ -2,14 +2,11 @@ package com.srb.project.view;
 
 import com.srb.project.controller.ControllerRol;
 import com.srb.project.enumConstans.EnumLabel;
-import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.RolesEntity;
-import com.srb.project.util.ValidationsString;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.CrudListener;
 import org.vaadin.crudui.crud.CrudOperation;
@@ -17,6 +14,7 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @UIScope

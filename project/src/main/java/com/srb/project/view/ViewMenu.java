@@ -1,76 +1,66 @@
 package com.srb.project.view;
 
-import com.srb.project.model.UsersEntity;
+import com.srb.project.ViewLogin;
+import com.srb.project.navigator.UniverseNavigator;
+import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Widgetset;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.sass.internal.util.StringUtil;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.spring.navigator.SpringNavigator;
-//import com.vaadin.tapio.googlemaps.GoogleMap;
-//import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.ui.*;
-import org.vaadin.crudui.crud.impl.GridCrud;
 
 import javax.annotation.PostConstruct;
 
 @UIScope
 
 @Widgetset("com.srb.project.widgetset.VaadinmapsWidgetset")
-@SpringView(name = ViewMenu.VIEW_NAME)
+@Title("Menu")
+@SpringView(name = ViewMenu.VIEW_NAME, ui = ViewLogin.class)
 public class ViewMenu extends VerticalLayout implements View {
-    private final MenuBar.Command menuCommand = selectedItem -> Notification.show("Action " + selectedItem.getText(), Notification.Type.TRAY_NOTIFICATION);
-
     public static final String VIEW_NAME = "menu";
 
-    public ViewMenu() {
-        buildContainer();
-    }
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-    private void buildContainer() {
-        buildMenu();
-    }
+        MenuBar barmenu = new MenuBar();
 
-    @PostConstruct
-    protected void init() {
-        buildMenu();
-    }
+        // A top-level menu item that opens a submenu
+        MenuBar.MenuItem drinks = barmenu.addItem("Roles", null,new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceRol.VIEW_NAME);
+            }
+        });
 
-    private void buildMenu() {
-        Navigator navigator = new SpringNavigator();
-        navigator.addView("Roles", new ViewMaintenanceRol());
-        navigator.addView("Usuarios", new ViewMaintenanceUser());
+//// Submenu item with a sub-submenu
+//        MenuBar.MenuItem hots = drinks.addItem("Hot", null, null);
+//        hots.addItem("Tea",    mycommand);
+//        hots.addItem("Coffee", mycommand);
+//
+//// Another submenu item with a sub-submenu
+//        MenuBar.MenuItem colds = drinks.addItem("Cold", null, null);
+//        colds.addItem("Milk", null, new MenuBar.Command() {
+//            @Override
+//            public void menuSelected(MenuBar.MenuItem selectedItem) {
+//                UniverseNavigator.navigate(ViewMaintenanceRol.VIEW_NAME);
+//            }
+//        });
+//        colds.addItem("Weissbier", null, mycommand);
+//
+//// Another top-level item
+//        MenuBar.MenuItem snacks = barmenu.addItem("Snacks", null, null);
+//        snacks.addItem("Weisswurst", null, mycommand);
+//        snacks.addItem("Bratwurst",  null, mycommand);
+//        snacks.addItem("Currywurst", null, mycommand);
+//
+//// Yet another top-level item
+//        MenuBar.MenuItem servs = barmenu.addItem("Services", null, null);
+//        servs.addItem("Car Service", null, mycommand);
 
 
-
-        setWidth(100, Unit.PERCENTAGE);
-        setSpacing(true);
-        setMargin(true);
-
-        HorizontalLayout actionBarLayout = new HorizontalLayout();
-        actionBarLayout.setWidth(100, Unit.PERCENTAGE);
-//        GridCrud<UsersEntity> crud = new GridCrud<>(UsersEntity.class);
-//        layout.addComponent(crud);
-
-        MenuBar menu = new MenuBar();
-
-
-        MenuBar.MenuItem dataItem = menu.addItem("Configuration", null, null);
-        dataItem.addItem("Roles", menuItem -> navigator.navigateTo("Roles"));
-        dataItem.addItem("Usuarios", menuItem -> navigator.navigateTo("Usuarios"));
-
-        actionBarLayout.addComponent(menu);
-      /*  GoogleMap googleMap = new GoogleMap("",null,null);
-        LatLon latLon = new2 LatLon();
-        latLon.setLat(60.50691090821668);
-        latLon.setLon(22.163543701171875);
-        googleMap.setCenter(latLon);
-        googleMap.setHeight("20%");
-        googleMap.setWidth("20%");
-*/
-        addComponent(actionBarLayout);
-//        addComponent(googleMap);
-
-//        addComponent(crud);
+        addComponent(barmenu);
     }
 }

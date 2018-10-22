@@ -1,28 +1,40 @@
 package com.srb.project;
 
 
+import com.srb.project.navigator.UniverseNavigator;
 import com.srb.project.persister.ServicesLogin;
 import com.srb.project.view.ViewMenu;
-import com.vaadin.navigator.Navigator;
+import com.vaadin.annotations.Title;
+import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.annotation.SpringViewDisplay;
+import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 @SpringUI(path = ViewLogin.APP_ROOT)
-@SpringViewDisplay
-public class ViewLogin extends UI {
+@Title("Geo Baruta")
+@SpringView
+public class ViewLogin extends UI implements View{
     public static final String APP_ROOT = "/project";
-    public static final String MENU_VIEW = "Menu";
+
     @Autowired
     ServicesLogin loginServices;
 
+    @Autowired
+    ApplicationContext applicationContext;
+
+    @Autowired
+    private SpringViewProvider viewProvider;
+
+    Panel panelPrincipal = new Panel();
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        Navigator navigator = new Navigator(this, this);
-        navigator.addView(ViewMenu.VIEW_NAME, new ViewMenu());
+        panelPrincipal.setSizeFull();
 
         VerticalLayout root = new VerticalLayout();
 
@@ -52,7 +64,7 @@ public class ViewLogin extends UI {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 if (loginServices.validateInfo(txtUser.getValue(), txtPassword.getValue())) {
-                    navigator.navigateTo(ViewMenu.VIEW_NAME);
+                    iniNavigator();
                 } else {
                     Notification.show("Verificar sus datos.", Notification.Type.ERROR_MESSAGE);
                 }
@@ -71,7 +83,15 @@ public class ViewLogin extends UI {
         root.setSizeFull();
         root.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
         root.addStyleNames(ValoTheme.LAYOUT_WELL);
-        setContent(root);
+        panelPrincipal.setContent(root);
+        setContent(panelPrincipal);
 
+    }
+
+    private void iniNavigator() {
+        UniverseNavigator navigator = new UniverseNavigator(this,this);
+        applicationContext.getAutowireCapableBeanFactory().autowireBean(navigator);
+        navigator.addProvider(viewProvider);
+        navigator.navigateTo(ViewMenu.VIEW_NAME);
     }
 }
