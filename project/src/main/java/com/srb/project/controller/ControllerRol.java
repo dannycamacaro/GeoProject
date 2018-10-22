@@ -6,6 +6,11 @@ import com.srb.project.util.ValidationsString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 
 @Controller
 public class ControllerRol {
@@ -25,17 +30,28 @@ public class ControllerRol {
         return validRol;
     }
 
+    public RolesEntity save(RolesEntity rolEntity) {
+
+        if (validateRol(rolEntity)) {
+            rolEntity.setStatedelete((byte)1);
+            servicesRol.save(rolEntity);
+
+        }
+
+        return rolEntity;
+    }
+
     //    public boolean deleteRol(int idRol) { //TODO DESCOMENTAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
-    public boolean deleteRol(String name) {
+    public boolean deleteRol(RolesEntity rolEntity) {
 
         boolean deleteRol = false;
         RolesEntity rolesEntityBd = null;
 
         try {
 //            rolesEntityBd = servicesRol.findByIdRol(idRol); TODO DESCOMENTAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
-            rolesEntityBd = servicesRol.findRolByName(name); //TODO QUITAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
+            rolesEntityBd = servicesRol.findByIdRol(rolEntity.getIdrol()); //TODO QUITAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
             if (rolesEntityBd != null) {
-                rolesEntityBd.setStatedelete((byte) 1);
+                rolesEntityBd.setStatedelete((byte) 0);
                 servicesRol.delete(rolesEntityBd);
                 deleteRol = true;
             }
@@ -47,17 +63,16 @@ public class ControllerRol {
         return deleteRol;
     }
 
-    //    public boolean deleteRol(RolesEntity  rolesEntity) { //TODO DESCOMENTAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
-    public boolean updateRol(RolesEntity  rolesEntity) {
+
+    public RolesEntity updateRol(RolesEntity rolesEntity) {
 
         boolean updateRol = false;
         RolesEntity rolesEntityBd = null;
 
         try {
-//            rolesEntityBd = servicesRol.findByIdRol(idRol); TODO DESCOMENTAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
-            rolesEntityBd = servicesRol.findByIdRol(rolesEntity.getIdrol()); //TODO QUITAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
+            rolesEntityBd = servicesRol.findByIdRol(rolesEntity.getIdrol());
             if (rolesEntityBd != null) {
-                if(!rolesEntity.equals(rolesEntityBd)){
+                if (!rolesEntity.equals(rolesEntityBd)) {
                     servicesRol.update(rolesEntity);
                     updateRol = true;
                 }
@@ -68,7 +83,7 @@ public class ControllerRol {
 
         }
 
-        return updateRol;
+        return rolesEntity;
     }
 
     private boolean validateRol(RolesEntity rolesEntity) {
@@ -96,4 +111,11 @@ public class ControllerRol {
     }
 
 
+    public Collection<RolesEntity> findAllRoles() {
+        Collection<RolesEntity> rolesEntities = new ArrayList<>();
+        rolesEntities = servicesRol.findAllRoles();
+
+
+        return rolesEntities;
+    }
 }

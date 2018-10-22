@@ -1,14 +1,16 @@
 package com.srb.project.view;
 
+import com.srb.project.model.UsersEntity;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.spring.navigator.SpringNavigator;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.LatLon;
+//import com.vaadin.tapio.googlemaps.GoogleMap;
+//import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.ui.*;
+import org.vaadin.crudui.crud.impl.GridCrud;
 
 import javax.annotation.PostConstruct;
 
@@ -40,13 +42,15 @@ public class ViewMenu extends VerticalLayout implements View {
         navigator.addView("Usuarios", new ViewMaintenanceUser());
 
 
-        UI.getCurrent().getPage().setTitle(String.format("Crawler Admin | %s", "Menu"));
+
         setWidth(100, Unit.PERCENTAGE);
         setSpacing(true);
         setMargin(true);
 
         HorizontalLayout actionBarLayout = new HorizontalLayout();
         actionBarLayout.setWidth(100, Unit.PERCENTAGE);
+//        GridCrud<UsersEntity> crud = new GridCrud<>(UsersEntity.class);
+//        layout.addComponent(crud);
 
         MenuBar menu = new MenuBar();
 
@@ -56,16 +60,17 @@ public class ViewMenu extends VerticalLayout implements View {
         dataItem.addItem("Usuarios", menuItem -> navigator.navigateTo("Usuarios"));
 
         actionBarLayout.addComponent(menu);
-        GoogleMap googleMap = new GoogleMap("",null,null);
-        LatLon latLon = new LatLon();
+      /*  GoogleMap googleMap = new GoogleMap("",null,null);
+        LatLon latLon = new2 LatLon();
         latLon.setLat(60.50691090821668);
         latLon.setLon(22.163543701171875);
         googleMap.setCenter(latLon);
         googleMap.setHeight("20%");
         googleMap.setWidth("20%");
-
+*/
         addComponent(actionBarLayout);
-        addComponent(googleMap);
+//        addComponent(googleMap);
 
+//        addComponent(crud);
     }
 }

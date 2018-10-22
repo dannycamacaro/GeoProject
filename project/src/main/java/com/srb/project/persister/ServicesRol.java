@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ServicesRol {
@@ -26,7 +29,7 @@ public class ServicesRol {
 
     @Transactional
     public void delete(Object object) {
-        entityManager.remove(object);
+        entityManager.merge(object);
     }
 
 
@@ -67,10 +70,22 @@ public class ServicesRol {
         RolesEntity rolesEntity = null;
         Query query = entityManager.createQuery("from RolesEntity rol where rol.idrol=:idRol");
         query.setParameter("idRol", idRol);
-        if (query.getResultList().size() > 0) {
-            rolesEntity = (RolesEntity) query.getResultList().get(0);
+        List <RolesEntity> rolesEntities = new ArrayList<>();
+        rolesEntities = query.getResultList();
+        if (rolesEntities.size() > 0) {
+
+            rolesEntity = rolesEntities.get(0);
         }
 
         return rolesEntity;
+    }
+
+    public Collection<RolesEntity>  findAllRoles() {
+        Query query = entityManager.createQuery("from RolesEntity rol where statedelete=:state");
+        query.setParameter("state", (byte)1);
+        List <RolesEntity> rolesEntities = new ArrayList<>();
+        rolesEntities = query.getResultList();
+
+        return rolesEntities;
     }
 }
