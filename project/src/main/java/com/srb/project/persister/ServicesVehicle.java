@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
 
 @Service
 public class ServicesVehicle {
@@ -29,9 +29,7 @@ public class ServicesVehicle {
 
     public VehicleEntity findById(Integer idVehicle) {
         VehicleEntity vehicleEntity;
-        vehicleEntity =entityManager.find(VehicleEntity.class, idVehicle);
-
-
+        vehicleEntity = entityManager.find(VehicleEntity.class, idVehicle);
         return vehicleEntity;
     }
 

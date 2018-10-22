@@ -31,12 +31,11 @@ public class ViewLogin extends UI {
         FormLayout loginForm = new FormLayout();
         loginForm.addStyleName(ValoTheme.LABEL_COLORED);
         Label lblTitle = new Label("Login");
+        lblTitle.addStyleName(ValoTheme.LABEL_H1);
         lblTitle.setSizeFull();
-//        loginForm.setCaption("Login");
         loginForm.setWidth("600px");
         loginForm.setHeight("200px");
-        loginForm.addStyleNames(ValoTheme.LAYOUT_CARD, ValoTheme.LABEL_H3, ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
-
+        loginForm.addStyleNames(ValoTheme.PANEL_BORDERLESS);
 
         TextField txtUser = new TextField();
         txtUser.addStyleName(ValoTheme.TEXTFIELD_LARGE);
@@ -73,7 +72,6 @@ public class ViewLogin extends UI {
         root.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
         root.addStyleNames(ValoTheme.LAYOUT_WELL);
         setContent(root);
-
 
     }
 }

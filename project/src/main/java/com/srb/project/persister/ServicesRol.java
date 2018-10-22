@@ -31,8 +31,9 @@ public class ServicesRol {
 
     public int existelRol(Object nameRole) {
         Query existRol = entityManager.createQuery("from RolesEntity where  namerole=:nameroles");
-        existRol.setParameter("nameroles",nameRole);
-        int value = existRol.getResultList().size();
+        existRol.setParameter("nameroles", nameRole);
+        int value;
+        value = existRol.getResultList().size();
         return value;
     }
 }

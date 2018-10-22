@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 @Service
@@ -29,8 +30,18 @@ public class ServicesRouteDetail {
         entityManager.remove(object);
     }
 
-    public List<RoutedetailEntity> findAll(){
-        List<RoutedetailEntity> entityList =  entityManager.createQuery("from RoutedetailEntity",RoutedetailEntity.class).getResultList();
+    public List<RoutedetailEntity> findAll() {
+        List<RoutedetailEntity> entityList;
+        entityList = entityManager.createQuery("from RoutedetailEntity", RoutedetailEntity.class).getResultList();
         return entityList;
+    }
+
+    public RoutedetailEntity findById(Integer id) {
+        RoutedetailEntity routedetailEntity;
+        Query query;
+        query = entityManager.createQuery("from RoutedetailEntity where idroutedetail=:routeid", RoutedetailEntity.class);
+        query = query.setParameter("routeid", id);
+        routedetailEntity = (RoutedetailEntity) query.getSingleResult();
+        return routedetailEntity;
     }
 }
