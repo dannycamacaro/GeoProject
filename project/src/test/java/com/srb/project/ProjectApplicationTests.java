@@ -30,27 +30,12 @@ public class ProjectApplicationTests {
 
 		rolEntity.setNamerole("CIMUN");
 		rolEntity.setDescriptionrole("valad");
-		if(servicesRol.existelRol(rolEntity.getNamerole())>0){
+		if(servicesRol.loadRolByName(rolEntity.getNamerole())>0){
 			System.out.println("true");
 		}*/
-		probarInsertLocation();
-
-
 	}
 
-	private void probarInsertLocation (){
 
-		VehicleEntity vehicleEntity = servicesVehicle.findById(50);
-
-		if(vehicleEntity != null) {
-			LocationEntity locationEntity = new LocationEntity("100", "300", vehicleEntity.getIdvehicle(), (byte) 0);
-			servicesLocation.save(locationEntity);
-			System.out.println("Insert Location correcto");
-		}else{
-			System.out.println("No se logro insertar la locacion");
-		}
-
-	}
 
 
 }

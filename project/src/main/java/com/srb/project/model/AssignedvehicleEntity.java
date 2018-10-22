@@ -1,7 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "assignedvehicle", schema = "srb")
@@ -19,31 +19,28 @@ public class AssignedvehicleEntity {
     private int idvehicle;
 
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "INITIALDATE", nullable = true)
     private Date initialdate;
 
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FINISHDATE", nullable = true)
     private Date finishdate;
     @ManyToOne
-    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS", insertable = false, updatable = false, nullable = false)
     private UsersEntity usersByIdusers;
     @ManyToOne
-    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE", insertable = false, updatable = false, nullable = false)
     private VehicleEntity vehicleByIdvehicle;
 
     public void setIdassignedvehicle(Integer idassignedvehicle) {
         this.idassignedvehicle = idassignedvehicle;
     }
 
-    public void setIdusers(Integer idusers) {
-        this.idusers = idusers;
-    }
-
     public void setIdvehicle(Integer idvehicle) {
         this.idvehicle = idvehicle;
     }
-
 
     public int getIdassignedvehicle() {
         return idassignedvehicle;

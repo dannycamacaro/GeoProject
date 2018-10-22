@@ -1,7 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 
 @Entity
@@ -24,8 +24,9 @@ public class AuditsEntity {
     @Column(name = "IP", nullable = true, length = 45)
     private String ip;
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "AUDITSDATE", nullable = true)
-    private Date auditsdate;
+    private Date auditDate;
 
     @Basic
     @Column(name = "TIMEAUDIT", nullable = true)
@@ -41,6 +42,11 @@ public class AuditsEntity {
     @ManyToOne
     @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS",insertable = false, updatable = false, nullable = false)
     private UsersEntity usersByIdusers;
+
+    @PrePersist
+    public void prePersist() {
+        auditDate =  new java.util.Date();
+    }
 
     public void setIdaudits(Integer idaudits) {
         this.idaudits = idaudits;
@@ -87,12 +93,12 @@ public class AuditsEntity {
     }
 
 
-    public Date getAuditsdate() {
-        return auditsdate;
+    public Date getAuditDate() {
+        return auditDate;
     }
 
-    public void setAuditsdate(Date auditsdate) {
-        this.auditsdate = auditsdate;
+    public void setAuditDate(Date auditsdate) {
+        this.auditDate = auditsdate;
     }
 
 
@@ -134,7 +140,7 @@ public class AuditsEntity {
         if (typeoperation != null ? !typeoperation.equals(that.typeoperation) : that.typeoperation != null)
             return false;
         if (ip != null ? !ip.equals(that.ip) : that.ip != null) return false;
-        if (auditsdate != null ? !auditsdate.equals(that.auditsdate) : that.auditsdate != null) return false;
+        if (auditDate != null ? !auditDate.equals(that.auditDate) : that.auditDate != null) return false;
         if (timeaudit != null ? !timeaudit.equals(that.timeaudit) : that.timeaudit != null) return false;
         if (statusoperation != null ? !statusoperation.equals(that.statusoperation) : that.statusoperation != null)
             return false;
@@ -149,7 +155,7 @@ public class AuditsEntity {
         result = 31 * result + idusers;
         result = 31 * result + (typeoperation != null ? typeoperation.hashCode() : 0);
         result = 31 * result + (ip != null ? ip.hashCode() : 0);
-        result = 31 * result + (auditsdate != null ? auditsdate.hashCode() : 0);
+        result = 31 * result + (auditDate != null ? auditDate.hashCode() : 0);
         result = 31 * result + (timeaudit != null ? timeaudit.hashCode() : 0);
         result = 31 * result + (statusoperation != null ? statusoperation.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);

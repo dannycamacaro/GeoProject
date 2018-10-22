@@ -1,16 +1,22 @@
 package com.srb.project.persister;
 
-import com.srb.project.model.UsersEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.srb.project.model.DeviceEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Created by Ericka on 13-10-2018.
+ */
 @Service
-public class ServicesUser {
+public class ServicesDevice {
 
-    @Autowired
+    @PersistenceContext
     EntityManager entityManager;
 
     @Transactional
@@ -25,12 +31,17 @@ public class ServicesUser {
 
     @Transactional
     public void delete(Object object) {
-        entityManager.remove(object);
+        entityManager.merge(object);
     }
 
-    public UsersEntity findById(Integer idUsers) {
-        UsersEntity usersEntity;
-        usersEntity = entityManager.find(UsersEntity.class, idUsers);
-        return usersEntity;
+    public DeviceEntity findById(Integer idDevice) {
+        DeviceEntity deviceEntity;
+        deviceEntity = entityManager.find(DeviceEntity.class, idDevice);
+        return deviceEntity;
     }
+
+
+
+
+
 }
