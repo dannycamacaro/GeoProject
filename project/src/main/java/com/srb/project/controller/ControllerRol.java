@@ -41,15 +41,13 @@ public class ControllerRol {
         return rolEntity;
     }
 
-    //    public boolean deleteRol(int idRol) { //TODO DESCOMENTAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
     public boolean deleteRol(RolesEntity rolEntity) {
 
         boolean deleteRol = false;
         RolesEntity rolesEntityBd = null;
 
         try {
-//            rolesEntityBd = servicesRol.findByIdRol(idRol); TODO DESCOMENTAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
-            rolesEntityBd = servicesRol.findByIdRol(rolEntity.getIdrol()); //TODO QUITAR CUANDO SE TENGA LA VISTA BIEN, YA QUE SE VA A BUSCAR ES POR EL ID DEL ROL
+            rolesEntityBd = servicesRol.findByIdRol(rolEntity.getIdrol());
             if (rolesEntityBd != null) {
                 rolesEntityBd.setStatedelete((byte) 0);
                 servicesRol.delete(rolesEntityBd);
@@ -114,7 +112,6 @@ public class ControllerRol {
     public Collection<RolesEntity> findAllRoles() {
         Collection<RolesEntity> rolesEntities = new ArrayList<>();
         rolesEntities = servicesRol.findAllRoles();
-
 
         return rolesEntities;
     }
