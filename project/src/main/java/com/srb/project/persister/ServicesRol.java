@@ -83,7 +83,7 @@ public class ServicesRol {
     public Collection<RolesEntity>  findAllRoles() {
         Query query = entityManager.createQuery("from RolesEntity rol where statedelete=:state");
         query.setParameter("state", (byte)1);
-        List <RolesEntity> rolesEntities = new ArrayList<>();
+        Collection <RolesEntity> rolesEntities = new ArrayList<>();
         rolesEntities = query.getResultList();
 
         return rolesEntities;

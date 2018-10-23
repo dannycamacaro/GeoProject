@@ -31,6 +31,7 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
         GridCrud<RolesEntity> crud = new GridCrud<>(RolesEntity.class, new HorizontalSplitCrudLayout());
         GridLayoutCrudFormFactory<RolesEntity> formFactory = new GridLayoutCrudFormFactory<>(RolesEntity.class, 2, 2);
 
+        formFactory.setVisibleProperties(CrudOperation.READ, "namerole", "descriptionrole");
         formFactory.setVisibleProperties(CrudOperation.ADD, "namerole", "descriptionrole");
         formFactory.setVisibleProperties(CrudOperation.UPDATE, "namerole", "descriptionrole");
         formFactory.setVisibleProperties(CrudOperation.DELETE, "namerole", "descriptionrole");
