@@ -39,6 +39,7 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
         formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del rol", "Descripcion del rol");
         formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del rol", "Descripcion del rol");
         formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
+        formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
         crud.setRowCountCaption("%d roles(s) encontrados");
         crud.getGrid().setColumns("namerole", "descriptionrole");
