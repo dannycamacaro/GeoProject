@@ -26,12 +26,20 @@ public class ViewMenu extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         MenuBar barmenu = new MenuBar();
+        MenuBar barmenuUser = new MenuBar();
 
         // A top-level menu item that opens a submenu
-        MenuBar.MenuItem drinks = barmenu.addItem("Roles", null,new MenuBar.Command() {
+        MenuBar.MenuItem drinks = barmenu.addItem("Roles", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceRol.VIEW_NAME);
+            }
+        });
+
+        barmenuUser.addItem("Usuario", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceUser.VIEW_NAME);
             }
         });
 
@@ -62,5 +70,6 @@ public class ViewMenu extends VerticalLayout implements View {
 
 
         addComponent(barmenu);
+        addComponent(barmenuUser);
     }
 }

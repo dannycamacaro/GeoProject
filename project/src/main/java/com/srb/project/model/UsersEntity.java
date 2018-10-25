@@ -47,7 +47,7 @@ public class UsersEntity {
     private Collection<AssignedvehicleEntity> assignedvehiclesByIdusers;
     @OneToMany(mappedBy = "usersByIdusers")
     private Collection<AuditsEntity> auditsByIdusers;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "IDROL", referencedColumnName = "IDROL",insertable = false, updatable = false, nullable = false)
     private RolesEntity rolesByIdrol;
 
