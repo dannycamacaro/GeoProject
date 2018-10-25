@@ -25,21 +25,29 @@ public class ViewMenu extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        MenuBar barmenu = new MenuBar();
-        MenuBar barmenuUser = new MenuBar();
+        MenuBar menuBarRol = new MenuBar();
+        MenuBar menuBarUser = new MenuBar();
+        MenuBar menuBarRoutes = new MenuBar();
+        MenuBar menuBarVehicle = new MenuBar();
 
         // A top-level menu item that opens a submenu
-        MenuBar.MenuItem drinks = barmenu.addItem("Roles", null, new MenuBar.Command() {
+        MenuBar.MenuItem drinks = menuBarRol.addItem("Roles", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceRol.VIEW_NAME);
             }
         });
 
-        barmenuUser.addItem("Usuario", null, new MenuBar.Command() {
+        menuBarUser.addItem("Usuario", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceUser.VIEW_NAME);
+            }
+        });
+        menuBarVehicle.addItem("Vehiculos", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceVehicle.VIEW_NAME);
             }
         });
 
@@ -69,7 +77,8 @@ public class ViewMenu extends VerticalLayout implements View {
 //        servs.addItem("Car Service", null, mycommand);
 
 
-        addComponent(barmenu);
-        addComponent(barmenuUser);
+        addComponent(menuBarRol);
+        addComponent(menuBarUser);
+        addComponent(menuBarVehicle);
     }
 }

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 public class ServicesVehicle {
@@ -24,13 +27,22 @@ public class ServicesVehicle {
 
     @Transactional
     public void delete(Object object) {
-        entityManager.remove(object);
+        entityManager.merge(object);
     }
 
     public VehicleEntity findById(Integer idVehicle) {
         VehicleEntity vehicleEntity;
         vehicleEntity = entityManager.find(VehicleEntity.class, idVehicle);
         return vehicleEntity;
+    }
+
+    public Collection<VehicleEntity> findAllVehicle() {
+        Query query = entityManager.createQuery("from VehicleEntity user where statedelete=:state");
+        query.setParameter("state", (byte)1);
+        Collection <VehicleEntity> vehicleEntities = new ArrayList<>();
+        vehicleEntities = query.getResultList();
+
+        return vehicleEntities;
     }
 
 }

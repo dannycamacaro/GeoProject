@@ -27,11 +27,8 @@ public class ControllerUser {
 
     public UsersEntity save(UsersEntity usersEntity) {
 
-
         usersEntity.setStatedelete((byte) 1);
-        usersEntity.setIdrol(1);//TODO AJUSATR CON LA LISTA DE ROLES
         servicesUser.save(usersEntity);
-
 
         return usersEntity;
     }
