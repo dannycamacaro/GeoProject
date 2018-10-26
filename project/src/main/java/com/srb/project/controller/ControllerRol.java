@@ -14,21 +14,11 @@ import java.util.List;
 
 @Controller
 public class ControllerRol {
+
     @Autowired
     ServicesRol servicesRol;
 
-    public Boolean saveRol(RolesEntity rolEntity) {
-        Boolean validRol = false;
-        try {
-            if (validateRol(rolEntity)) {
-                servicesRol.save(rolEntity);
-                validRol = true;
-            }
-        } catch (Exception e) {
-            validRol = false;
-        }
-        return validRol;
-    }
+
 
     public RolesEntity save(RolesEntity rolEntity) {
 

@@ -53,7 +53,7 @@ public class ControllerVehicle {
 
     public boolean deleteVehicle(VehicleEntity vehicle) {
 
-        boolean deleteUser = false;
+        boolean deleteVehicle = false;
         VehicleEntity vehicleEntityBd = null;
 
         try {
@@ -61,13 +61,13 @@ public class ControllerVehicle {
             if (vehicleEntityBd != null) {
                 vehicleEntityBd.setStatedelete((byte) 0);
                 servicesVehicle.delete(vehicleEntityBd);
-                deleteUser = true;
+                deleteVehicle = true;
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return deleteUser;
+        return deleteVehicle;
     }
 }
