@@ -1,6 +1,9 @@
 package com.srb.project.controller;
 
+import com.srb.project.enumConstans.EnumOperation;
+import com.srb.project.model.AuditsEntity;
 import com.srb.project.model.UsersEntity;
+import com.srb.project.persister.ServicesAudit;
 import com.srb.project.persister.ServicesRol;
 import com.srb.project.persister.ServicesUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class ControllerUser {
     @Autowired
     ServicesRol servicesRol;
 
+    @Autowired
+    ServicesAudit servicesAudit;
+
     public Collection<UsersEntity> findAllUsers() {
         Collection<UsersEntity> usersEntities = new ArrayList<>();
         usersEntities = servicesUser.findAllUsers();
@@ -26,14 +32,31 @@ public class ControllerUser {
     }
 
     public UsersEntity save(UsersEntity usersEntity) {
+        AuditsEntity auditsEntity = new AuditsEntity();
+        auditsEntity.setContent(usersEntity.toString());
+        auditsEntity.setIdusers(1);//TODO AJUSTARLO CON EL ID DEL USUARIO QUE INICIO SESION
+        auditsEntity.setTypeoperation(EnumOperation.ADD_USER.getIdOperation());
 
         usersEntity.setStatedelete((byte) 1);
-        servicesUser.save(usersEntity);
+        usersEntity.setIdrol(1); //TODO AJUSTARLO CON EL ID DEL ROL QUE SE MUESTRE EN LA LISTA
+        try {
+            servicesUser.save(usersEntity);
+            auditsEntity.setStatusoperation(1);
+            servicesAudit.save(auditsEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            auditsEntity.setStatusoperation(0);
+            servicesAudit.save(auditsEntity);
+        }
 
         return usersEntity;
     }
 
     public boolean deleteUser(UsersEntity user) {
+        AuditsEntity auditsEntity = new AuditsEntity();
+        auditsEntity.setContent(user.toString());
+        auditsEntity.setIdusers(1);//TODO AJUSTARLO CON EL ID DEL USUARIO QUE INICIO SESION
+        auditsEntity.setTypeoperation(EnumOperation.DELETE_USER.getIdOperation());
         boolean deleteUser = false;
         UsersEntity usersEntityBd = null;
 
@@ -42,11 +65,15 @@ public class ControllerUser {
             if (usersEntityBd != null) {
                 usersEntityBd.setStatedelete((byte) 0);
                 servicesUser.delete(usersEntityBd);
+                auditsEntity.setStatusoperation(1);
+                servicesAudit.save(auditsEntity);
                 deleteUser = true;
             }
 
         } catch (Exception e) {
             System.out.println(e);
+            auditsEntity.setStatusoperation(0);
+            servicesAudit.save(auditsEntity);
         }
 
         return deleteUser;
@@ -56,18 +83,27 @@ public class ControllerUser {
 
         boolean updateUser = false;
         UsersEntity userEntityBd = null;
+        AuditsEntity auditsEntity = new AuditsEntity();
+        auditsEntity.setContent(usersEntity.toString());
+        auditsEntity.setIdusers(1);//TODO AJUSTARLO CON EL ID DEL USUARIO QUE INICIO SESION
+        auditsEntity.setTypeoperation(EnumOperation.EDIT_USER.getIdOperation());
 
         try {
             userEntityBd = servicesUser.findById(usersEntity.getIdusers());
             if (userEntityBd != null) {
                 if (!usersEntity.equals(userEntityBd)) {
                     servicesUser.update(usersEntity);
+
+                    auditsEntity.setStatusoperation(1);
+                    servicesAudit.save(auditsEntity);
                     updateUser = true;
                 }
 
             }
 
         } catch (Exception e) {
+            auditsEntity.setStatusoperation(0);
+            servicesAudit.save(auditsEntity);
 
         }
 

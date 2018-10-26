@@ -242,4 +242,25 @@ public class UsersEntity {
     public void setAuditssByIdusers(Collection<AuditsEntity> auditssByIdusers) {
         this.auditssByIdusers = auditssByIdusers;
     }
+//TODO HAY QUE AJUSTAR LOS  lazily initialize a collection
+    @Override
+    public String toString() {
+        return "UsersEntity{" +
+                "idusers=" + idusers +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", identitydocument='" + identitydocument + '\'' +
+                ", age=" + age +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", email='" + email + '\'' +
+//                ", idrol=" + idrol +
+//                ", assignedvehiclesByIdusers=" + assignedvehiclesByIdusers +
+//                ", auditsByIdusers=" + auditsByIdusers +
+                ", rolesByIdrol=" + rolesByIdrol +
+                ", statedelete=" + statedelete +
+                ", password='" + password + '\'' +
+//                ", auditssByIdusers=" + auditssByIdusers +
+                '}';
+    }
 }
