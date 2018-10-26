@@ -51,6 +51,13 @@ public class ViewMenu extends VerticalLayout implements View {
             }
         });
 
+        menuBarRoutes.addItem("Rutas", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceRoutes.VIEW_NAME);
+            }
+        });
+
 //// Submenu item with a sub-submenu
 //        MenuBar.MenuItem hots = drinks.addItem("Hot", null, null);
 //        hots.addItem("Tea",    mycommand);
@@ -80,5 +87,6 @@ public class ViewMenu extends VerticalLayout implements View {
         addComponent(menuBarRol);
         addComponent(menuBarUser);
         addComponent(menuBarVehicle);
+        addComponent(menuBarRoutes);
     }
 }
