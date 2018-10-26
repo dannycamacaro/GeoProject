@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,7 +41,15 @@ public class ServicesDevice {
         return deviceEntity;
     }
 
+    public Collection<DeviceEntity> findAllDevice() {
 
+        Query query = entityManager.createQuery("from DeviceEntity device where statedelete=:state");
+        query.setParameter("state", (byte)1);
+        Collection <DeviceEntity> deviceEntities = new ArrayList<>();
+        deviceEntities = query.getResultList();
+
+        return deviceEntities;
+    }
 
 
 
