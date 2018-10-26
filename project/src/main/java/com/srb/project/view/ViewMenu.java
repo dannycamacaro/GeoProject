@@ -28,6 +28,7 @@ public class ViewMenu extends VerticalLayout implements View {
         MenuBar menuBarRol = new MenuBar();
         MenuBar menuBarUser = new MenuBar();
         MenuBar menuBarRoutes = new MenuBar();
+        MenuBar menuBarRoutesDetail = new MenuBar();
         MenuBar menuBarVehicle = new MenuBar();
         MenuBar menuBarDevice = new MenuBar();
 
@@ -56,6 +57,13 @@ public class ViewMenu extends VerticalLayout implements View {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceRoutes.VIEW_NAME);
+            }
+        });
+
+        menuBarRoutesDetail.addItem("Detalle de rutas", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceRoutesDetail.VIEW_NAME);
             }
         });
 
@@ -96,6 +104,7 @@ public class ViewMenu extends VerticalLayout implements View {
         addComponent(menuBarUser);
         addComponent(menuBarVehicle);
         addComponent(menuBarRoutes);
+        addComponent(menuBarRoutesDetail);
         addComponent(menuBarDevice);
     }
 }

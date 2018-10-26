@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -27,7 +29,14 @@ public class ServicesRouteDetail {
 
     @Transactional
     public void delete(Object object) {
-        entityManager.remove(object);
+        RoutedetailEntity routedetailEntity = (RoutedetailEntity) object;
+        RoutedetailEntity routedetailEntityBD = findById(routedetailEntity.getIdroutedetail());
+        if(routedetailEntityBD != null){
+            entityManager.remove(routedetailEntityBD);
+        }
+
+
+
     }
 
     public List<RoutedetailEntity> findAll() {
@@ -44,4 +53,15 @@ public class ServicesRouteDetail {
         routedetailEntity = (RoutedetailEntity) query.getSingleResult();
         return routedetailEntity;
     }
+
+    public Collection<RoutedetailEntity> findAllRoutesDetail() {
+
+        Query query = entityManager.createQuery("from RoutedetailEntity routes ");
+        Collection <RoutedetailEntity> routesEntities = new ArrayList<>();
+        routesEntities = query.getResultList();
+
+        return routesEntities;
+    }
+
+
 }
