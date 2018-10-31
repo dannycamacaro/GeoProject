@@ -53,12 +53,9 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre ruta","Descripcion");
         formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre ruta","Descripcion");
         formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre ruta","Descripcion");
-//        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico");
-//        formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del usuario", "Nombres","Apellidos");
         formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
-//        formFactory.setFieldType("password", PasswordField.class);
 
 
         crud.setCrudListener(new CrudListener<RoutesEntity>() {
