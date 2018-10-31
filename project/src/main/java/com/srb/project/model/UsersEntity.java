@@ -63,6 +63,8 @@ public class UsersEntity {
 
     @Transient
     private String nameRol;
+    @Transient
+    private String  listRoles;
 
     public void setIdusers(Integer idusers) {
         this.idusers = idusers;
@@ -155,6 +157,14 @@ public class UsersEntity {
 
     public String getNameRol() {
         return nameRol;
+    }
+
+    public String getListRoles() {
+        return listRoles;
+    }
+
+    public void setListRoles(String listRoles) {
+        this.listRoles = listRoles;
     }
 
     public void setNameRol(String nameRol) {

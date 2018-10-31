@@ -46,9 +46,9 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         this.setSizeFull();
         this.setWidth("100%");
 
-        FormLayout formUser = new FormLayout();
         GridCrud<UsersEntity> crud = new GridCrud<>(UsersEntity.class, new HorizontalSplitCrudLayout());
         GridLayoutCrudFormFactory<UsersEntity> formFactory = new GridLayoutCrudFormFactory<>(UsersEntity.class, 2, 2);
+        GridLayoutCrudFormFactory<RolesEntity>  formFactory2= new GridLayoutCrudFormFactory<>(RolesEntity.class, 2, 2);
 
 
         crud.getGrid().setColumns("username","firstname","lastname","nameRol");
@@ -59,10 +59,10 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
 
         formFactory.setVisibleProperties(CrudOperation.READ, "username","firstname","lastname");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "username","password","firstname","lastname","identitydocument","age","phonenumber","email" );
+        formFactory.setVisibleProperties(CrudOperation.ADD, "username","password","firstname","lastname","identitydocument","age","phonenumber","email","listRoles" );
         formFactory.setVisibleProperties(CrudOperation.UPDATE, "username","password","firstname","lastname","identitydocument","age","phonenumber","email");
         formFactory.setVisibleProperties(CrudOperation.DELETE, "username","firstname","lastname");
-        formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico");
+        formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico","Roles");
         formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico");
         formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del usuario", "Nombres","Apellidos");
         formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
@@ -72,16 +72,18 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
 
 
-        /*formFactory.setFieldType("gender", com.vaadin.ui.ComboBox.class);
-        String[] gender = {"mail", "femail"};
-        formFactory.setFieldProvider("gender", () -> new ComboBox("gender", Arrays.asList(gender)));
-        formFactory.setFieldCreationListener("gender", field -> {
+        formFactory.setFieldType("listRoles", com.vaadin.ui.ComboBox.class);
+        ArrayList<String> roles = new ArrayList<>();
+        roles.add("Adminitrador");
+        roles.add("Chofer");
+        formFactory.setFieldProvider("listRoles", () -> new ComboBox("listRoles",roles));
+        formFactory.setFieldCreationListener("listRoles", field -> {
             com.vaadin.ui.ComboBox comboBox = ( com.vaadin.ui.ComboBox) field;
-            comboBox.addItem(gender[0]);
-            comboBox.addItem(gender[1]);
-        });*/
+            comboBox.setItems(roles.get(0));
+            comboBox.setItems(roles.get(1));
+        });
 //        formFactory.setFieldProvider("mainGroup",new ComboBoxProvider<RolesEntity>("Main Group", controllerRol.findAllRoles()));
-
+//
         crud.setCrudListener(new CrudListener<UsersEntity>() {
             @Override
             public Collection<UsersEntity> findAll() {
@@ -93,11 +95,11 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
                     while (entityIterator.hasNext()) {
                         UsersEntity usersEntity = entityIterator.next();
                         if (usersEntity.getRolesByIdrol() != null && usersEntity.getRolesByIdrol().getNamerole() != null) {
+
                             usersEntity.setNameRol(usersEntity.getRolesByIdrol().getNamerole());
                         }
 
                         usersEntitiesView.add(usersEntity);
-
                     }
                 }
                 return usersEntitiesView;
