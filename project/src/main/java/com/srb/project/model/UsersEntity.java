@@ -61,6 +61,9 @@ public class UsersEntity {
     @OneToMany(mappedBy = "usersByIdusers")
     private Collection<AuditsEntity> auditssByIdusers;
 
+    @Transient
+    private String nameRol;
+
     public void setIdusers(Integer idusers) {
         this.idusers = idusers;
     }
@@ -150,8 +153,13 @@ public class UsersEntity {
         this.idrol = idrol;
     }
 
+    public String getNameRol() {
+        return nameRol;
+    }
 
-
+    public void setNameRol(String nameRol) {
+        this.nameRol = nameRol;
+    }
 
     @Override
     public boolean equals(Object o) {

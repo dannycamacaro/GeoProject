@@ -32,6 +32,9 @@ public class ServicesRol {
         entityManager.merge(object);
     }
 
+    public ServicesRol(EntityManager em) {
+        entityManager= em;
+    }
 
     public int loadRolByName(Object nameRole) {
         Query existRol = entityManager.createQuery("from RolesEntity where  namerole=:nameroles");
