@@ -25,6 +25,7 @@ public class ControllerUser {
     ServicesAudit servicesAudit;
 
     public Collection<UsersEntity> findAllUsers() {
+
         Collection<UsersEntity> usersEntities = new ArrayList<>();
         usersEntities = servicesUser.findAllUsers();
 
@@ -32,13 +33,13 @@ public class ControllerUser {
     }
 
     public UsersEntity save(UsersEntity usersEntity) {
+
         AuditsEntity auditsEntity = new AuditsEntity();
         auditsEntity.setContent(usersEntity.toString());
         auditsEntity.setIdusers(1);//TODO AJUSTARLO CON EL ID DEL USUARIO QUE INICIO SESION
         auditsEntity.setTypeoperation(EnumOperation.ADD_USER.getIdOperation());
 
         usersEntity.setStatedelete((byte) 1);
-        usersEntity.setIdrol(1); //TODO AJUSTARLO CON EL ID DEL ROL QUE SE MUESTRE EN LA LISTA
         try {
             servicesUser.save(usersEntity);
             auditsEntity.setStatusoperation(1);
@@ -53,6 +54,7 @@ public class ControllerUser {
     }
 
     public boolean deleteUser(UsersEntity user) {
+
         AuditsEntity auditsEntity = new AuditsEntity();
         auditsEntity.setContent(user.toString());
         auditsEntity.setIdusers(1);//TODO AJUSTARLO CON EL ID DEL USUARIO QUE INICIO SESION
@@ -71,7 +73,6 @@ public class ControllerUser {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
             auditsEntity.setStatusoperation(0);
             servicesAudit.save(auditsEntity);
         }

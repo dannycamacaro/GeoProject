@@ -42,19 +42,22 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
     @Autowired
     ServicesRol servicesRol;
+
+    Collection roles;
+
     @PostConstruct
     void init() {
 
         formFactory.setFieldType("listRoles", com.vaadin.ui.ComboBox.class);
-         Collection roles = servicesRol.findAllRoles();
-         ArrayList <String> stringArrayList = new ArrayList<>();
+        roles = servicesRol.findAllRoles();
+        ArrayList<String> stringArrayList = new ArrayList<>();
 
-        formFactory.setFieldProvider("listRoles", () -> new ComboBox("listRoles",stringArrayList));
+        formFactory.setFieldProvider("listRoles", () -> new ComboBox("listRoles", stringArrayList));
         formFactory.setFieldCreationListener("listRoles", field -> {
-            com.vaadin.ui.ComboBox comboBox = ( com.vaadin.ui.ComboBox) field;
+            com.vaadin.ui.ComboBox comboBox = (com.vaadin.ui.ComboBox) field;
             Iterator iterator = roles.iterator();
 
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 RolesEntity rolesEntity = (RolesEntity) iterator.next();
                 stringArrayList.add(rolesEntity.getDescriptionrole());
 
@@ -74,41 +77,26 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         this.setWidth("100%");
 
 
-
-        crud.getGrid().setColumns("username","firstname","lastname","nameRol");
+        crud.getGrid().setColumns("username", "firstname", "lastname", "nameRol");
         crud.getGrid().getColumn("username").setCaption("Nombre del usuario");
         crud.getGrid().getColumn("firstname").setCaption("Nombres");
         crud.getGrid().getColumn("lastname").setCaption("Apellido");
         crud.getGrid().getColumn("nameRol").setCaption("Nombre del rol");
 
 
-        formFactory.setVisibleProperties(CrudOperation.READ, "username","firstname","lastname");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "username","password","firstname","lastname","identitydocument","age","phonenumber","email","listRoles" );
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "username","password","firstname","lastname","identitydocument","age","phonenumber","email");
-        formFactory.setVisibleProperties(CrudOperation.DELETE, "username","firstname","lastname");
-        formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico","Roles");
-        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico");
-        formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del usuario", "Nombres","Apellidos");
+        formFactory.setVisibleProperties(CrudOperation.READ, "username", "firstname", "lastname");
+        formFactory.setVisibleProperties(CrudOperation.ADD, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email", "listRoles");
+        formFactory.setVisibleProperties(CrudOperation.UPDATE, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email");
+        formFactory.setVisibleProperties(CrudOperation.DELETE, "username", "firstname", "lastname");
+        formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre del usuario", "Password", "Nombres", "Apellidos", "Documento de identidad", "Edad", "Numero de telefono", "Correo electronico", "Roles");
+        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario", "Password", "Nombres", "Apellidos", "Documento de identidad", "Edad", "Numero de telefono", "Correo electronico");
+        formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del usuario", "Nombres", "Apellidos");
         formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
         formFactory.setFieldType("password", PasswordField.class);
 
 
-
-        /*formFactory.setFieldType("listRoles", com.vaadin.ui.ComboBox.class);
-        ArrayList<String> roles = new ArrayList<>();
-        roles.add("");
-        roles.add("Adminitrador");
-        roles.add("Chofer");
-        formFactory.setFieldProvider("listRoles", () -> new ComboBox("listRoles",roles));
-        formFactory.setFieldCreationListener("listRoles", field -> {
-            com.vaadin.ui.ComboBox comboBox = ( com.vaadin.ui.ComboBox) field;
-            comboBox.setItems(roles.get(0));
-            comboBox.setItems(roles.get(1));
-        });*/
-//        formFactory.setFieldProvider("mainGroup",new ComboBoxProvider<RolesEntity>("Main Group", controllerRol.findAllRoles()));
-//
         crud.setCrudListener(new CrudListener<UsersEntity>() {
             @Override
             public Collection<UsersEntity> findAll() {
@@ -132,8 +120,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
             @Override
             public UsersEntity add(UsersEntity user) {
-
-
+                getLoadIdRol(user);
                 controllerUser.save(user);
                 return user;
             }
@@ -155,6 +142,20 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         this.addComponent(crud);
 
 
+    }
+
+    private void getLoadIdRol(UsersEntity user) {
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext()) {
+            RolesEntity rolesEntity = (RolesEntity) iterator.next();
+
+            if (rolesEntity.getDescriptionrole().equalsIgnoreCase(user.getListRoles())) {
+                user.setIdrol(rolesEntity.getIdrol());
+                break;
+            }
+
+
+        }
     }
 
 }
