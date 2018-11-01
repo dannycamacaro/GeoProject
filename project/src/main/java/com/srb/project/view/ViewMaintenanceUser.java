@@ -19,6 +19,7 @@ import org.vaadin.crudui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -29,13 +30,39 @@ import java.util.*;
 public class ViewMaintenanceUser extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "user";
+
+    private GridCrud<UsersEntity> crud = new GridCrud<>(UsersEntity.class, new HorizontalSplitCrudLayout());
+    private GridLayoutCrudFormFactory<UsersEntity> formFactory = new GridLayoutCrudFormFactory<>(UsersEntity.class, 2, 2);
+
     @Autowired
     ControllerUser controllerUser;
 
     @Autowired
     ControllerRol controllerRol;
 
+    @Autowired
+    ServicesRol servicesRol;
+    @PostConstruct
+    void init() {
 
+        formFactory.setFieldType("listRoles", com.vaadin.ui.ComboBox.class);
+         Collection roles = servicesRol.findAllRoles();
+         ArrayList <String> stringArrayList = new ArrayList<>();
+
+        formFactory.setFieldProvider("listRoles", () -> new ComboBox("listRoles",stringArrayList));
+        formFactory.setFieldCreationListener("listRoles", field -> {
+            com.vaadin.ui.ComboBox comboBox = ( com.vaadin.ui.ComboBox) field;
+            Iterator iterator = roles.iterator();
+
+            while (iterator.hasNext()){
+                RolesEntity rolesEntity = (RolesEntity) iterator.next();
+                stringArrayList.add(rolesEntity.getDescriptionrole());
+
+            }
+            comboBox.setItems(stringArrayList);
+        });
+
+    }
 
     public ViewMaintenanceUser() {
         buildForm();
@@ -46,9 +73,6 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         this.setSizeFull();
         this.setWidth("100%");
 
-        GridCrud<UsersEntity> crud = new GridCrud<>(UsersEntity.class, new HorizontalSplitCrudLayout());
-        GridLayoutCrudFormFactory<UsersEntity> formFactory = new GridLayoutCrudFormFactory<>(UsersEntity.class, 2, 2);
-        GridLayoutCrudFormFactory<RolesEntity>  formFactory2= new GridLayoutCrudFormFactory<>(RolesEntity.class, 2, 2);
 
 
         crud.getGrid().setColumns("username","firstname","lastname","nameRol");
@@ -72,8 +96,9 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
 
 
-        formFactory.setFieldType("listRoles", com.vaadin.ui.ComboBox.class);
+        /*formFactory.setFieldType("listRoles", com.vaadin.ui.ComboBox.class);
         ArrayList<String> roles = new ArrayList<>();
+        roles.add("");
         roles.add("Adminitrador");
         roles.add("Chofer");
         formFactory.setFieldProvider("listRoles", () -> new ComboBox("listRoles",roles));
@@ -81,7 +106,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
             com.vaadin.ui.ComboBox comboBox = ( com.vaadin.ui.ComboBox) field;
             comboBox.setItems(roles.get(0));
             comboBox.setItems(roles.get(1));
-        });
+        });*/
 //        formFactory.setFieldProvider("mainGroup",new ComboBoxProvider<RolesEntity>("Main Group", controllerRol.findAllRoles()));
 //
         crud.setCrudListener(new CrudListener<UsersEntity>() {

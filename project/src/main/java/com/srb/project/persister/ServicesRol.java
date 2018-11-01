@@ -1,6 +1,7 @@
 package com.srb.project.persister;
 
 import com.srb.project.model.RolesEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +33,9 @@ public class ServicesRol {
         entityManager.merge(object);
     }
 
-    public ServicesRol(EntityManager em) {
-        entityManager= em;
+    @Autowired
+    public ServicesRol() {
+
     }
 
     public int loadRolByName(Object nameRole) {
