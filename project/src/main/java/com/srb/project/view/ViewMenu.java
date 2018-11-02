@@ -24,14 +24,19 @@ import java.awt.*;
 @SpringView(name = ViewMenu.VIEW_NAME, ui = ViewLogin.class)
 public class ViewMenu extends VerticalLayout implements View {
     public static final String VIEW_NAME = "menu";
+    MenuBar mainMenu;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        addComponent(buildMenu());
+        if(mainMenu==null){
+            addComponent(buildMenu());
+        }else {
+            addComponent(mainMenu);
+        }
     }
 
-    public static MenuBar buildMenu(){
-        MenuBar mainMenu = new MenuBar();
+    public  MenuBar buildMenu(){
+        mainMenu = new MenuBar();
 
         mainMenu.addItem("Roles",new MenuBar.Command() {
             @Override

@@ -56,8 +56,8 @@ public class ViewLogin extends UI implements View{
         txtUser.addStyleName(ValoTheme.TEXTFIELD_LARGE);
         txtPassword.setCaption("Contraseña");
 
-        txtUser.setValue("Ericka");
-        txtPassword.setValue("123456");
+        txtUser.setValue("");
+        txtPassword.setValue("");
         Button btnEntrar = new Button();
         btnEntrar.setCaption("Iniciar sesion");
         btnEntrar.addClickListener(new Button.ClickListener() {
