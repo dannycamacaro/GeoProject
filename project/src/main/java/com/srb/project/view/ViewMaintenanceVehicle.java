@@ -45,21 +45,20 @@ public class ViewMaintenanceVehicle  extends VerticalLayout implements View {
         crud.getGrid().getColumn("mark").setCaption("Marca");
         crud.getGrid().getColumn("licenseplate").setCaption("Placa");
         crud.getGrid().getColumn("vehicleyear").setCaption("Año");
-        crud.getGrid().getColumn("ton").setCaption("Tonelada");
+        crud.getGrid().getColumn("ton").setCaption("Carga");
 
 
         formFactory.setVisibleProperties(CrudOperation.READ, "mark","licenseplate","vehicleyear","ton");
         formFactory.setVisibleProperties(CrudOperation.ADD, "mark","licenseplate","vehicleyear","ton");
         formFactory.setVisibleProperties(CrudOperation.UPDATE, "mark","licenseplate","vehicleyear","ton");
         formFactory.setVisibleProperties(CrudOperation.DELETE, "mark","licenseplate","vehicleyear","ton");
-//        formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico");
-//        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico");
-//        formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del usuario", "Nombres","Apellidos");
+        formFactory.setFieldCaptions(CrudOperation.ADD, "Marca del vehiculo","Placa", "Año del vehiculo","Carga");
+        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Marca del vehiculo","Placa", "Año del vehiculo","Carga");
+        formFactory.setFieldCaptions(CrudOperation.DELETE, "Marca del vehiculo","Placa", "Año del vehiculo","Carga");
         formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
-//        formFactory.setFieldType("password", PasswordField.class);
-
+        formFactory.setCancelButtonCaption("Cancelar");
 
         crud.setCrudListener(new CrudListener<VehicleEntity>() {
             @Override
