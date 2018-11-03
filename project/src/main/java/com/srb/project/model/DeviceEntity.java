@@ -40,6 +40,9 @@ public class DeviceEntity {
     @Column(name = "STATEDELETE")
     private Byte statedelete;
 
+    @Transient
+    private String  nameVehicle;
+
     public void setIddevice(Integer iddevice) {
         this.iddevice = iddevice;
     }
@@ -100,6 +103,14 @@ public class DeviceEntity {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public String getNameVehicle() {
+        return nameVehicle;
+    }
+
+    public void setNameVehicle(String nameVehicle) {
+        this.nameVehicle = nameVehicle;
     }
 
     @Override

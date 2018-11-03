@@ -4,9 +4,12 @@ package com.srb.project.view;
 import com.srb.project.controller.ControllerDevice;
 import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.model.DeviceEntity;
+import com.srb.project.model.VehicleEntity;
+import com.srb.project.persister.ServicesVehicle;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.CrudListener;
@@ -15,7 +18,10 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 @UIScope
 @SpringView(name = ViewMaintenanceDevice.VIEW_NAME)
@@ -27,6 +33,32 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     private GridLayoutCrudFormFactory<DeviceEntity> formFactory;
     @Autowired
     ControllerDevice controllerDevice;
+    @Autowired
+    ServicesVehicle servicesVehicle;
+    Collection vehicles;
+
+    @PostConstruct
+    void init() {
+
+        formFactory.setFieldType("nameVehicle", com.vaadin.ui.ComboBox.class);
+        vehicles = servicesVehicle.findAllVehicle();
+        ArrayList<String> stringArrayList = new ArrayList<>();
+
+        formFactory.setFieldProvider("nameVehicle", () -> new ComboBox("nameVehicle", stringArrayList));
+        formFactory.setFieldCreationListener("nameVehicle", field -> {
+            com.vaadin.ui.ComboBox comboBox = (com.vaadin.ui.ComboBox) field;
+            Iterator iterator = vehicles.iterator();
+            stringArrayList.clear();
+
+            while (iterator.hasNext()) {
+                VehicleEntity vehicleEntity = (VehicleEntity) iterator.next();
+                stringArrayList.add(vehicleEntity.getLicenseplate());
+
+            }
+            comboBox.setItems(stringArrayList);
+        });
+
+    }
 
     public ViewMaintenanceDevice() {
         horizontalSplitCrudLayout = new HorizontalSplitCrudLayout();
@@ -61,20 +93,21 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         crud.getGrid().getColumn("model").setCaption("Modelo");
         crud.getGrid().getColumn("imei").setCaption("IMEI");
         crud.getGrid().getColumn("phonenumber").setCaption("Numero de telefono");
+//        crud.getGrid().getColumn("nameVehicle").setCaption("Vehiculo asociado");
 
     }
 
     private void loadSetVisibleProperties() {
         formFactory.setVisibleProperties(CrudOperation.READ, "mark", "model", "imei", "phonenumber");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "mark", "model", "imei", "phonenumber");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "mark", "model", "imei", "phonenumber");
+        formFactory.setVisibleProperties(CrudOperation.ADD, "mark", "model", "imei", "phonenumber","nameVehicle");
+        formFactory.setVisibleProperties(CrudOperation.UPDATE, "mark", "model", "imei", "phonenumber","nameVehicle");
         formFactory.setVisibleProperties(CrudOperation.DELETE, "mark", "model", "imei", "phonenumber");
     }
 
     private void loadSetFieldCaptions() {
         formFactory.setFieldCaptions(CrudOperation.READ, "Marca", "Modelo", "IMEI", "Numero de telefono");
-        formFactory.setFieldCaptions(CrudOperation.ADD, "Marca", "Modelo", "IMEI", "Numero de telefono");
-        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Marca", "Modelo", "IMEI", "Numero de telefono");
+        formFactory.setFieldCaptions(CrudOperation.ADD, "Marca", "Modelo", "IMEI", "Numero de telefono","Vehiculo");
+        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Marca", "Modelo", "IMEI", "Numero de telefono","Vehiculo");
         formFactory.setFieldCaptions(CrudOperation.DELETE, "Marca", "Modelo", "IMEI", "Numero de telefono");
     }
 

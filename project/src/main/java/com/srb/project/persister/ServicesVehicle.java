@@ -30,6 +30,11 @@ public class ServicesVehicle {
         entityManager.merge(object);
     }
 
+    @Autowired
+    public ServicesVehicle() {
+
+    }
+
     public VehicleEntity findById(Integer idVehicle) {
         VehicleEntity vehicleEntity;
         vehicleEntity = entityManager.find(VehicleEntity.class, idVehicle);

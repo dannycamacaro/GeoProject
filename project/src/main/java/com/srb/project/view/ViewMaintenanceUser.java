@@ -30,8 +30,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
     private HorizontalSplitCrudLayout horizontalSplitCrudLayout;
     private GridCrud<UsersEntity> crud;
     private GridLayoutCrudFormFactory<UsersEntity> formFactory;
-//    private GridCrud<UsersEntity> crud = new GridCrud<>(UsersEntity.class, new HorizontalSplitCrudLayout());
-//    private GridLayoutCrudFormFactory<UsersEntity> formFactory = new GridLayoutCrudFormFactory<>(UsersEntity.class, 2, 2);
+
 
     @Autowired
     ControllerUser controllerUser;
