@@ -23,11 +23,19 @@ import java.util.Collection;
 public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "detalleRuta";
+    private HorizontalSplitCrudLayout horizontalSplitCrudLayout;
+    private GridCrud<RoutedetailEntity> crud;
+    private GridLayoutCrudFormFactory<RoutedetailEntity> formFactory;
 
     @Autowired
     ControllerRoutesDetail controllerRoutesDetail;
 
     public ViewMaintenanceRoutesDetail() {
+
+        horizontalSplitCrudLayout = new HorizontalSplitCrudLayout();
+        horizontalSplitCrudLayout.setFormCaption(CrudOperation.DELETE,EnumLabel.ELIMINAR_REGISTRO_LABEL.getLabel());
+        crud = new GridCrud<>(RoutedetailEntity.class, horizontalSplitCrudLayout);
+        formFactory = new GridLayoutCrudFormFactory<>(RoutedetailEntity.class, 2, 2);
         buildForm();
 
     }
@@ -36,31 +44,62 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
         this.setSizeFull();
         this.setWidth("100%");
 
-        FormLayout formRoutes = new FormLayout();
-        GridCrud<RoutedetailEntity> crud = new GridCrud<>(RoutedetailEntity.class, new HorizontalSplitCrudLayout());
-        GridLayoutCrudFormFactory<RoutedetailEntity> formFactory = new GridLayoutCrudFormFactory<>(RoutedetailEntity.class, 2, 2);
+        loadSetColumns();
+        loadSetVisibleProperties();
+        loadSetFieldCaptions();
+        loadSetButtonCaption();
+        loadMessagesForm();
+        actionButtons();
 
-        crud.getGrid().setColumns("description", "routelatitude","routelength");
+        crud.setCrudFormFactory(formFactory);
+        this.addComponent(crud);
+
+
+    }
+
+    private void loadSetColumns() {
+
+        crud.getGrid().setColumns("description", "routelatitude", "routelength");
         crud.getGrid().getColumn("description").setCaption("Descriocion");
         crud.getGrid().getColumn("routelatitude").setCaption("Latitud");
         crud.getGrid().getColumn("routelength").setCaption("Longitud");
 
+    }
 
-        formFactory.setVisibleProperties(CrudOperation.READ, "description", "routelatitude","routelength");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "description", "routelatitude","routelength");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "description", "routelatitude","routelength");
-        formFactory.setVisibleProperties(CrudOperation.DELETE, "description", "routelatitude","routelength");
-        formFactory.setFieldCaptions(CrudOperation.ADD, "Descripcion","Latitud","Longitud");
-        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Descripcion","Latitud","Longitud");
-        formFactory.setFieldCaptions(CrudOperation.DELETE, "Descripcion","Latitud","Longitud");
-//        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario","Password", "Nombres","Apellidos","Documento de identidad","Edad","Numero de telefono","Correo electronico");
-//        formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del usuario", "Nombres","Apellidos");
+    private void loadSetVisibleProperties() {
+        formFactory.setVisibleProperties(CrudOperation.READ, "description", "routelatitude", "routelength");
+        formFactory.setVisibleProperties(CrudOperation.ADD, "description", "routelatitude", "routelength");
+        formFactory.setVisibleProperties(CrudOperation.UPDATE, "description", "routelatitude", "routelength");
+        formFactory.setVisibleProperties(CrudOperation.DELETE, "description", "routelatitude", "routelength");
+    }
+
+    private void loadSetFieldCaptions() {
+        formFactory.setFieldCaptions(CrudOperation.READ, "Descripcion", "Latitud", "Longitud");
+        formFactory.setFieldCaptions(CrudOperation.ADD, "Descripcion", "Latitud", "Longitud");
+        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Descripcion", "Latitud", "Longitud");
+        formFactory.setFieldCaptions(CrudOperation.DELETE, "Descripcion", "Latitud", "Longitud");
+    }
+
+    private void loadSetButtonCaption() {
+        formFactory.setButtonCaption(CrudOperation.READ, EnumLabel.ACEPTAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
-//        formFactory.setFieldType("password", PasswordField.class);
+        formFactory.setCancelButtonCaption(EnumLabel.CANCELAR_LABEL.getLabel());
+    }
 
+    private void loadMessagesForm() {
 
+        crud.setSavedMessage(EnumLabel.REGISTRO_SALVADO_LABEL.getLabel());
+        crud.setDeletedMessage(EnumLabel.REGISTRO_ELIMINADO_LABEL.getLabel());
+        crud.setRowCountCaption(EnumLabel.ROW_COUNT_CAPTION_LABEL.getLabel());
+        crud.getFindAllButton().setDescription(EnumLabel.REFRESCAR_LABEL.getLabel());
+        crud.getAddButton().setDescription(EnumLabel.REGISTRAR_LABEL.getLabel());
+        crud.getUpdateButton().setDescription(EnumLabel.EDITAR_LABEL.getLabel());
+        crud.getDeleteButton().setDescription(EnumLabel.ELIMINAR_LABEL.getLabel());
+    }
+
+    private void actionButtons() {
         crud.setCrudListener(new CrudListener<RoutedetailEntity>() {
             @Override
             public Collection<RoutedetailEntity> findAll() {
@@ -85,11 +124,6 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
                 controllerRoutesDetail.deleteRoutes(routes);
             }
         });
-
-        crud.setCrudFormFactory(formFactory);
-        this.addComponent(crud);
-
-
     }
 
 
