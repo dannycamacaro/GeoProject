@@ -54,6 +54,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         formFactory.setFieldCreationListener("listRoles", field -> {
             com.vaadin.ui.ComboBox comboBox = (com.vaadin.ui.ComboBox) field;
             Iterator iterator = roles.iterator();
+            stringArrayList.clear();
 
             while (iterator.hasNext()) {
                 RolesEntity rolesEntity = (RolesEntity) iterator.next();
