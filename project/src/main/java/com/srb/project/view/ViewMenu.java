@@ -7,9 +7,12 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.sass.internal.util.StringUtil;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.ui.*;
 import com.vaadin.ui.MenuBar;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +22,6 @@ import java.awt.*;
 
 @UIScope
 
-@Widgetset("com.srb.project.widgetset.DemoWidgetSet")
 @Title("Menu")
 @SpringView(name = ViewMenu.VIEW_NAME, ui = ViewLogin.class)
 public class ViewMenu extends VerticalLayout implements View {
