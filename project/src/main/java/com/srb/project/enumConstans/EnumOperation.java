@@ -9,8 +9,8 @@ public enum EnumOperation {
     OPERATION_NOT_SUCCESSFUL ("1","Operacion exitosa"),
     //MODULO USUARIO
     ADD_USER("1", "Agregar usuario"),
-    DELETE_USER("2", "Eliminar usuario"),
-    EDIT_USER("3", "Editar usuario"),
+    EDIT_USER("2", "Editar usuario"),
+    DELETE_USER("3", "Eliminar usuario"),
     //Modulo dispositivo
     DELETE_DEVICE("", "Eliminar dispositivo"),
     ;

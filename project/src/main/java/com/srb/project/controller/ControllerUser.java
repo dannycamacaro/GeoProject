@@ -40,8 +40,9 @@ public class ControllerUser {
 
     public UsersEntity save(UsersEntity usersEntity) {
 
-       AuditsEntity  auditsEntity = loadAudit(usersEntity,EnumOperation.ADD_USER.getIdOperation());
+       AuditsEntity  auditsEntity = ControllerAudit.loadInformationAudit(usersEntity.toString(),EnumOperation.ADD_USER.getIdOperation(),"controllerLogin",appContext);
         try {
+            usersEntity.setStatedelete((byte) 1);
             servicesUser.save(usersEntity);
             auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
             servicesAudit.save(auditsEntity);
@@ -56,10 +57,6 @@ public class ControllerUser {
 
     public boolean deleteUser(UsersEntity user) {
 
-//        AuditsEntity auditsEntity = new AuditsEntity();
-//        auditsEntity.setContent(user.toString());
-//        auditsEntity.setIdusers(1);//TODO AJUSTARLO CON EL ID DEL USUARIO QUE INICIO SESION
-//        auditsEntity.setTypeoperation(EnumOperation.DELETE_USER.getIdOperation());
         AuditsEntity  auditsEntity = loadAudit(user,EnumOperation.DELETE_USER.getIdOperation());
         boolean deleteUser = false;
         UsersEntity usersEntityBd = null;
@@ -86,10 +83,6 @@ public class ControllerUser {
 
         boolean updateUser = false;
         UsersEntity userEntityBd = null;
-       /* AuditsEntity auditsEntity = new AuditsEntity();
-        auditsEntity.setContent(usersEntity.toString());
-        auditsEntity.setIdusers(1);//TODO AJUSTARLO CON EL ID DEL USUARIO QUE INICIO SESION
-        auditsEntity.setTypeoperation(EnumOperation.EDIT_USER.getIdOperation());*/
 
         AuditsEntity  auditsEntity = loadAudit(usersEntity,EnumOperation.EDIT_USER.getIdOperation());
         try {
@@ -124,7 +117,6 @@ public class ControllerUser {
 
         auditsEntity.setTypeoperation(operation);
 
-        usersEntity.setStatedelete((byte) 1);
         return auditsEntity;
 
     }
