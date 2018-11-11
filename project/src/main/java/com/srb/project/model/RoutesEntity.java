@@ -80,6 +80,15 @@ public class RoutesEntity {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "RoutesEntity{" +
+                "idroutes=" + idroutes +
+                ", nameroutes='" + nameroutes + '\'' +
+                ", description='" + description + '\'' +
+                ", statedelete=" + statedelete +
+                '}';
+    }
 
     public Collection<AssignedroutesEntity> getAssignedroutesByIdroutes() {
         return assignedroutesByIdroutes;
