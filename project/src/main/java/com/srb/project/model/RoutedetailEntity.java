@@ -106,7 +106,17 @@ public class RoutedetailEntity {
         return result;
     }
 
-        public RoutesEntity getRoutesByIdroutes() {
+    @Override
+    public String toString() {
+        return "RoutedetailEntity{" +
+                "idroutedetail=" + idroutedetail +
+                ", routelatitude='" + routelatitude + '\'' +
+                ", routelength='" + routelength + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    public RoutesEntity getRoutesByIdroutes() {
         return routesByIdroutes;
     }
 

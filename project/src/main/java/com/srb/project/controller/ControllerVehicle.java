@@ -2,8 +2,10 @@ package com.srb.project.controller;
 
 
 import com.srb.project.model.VehicleEntity;
+import com.srb.project.persister.ServicesAudit;
 import com.srb.project.persister.ServicesVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -14,6 +16,12 @@ public class ControllerVehicle {
 
     @Autowired
     ServicesVehicle servicesVehicle;
+
+    @Autowired
+    ServicesAudit servicesAudit;
+
+    @Autowired
+    private ApplicationContext appContext;
 
 
     public void save(VehicleEntity vehicleEntity) {
