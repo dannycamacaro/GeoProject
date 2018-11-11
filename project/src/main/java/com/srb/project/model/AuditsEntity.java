@@ -1,5 +1,7 @@
 package com.srb.project.model;
 
+import com.vaadin.ui.UI;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.sql.Time;
@@ -7,6 +9,10 @@ import java.sql.Time;
 @Entity
 @Table(name = "audits", schema = "srb")
 public class AuditsEntity {
+    @Transient
+    public static final Integer OPERATION_SUCCESSFUL = 1;
+    @Transient
+    public static final Integer OPERATION_NOT_SUCCESSFUL = 0;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDAUDITS", nullable = false)
@@ -46,6 +52,14 @@ public class AuditsEntity {
     @PrePersist
     public void prePersist() {
         auditDate =  new java.util.Date();
+    }
+
+    public AuditsEntity() {
+
+    }
+
+    public AuditsEntity(String ip) {
+        this.ip = ip;
     }
 
     public void setIdaudits(Integer idaudits) {

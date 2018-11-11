@@ -29,22 +29,26 @@ public class ServicesLogin implements Serializable {
         return expression;
     }
 
-    public Boolean findUser(String user, String password) {
+    public UsersEntity findUser(String user, String password) {
         Boolean expression = false;
+        UsersEntity usersEntity = null;
         List<UsersEntity> entityList = entityManager.createQuery(QUERY_USER, UsersEntity.class)
                 .setParameter("userName", user).setParameter("password", password).getResultList();
         if (!entityList.isEmpty()) {
+            usersEntity = (UsersEntity)entityList.get(0);
             expression = true;
         }else {
             expression = false;
         }
-        return expression;
+        return usersEntity;
     }
 
-    public boolean validateInfo(String user, String password) {
+    public UsersEntity validateInfo(String user, String password) {
         Boolean expression = false;
+        UsersEntity entity = null;
         if (user != null && !user.isEmpty() && password != null && !password.isEmpty()) {
-            if (findUser(user, password)) {
+             entity = findUser(user, password);
+            if ( entity != null) {
                 expression = true;
             } else {
                 expression = false;
@@ -52,6 +56,6 @@ public class ServicesLogin implements Serializable {
         } else {
             expression = false;
         }
-        return expression;
+        return entity;
     }
 }

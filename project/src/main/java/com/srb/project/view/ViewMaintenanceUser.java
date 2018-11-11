@@ -19,9 +19,8 @@ import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 
 import javax.annotation.PostConstruct;
-
 import java.util.*;
-
+import org.springframework.context.ApplicationContext;
 @UIScope
 @SpringView(name = ViewMaintenanceUser.VIEW_NAME)
 public class ViewMaintenanceUser extends VerticalLayout implements View {

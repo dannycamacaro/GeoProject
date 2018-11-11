@@ -1,6 +1,8 @@
 package com.srb.project;
 
 
+import com.srb.project.controller.ControllerLogin;
+import com.srb.project.model.UsersEntity;
 import com.srb.project.navigator.UniverseNavigator;
 import com.srb.project.persister.ServicesLogin;
 import com.srb.project.view.ViewMenu;
@@ -34,6 +36,11 @@ public class ViewLogin extends UI implements View{
     @Autowired
     private SpringViewProvider viewProvider;
 
+
+
+    @Autowired
+    private ControllerLogin controllerLogin;
+
     Panel panelPrincipal = new Panel();
 
     @Override
@@ -41,7 +48,6 @@ public class ViewLogin extends UI implements View{
         panelPrincipal.setSizeFull();
 
         VerticalLayout root = new VerticalLayout();
-
         root.addStyleName(ValoTheme.PANEL_BORDERLESS);
         //Formulario de login
         FormLayout loginForm = new FormLayout();
@@ -67,7 +73,8 @@ public class ViewLogin extends UI implements View{
         btnEntrar.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                if (loginServices.validateInfo(txtUser.getValue(), txtPassword.getValue())) {
+//                if (loginServices.validateInfo(txtUser.getValue(), txtPassword.getValue(),usersEntity)) {
+                if (controllerLogin.validateLogin(txtUser.getValue(), txtPassword.getValue())) {
                     iniNavigator();
                 } else {
                     Notification.show("Verificar sus datos.", Notification.Type.ERROR_MESSAGE);
@@ -76,13 +83,13 @@ public class ViewLogin extends UI implements View{
         });
         btnEntrar.addStyleName(ValoTheme.BUTTON_PRIMARY);
         btnEntrar.setWidth("200px");
-        GoogleMap googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc",null,"spanish");
+       /* GoogleMap googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc",null,"spanish");
         LatLon latLon = new LatLon();
         latLon.setLon(60.654654);
         latLon.setLat(51.000000);
         googleMap.setCenter(latLon);
         googleMap.setSizeFull();
-        loginForm.addComponent(googleMap);
+        loginForm.addComponent(googleMap);*/
 
         loginForm.addComponent(lblTitle);
         loginForm.addComponent(txtUser);

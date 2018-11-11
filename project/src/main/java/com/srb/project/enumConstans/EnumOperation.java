@@ -1,14 +1,28 @@
 package com.srb.project.enumConstans;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
 public enum EnumOperation {
-    DELETE_DEVICE("1", "Eliminar dispositivo"),
-    ADD_USER("2", "Agregar usuario"),
-    DELETE_USER("3", "Eliminar usuario"),
-    EDIT_USER("4", "Editar usuario");
+    //STATUS OPERATION
+    OPERATION_SUCCESSFUL ("1","Operacion exitosa"),
+    OPERATION_NOT_SUCCESSFUL ("1","Operacion exitosa"),
+    //MODULO USUARIO
+    ADD_USER("1", "Agregar usuario"),
+    DELETE_USER("2", "Eliminar usuario"),
+    EDIT_USER("3", "Editar usuario"),
+    //Modulo dispositivo
+    DELETE_DEVICE("", "Eliminar dispositivo"),
+    ;
+
+
+    @Autowired
+    ApplicationContext context;
 
     EnumOperation(String idOperation, String operationName) {
         this.idOperation = idOperation;
         this.operationName = operationName;
+
     }
 
     public String getIdOperation() {
