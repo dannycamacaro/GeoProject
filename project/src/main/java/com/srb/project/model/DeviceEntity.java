@@ -141,6 +141,18 @@ public class DeviceEntity {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "DeviceEntity{" +
+                "iddevice=" + iddevice +
+                ", mark='" + mark + '\'' +
+                ", model='" + model + '\'' +
+                ", imei='" + imei + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", statedelete=" + statedelete +
+                ", nameVehicle='" + nameVehicle + '\'' +
+                '}';
+    }
 
     public Collection<AssignedroutesEntity> getAssignedroutesByIddevice() {
         return assignedroutesByIddevice;

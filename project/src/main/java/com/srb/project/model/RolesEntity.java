@@ -81,6 +81,18 @@ public class RolesEntity {
         return result;
     }
 
+    @Override
+    public String
+
+
+    toString() {
+        return "RolesEntity{" +
+                "idrol=" + idrol +
+                ", namerole='" + namerole + '\'' +
+                ", descriptionrole='" + descriptionrole + '\'' +
+                ", statedelete=" + statedelete +
+                '}';
+    }
 
     public Collection<UsersEntity> getUsersByIdrol() {
         return usersByIdrol;
