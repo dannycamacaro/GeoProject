@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 public class WebConfig {
 
     @WebServlet(urlPatterns = "/project", asyncSupported = true)
-    @VaadinServletConfiguration(ui = ViewLogin.class, productionMode = false)
+    @VaadinServletConfiguration(ui = ViewLogin.class, productionMode = false, widgetset = "WidgetSet")
     public static class MyUIServlet extends VaadinServlet {
     }
 

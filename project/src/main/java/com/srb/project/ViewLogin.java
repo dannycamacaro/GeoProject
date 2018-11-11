@@ -76,7 +76,7 @@ public class ViewLogin extends UI implements View{
         });
         btnEntrar.addStyleName(ValoTheme.BUTTON_PRIMARY);
         btnEntrar.setWidth("200px");
-        GoogleMap googleMap = new GoogleMap(null,null,null);
+        GoogleMap googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc",null,"spanish");
         LatLon latLon = new LatLon();
         latLon.setLon(60.654654);
         latLon.setLat(51.000000);

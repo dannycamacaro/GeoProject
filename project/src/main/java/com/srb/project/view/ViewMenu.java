@@ -27,7 +27,6 @@ import java.awt.*;
 public class ViewMenu extends VerticalLayout implements View {
     public static final String VIEW_NAME = "menu";
     MenuBar mainMenu;
-
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if(mainMenu==null){
@@ -35,6 +34,7 @@ public class ViewMenu extends VerticalLayout implements View {
         }else {
             addComponent(mainMenu);
         }
+
     }
 
     public  MenuBar buildMenu(){
@@ -74,10 +74,10 @@ public class ViewMenu extends VerticalLayout implements View {
             }
         });
 
-        mainMenu.addItem("Dispositivos", null, new MenuBar.Command() {
+        mainMenu.addItem("Mapa", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceDevice.VIEW_NAME);
+                UniverseNavigator.navigate(ViewMapsUbication.VIEW_NAME);
             }
         });
 
