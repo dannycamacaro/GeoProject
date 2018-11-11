@@ -4,16 +4,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 public enum EnumOperation {
-    //STATUS OPERATION
-    OPERATION_SUCCESSFUL ("1","Operacion exitosa"),
-    OPERATION_NOT_SUCCESSFUL ("1","Operacion exitosa"),
-    //MODULO USUARIO
-    ADD_USER("1", "Agregar usuario"),
-    EDIT_USER("2", "Editar usuario"),
-    DELETE_USER("3", "Eliminar usuario"),
-    //Modulo dispositivo
-    DELETE_DEVICE("", "Eliminar dispositivo"),
-    ;
+
+    //MODULO USER
+    ADD_USER("1", "Add user"),
+    EDIT_USER("2", "Edit user"),
+    DELETE_USER("3", "Delete user"),
+    //MODULO DEVICE
+    ADD_DEVICE("4", "Add device"),
+    EDIT_DEVICE("5", "Edit device"),
+    DELETE_DEVICE("6", "Delete device"),
+    //MODULO DRIVER
+    ADD_DRIVER("7", "Add driver"),
+    EDIT_DRIVER("8", "Edit driver"),
+    DELETE_DRIVER("9", "Delete driver"),
+    //MODULO LOCATION
+    ADD_LOCATION("10", "Add location"),
+    EDIT_LOCATION("11", "Edit location"),
+    DELETE_LOCATION("12", "Delete location"),
+    //MODULO ROL
+    ADD_ROL("13", "Add rol"),
+    EDIT_ROL("14", "Edit rol"),
+    DELETE_ROL("15", "Delete rol"),
+    //MODULO ROUTES
+    ADD_ROUTES("16", "Add routes"),
+    EDIT_ROUTES("17", "Edit routes"),
+    DELETE_ROUTES("18", "Delete routes"),
+    //MODULO ROUTES_DETAIL
+    ADD_ROUTES_DETAIL("19", "Add routes_detail"),
+    EDIT_ROUTES_DETAIL("20", "Edit routes_detail"),
+    DELETE_ROUTES_DETAIL("21", "Delete routes_detail"),
+    //MODULO VEHICLE
+    ADD_VEHICLE("22", "Add vehicle"),
+    EDIT_VEHICLE("23", "Edit vehicle"),
+    DELETE_VEHICLE("24", "Delete vehicle");
 
 
     @Autowired
