@@ -39,9 +39,9 @@ public class ControllerUser {
     }
 
     public UsersEntity save(UsersEntity usersEntity) {
-
-       AuditsEntity  auditsEntity = ControllerAudit.loadInformationAudit(usersEntity.toString(),EnumOperation.ADD_USER.getIdOperation(),"controllerLogin",appContext);
+        AuditsEntity  auditsEntity = new AuditsEntity();
         try {
+            auditsEntity = ControllerAudit.loadInformationAudit(usersEntity.toString(),EnumOperation.ADD_USER.getIdOperation(),"controllerLogin",appContext);
             usersEntity.setStatedelete((byte) 1);
             servicesUser.save(usersEntity);
             auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
@@ -57,7 +57,7 @@ public class ControllerUser {
 
     public boolean deleteUser(UsersEntity user) {
 
-        AuditsEntity  auditsEntity = loadAudit(user,EnumOperation.DELETE_USER.getIdOperation());
+        AuditsEntity  auditsEntity = ControllerAudit.loadInformationAudit(user.toString(),EnumOperation.DELETE_USER.getIdOperation(),"controllerLogin",appContext);
         boolean deleteUser = false;
         UsersEntity usersEntityBd = null;
 
@@ -81,19 +81,16 @@ public class ControllerUser {
 
     public UsersEntity updateUser(UsersEntity usersEntity) {
 
-        boolean updateUser = false;
         UsersEntity userEntityBd = null;
 
-        AuditsEntity  auditsEntity = loadAudit(usersEntity,EnumOperation.EDIT_USER.getIdOperation());
+        AuditsEntity  auditsEntity = ControllerAudit.loadInformationAudit(usersEntity.toString(),EnumOperation.EDIT_USER.getIdOperation(),"controllerLogin",appContext);
         try {
             userEntityBd = servicesUser.findById(usersEntity.getIdusers());
             if (userEntityBd != null) {
                 if (!usersEntity.equals(userEntityBd)) {
                     servicesUser.update(usersEntity);
-
                     auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
                     servicesAudit.save(auditsEntity);
-                    updateUser = true;
                 }
 
             }
@@ -107,19 +104,6 @@ public class ControllerUser {
         return usersEntity;
     }
 
-    private AuditsEntity loadAudit(UsersEntity usersEntity, String operation){
-        AuditsEntity auditsEntity = new AuditsEntity(Page.getCurrent().getWebBrowser().getAddress());
-        ControllerLogin controller = (ControllerLogin) appContext.getBean("controllerLogin");
-        auditsEntity.setContent(usersEntity.toString());
-        if(controller != null && controller.getUsersEntity() != null){
-            auditsEntity.setIdusers(controller.getUsersEntity().getIdusers());
-        }
-
-        auditsEntity.setTypeoperation(operation);
-
-        return auditsEntity;
-
-    }
     public ServicesUser getServicesUser() {
         return servicesUser;
     }
