@@ -2,6 +2,7 @@ package com.srb.project.view;
 
 import com.srb.project.controller.ControllerRol;
 import com.srb.project.enumConstans.EnumLabel;
+import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.RolesEntity;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
@@ -47,7 +48,7 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
         loadSetButtonCaption();
         loadMessagesForm();
         actionButtons();
-
+        formFactory.setUseBeanValidation(true);
         crud.setCrudFormFactory(formFactory);
         this.addComponent(crud);
 
@@ -81,6 +82,7 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
         formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
         formFactory.setCancelButtonCaption(EnumLabel.CANCELAR_LABEL.getLabel());
+        formFactory.setValidationErrorMessage(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage());
 
     }
 

@@ -1,6 +1,8 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+
 import java.util.Collection;
 
 @Entity
@@ -14,16 +16,21 @@ public class RolesEntity {
 
     @Basic
     @Column(name = "NAMEROLE", nullable = true, length = 45)
+    @NotNull
     private String namerole;
+
     @Basic
     @Column(name = "DESCRIPTIONROLE", nullable = true, length = 400)
+    @NotNull
     private String descriptionrole;
+
     @OneToMany(mappedBy = "rolesByIdrol")
     private Collection<UsersEntity> usersByIdrol;
 
     @Basic
     @Column(name = "STATEDELETE")
     private Byte statedelete;
+
     @OneToMany(mappedBy = "rolesByIdrol")
     private Collection<UsersEntity> userssByIdrol;
 
