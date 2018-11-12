@@ -3,6 +3,7 @@ package com.srb.project.view;
 
 import com.srb.project.controller.ControllerRoutes;
 import com.srb.project.enumConstans.EnumLabel;
+import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.RoutesEntity;
 import com.srb.project.model.RoutesEntity;
 import com.vaadin.navigator.View;
@@ -50,7 +51,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         loadSetButtonCaption();
         loadMessagesForm();
         actionButtons();
-
+        formFactory.setUseBeanValidation(true);
         crud.setCrudFormFactory(formFactory);
         this.addComponent(crud);
 
@@ -85,6 +86,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
         formFactory.setCancelButtonCaption(EnumLabel.CANCELAR_LABEL.getLabel());
+        formFactory.setValidationErrorMessage(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage());
     }
 
     private void loadMessagesForm() {

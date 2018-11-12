@@ -1,6 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
@@ -13,13 +14,17 @@ public class RoutesEntity {
 
     @Basic
     @Column(name = "NAMEROUTES", nullable = true, length = 100)
+    @NotNull
     private String nameroutes;
 
     @Basic
     @Column(name = "DESCRIPTION", nullable = true, length = 400)
+    @NotNull
     private String description;
+
     @OneToMany(mappedBy = "routesByIdroutes")
     private Collection<AssignedroutesEntity> assignedroutesByIdroutes;
+
     @OneToMany(mappedBy = "routesByIdroutes")
     private Collection<RoutedetailEntity> routedetailsByIdroutes;
 
