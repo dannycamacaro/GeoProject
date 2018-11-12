@@ -108,6 +108,17 @@ public class VehicleEntity {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "VehicleEntity{" +
+                "idvehicle=" + idvehicle +
+                ", mark='" + mark + '\'' +
+                ", licenseplate='" + licenseplate + '\'' +
+                ", vehicleyear=" + vehicleyear +
+                ", ton=" + ton +
+                ", statedelete=" + statedelete +
+                '}';
+    }
 
     public Collection<AssignedvehicleEntity> getAssignedvehiclesByIdvehicle() {
         return assignedvehiclesByIdvehicle;
