@@ -1,12 +1,14 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Collection;
 
 @Entity
 @Table(name = "users", schema = "srb")
 public class UsersEntity {
-
+    @Transient
+    public static final String  MESSAGES_FORMAT_PHONE_NUMBER ="Debe introducir un formato correcto: 123-456-7890";
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "IDUSERS", nullable = false)
@@ -14,28 +16,40 @@ public class UsersEntity {
 
     @Basic
     @Column(name = "USERNAME", nullable = true, length = 100)
+    @NotNull
     private String username;
-
+    
+    @NotNull
     @Basic
     @Column(name = "FIRSTNAME", nullable = true, length = 100)
     private String firstname;
-
+    
+    @NotNull
     @Basic
     @Column(name = "LASTNAME", nullable = true, length = 45)
     private String lastname;
 
+    @NotNull
+    @Digits(integer = 8, fraction = 0)
     @Basic
     @Column(name = "IDENTITYDOCUMENT", nullable = true, length = 45)
     private String identitydocument;
 
     @Basic
+    @NotNull
+    @Min(18)
+    @Max(60)
     @Column(name = "AGE", nullable = true)
     private Integer age;
 
+    @NotNull
+    @Pattern (regexp = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$")
     @Basic
     @Column(name = "PHONENUMBER", nullable = true, length = 45)
     private String phonenumber;
 
+    @Email
+    @NotNull
     @Basic
     @Column(name = "EMAIL", nullable = true, length = 200)
     private String email;
@@ -43,10 +57,13 @@ public class UsersEntity {
     @Basic
     @Column(name = "IDROL", nullable = false)
     private int idrol;
+
     @OneToMany(mappedBy = "usersByIdusers")
     private Collection<AssignedvehicleEntity> assignedvehiclesByIdusers;
+
     @OneToMany(mappedBy = "usersByIdusers")
     private Collection<AuditsEntity> auditsByIdusers;
+
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "IDROL", referencedColumnName = "IDROL",insertable = false, updatable = false, nullable = false)
     private RolesEntity rolesByIdrol;
@@ -56,6 +73,7 @@ public class UsersEntity {
     private Byte statedelete;
 
     @Basic
+    @NotNull
     @Column(name = "PASSWORD")
     private String password;
     @OneToMany(mappedBy = "usersByIdusers")
@@ -63,6 +81,8 @@ public class UsersEntity {
 
     @Transient
     private String nameRol;
+
+    @NotNull
     @Transient
     private String  listRoles;
 
@@ -260,7 +280,6 @@ public class UsersEntity {
     public void setAuditssByIdusers(Collection<AuditsEntity> auditssByIdusers) {
         this.auditssByIdusers = auditssByIdusers;
     }
-//TODO HAY QUE AJUSTAR LOS  lazily initialize a collection
     @Override
     public String toString() {
         return "UsersEntity{" +
@@ -272,13 +291,9 @@ public class UsersEntity {
                 ", age=" + age +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", email='" + email + '\'' +
-//                ", idrol=" + idrol +
-//                ", assignedvehiclesByIdusers=" + assignedvehiclesByIdusers +
-//                ", auditsByIdusers=" + auditsByIdusers +
-                ", rolesByIdrol=" + rolesByIdrol +
+               ", rolesByIdrol=" + rolesByIdrol +
                 ", statedelete=" + statedelete +
                 ", password='" + password + '\'' +
-//                ", auditssByIdusers=" + auditssByIdusers +
                 '}';
     }
 }

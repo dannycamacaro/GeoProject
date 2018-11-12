@@ -4,6 +4,7 @@ package com.srb.project.view;
 import com.srb.project.controller.ControllerRol;
 import com.srb.project.controller.ControllerUser;
 import com.srb.project.enumConstans.EnumLabel;
+import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.RolesEntity;
 import com.srb.project.model.UsersEntity;
 import com.srb.project.persister.ServicesRol;
@@ -20,7 +21,7 @@ import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
-import org.springframework.context.ApplicationContext;
+
 @UIScope
 @SpringView(name = ViewMaintenanceUser.VIEW_NAME)
 public class ViewMaintenanceUser extends VerticalLayout implements View {
@@ -67,7 +68,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
     public ViewMaintenanceUser() {
         horizontalSplitCrudLayout = new HorizontalSplitCrudLayout();
-        horizontalSplitCrudLayout.setFormCaption(CrudOperation.DELETE,EnumLabel.ELIMINAR_REGISTRO_LABEL.getLabel());
+        horizontalSplitCrudLayout.setFormCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_REGISTRO_LABEL.getLabel());
         crud = new GridCrud<>(UsersEntity.class, horizontalSplitCrudLayout);
         formFactory = new GridLayoutCrudFormFactory<>(UsersEntity.class, 2, 2);
         buildForm();
@@ -84,6 +85,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         loadSetButtonCaption();
         loadMessagesForm();
         actionButtons();
+        formFactory.setUseBeanValidation(true);
         formFactory.setFieldType("password", PasswordField.class);
         crud.setCrudFormFactory(formFactory);
         this.addComponent(crud);
@@ -115,11 +117,12 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
     }
 
     private void loadSetButtonCaption() {
-        formFactory.setButtonCaption(CrudOperation.READ,EnumLabel.ACEPTAR_LABEL.getLabel());
+        formFactory.setButtonCaption(CrudOperation.READ, EnumLabel.ACEPTAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
         formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
         formFactory.setCancelButtonCaption(EnumLabel.CANCELAR_LABEL.getLabel());
+        formFactory.setValidationErrorMessage(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage());
     }
 
     private void loadMessagesForm() {
@@ -175,6 +178,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
             }
         });
     }
+
     private void getLoadIdRol(UsersEntity user) {
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {

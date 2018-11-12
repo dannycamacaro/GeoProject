@@ -10,7 +10,7 @@ public enum EnumLabel {
     ROW_COUNT_CAPTION_LABEL("%d registro(s) encontrados"),
     REFRESCAR_LABEL("Refrescar"),
     ELIMINAR_REGISTRO_LABEL("¿Desea eliminar el registro?"),
-   CANCELAR_LABEL("Cancelar");
+    CANCELAR_LABEL("Cancelar");
 
     EnumLabel(String label) {
         this.label = label;

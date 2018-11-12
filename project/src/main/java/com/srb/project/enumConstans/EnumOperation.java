@@ -1,7 +1,5 @@
 package com.srb.project.enumConstans;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 
 public enum EnumOperation {
 
@@ -37,10 +35,6 @@ public enum EnumOperation {
     ADD_VEHICLE("22", "Add vehicle"),
     EDIT_VEHICLE("23", "Edit vehicle"),
     DELETE_VEHICLE("24", "Delete vehicle");
-
-
-    @Autowired
-    ApplicationContext context;
 
     EnumOperation(String idOperation, String operationName) {
         this.idOperation = idOperation;
