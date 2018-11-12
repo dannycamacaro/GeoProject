@@ -1,31 +1,46 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
 @Table(name = "vehicle", schema = "srb")
 public class VehicleEntity {
+
     @Id
     @Column(name = "IDVEHICLE", nullable = false)
     private int idvehicle;
+
     @Basic
     @Column(name = "MARK", nullable = true, length = 45)
+    @NotNull
     private String mark;
 
     @Basic
     @Column(name = "LICENSEPLATE", nullable = true, length = 45)
+    @NotNull
     private String licenseplate;
+
     @Basic
     @Column(name = "VEHICLEYEAR", nullable = true)
+    @NotNull
+    @Digits(integer = 4,fraction = 0,message = "{com.srb.project.view.ViewMaintenanceVehicle.year}")
     private Integer vehicleyear;
+
     @Basic
     @Column(name = "TON", nullable = true)
+    @NotNull
+    @Digits(integer = 4,fraction = 0)
     private Integer ton;
+
     @OneToMany(mappedBy = "vehicleByIdvehicle")
     private Collection<AssignedvehicleEntity> assignedvehiclesByIdvehicle;
+
     @OneToMany(mappedBy = "vehicleByIdvehicle")
     private Collection<DeviceEntity> devicesByIdvehicle;
+
     @OneToMany(mappedBy = "vehicleByIdvehicle")
     private Collection<LocationEntity> locationsByIdvehicle;
 
