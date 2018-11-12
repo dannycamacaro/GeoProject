@@ -88,6 +88,15 @@ public class ControllerUser {
             userEntityBd = servicesUser.findById(usersEntity.getIdusers());
             if (userEntityBd != null) {
                 if (!usersEntity.equals(userEntityBd)) {
+         /*           userEntityBd.setNameRol(usersEntity.getNameRol());
+                    userEntityBd.setIdrol(usersEntity.getIdrol());
+                    userEntityBd.setPassword(usersEntity.getPassword());
+                    userEntityBd.setAge(usersEntity.getAge());
+                    userEntityBd.setEmail(usersEntity.getEmail());
+                    userEntityBd.setPhonenumber(usersEntity.getPhonenumber());
+                    userEntityBd.setIdentitydocument(usersEntity.getIdentitydocument());
+                    userEntityBd.setRolesByIdrol(usersEntity.getRolesByIdrol());
+                    userEntityBd.setListRoles(usersEntity.getListRoles());*/
                     servicesUser.update(usersEntity);
                     auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
                     servicesAudit.save(auditsEntity);

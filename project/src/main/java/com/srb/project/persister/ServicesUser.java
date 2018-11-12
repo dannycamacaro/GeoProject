@@ -40,9 +40,9 @@ public class ServicesUser {
     public Collection<UsersEntity> findAllUsers() {
         Query query = entityManager.createQuery("from UsersEntity user where statedelete=:state");
         query.setParameter("state", (byte)1);
-        Collection <UsersEntity> rolesEntities = new ArrayList<>();
-        rolesEntities = query.getResultList();
+        Collection <UsersEntity> usersEntities = new ArrayList<>();
+        usersEntities = query.getResultList();
 
-        return rolesEntities;
+        return usersEntities;
     }
 }

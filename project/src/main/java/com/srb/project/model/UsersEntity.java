@@ -82,7 +82,6 @@ public class UsersEntity {
     @Transient
     private String nameRol;
 
-    @NotNull
     @Transient
     private String  listRoles;
 

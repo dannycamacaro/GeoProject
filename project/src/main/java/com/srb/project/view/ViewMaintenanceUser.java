@@ -58,7 +58,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
             while (iterator.hasNext()) {
                 RolesEntity rolesEntity = (RolesEntity) iterator.next();
-                stringArrayList.add(rolesEntity.getDescriptionrole());
+                stringArrayList.add(rolesEntity.getNamerole());
 
             }
             comboBox.setItems(stringArrayList);
@@ -106,13 +106,14 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
     private void loadSetVisibleProperties() {
         formFactory.setVisibleProperties(CrudOperation.READ, "username", "firstname", "lastname");
         formFactory.setVisibleProperties(CrudOperation.ADD, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email", "listRoles");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email");
+        formFactory.setVisibleProperties(CrudOperation.UPDATE, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email","listRoles");
         formFactory.setVisibleProperties(CrudOperation.DELETE, "username", "firstname", "lastname");
     }
 
     private void loadSetFieldCaptions() {
+        formFactory.setFieldCaptions(CrudOperation.READ, "Nombre del usuario", "Nombres", "Apellidos");
         formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre del usuario", "Password", "Nombres", "Apellidos", "Documento de identidad", "Edad", "Numero de telefono", "Correo electronico", "Roles");
-        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario", "Password", "Nombres", "Apellidos", "Documento de identidad", "Edad", "Numero de telefono", "Correo electronico");
+        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del usuario", "Password", "Nombres", "Apellidos", "Documento de identidad", "Edad", "Numero de telefono", "Correo electronico","Roles");
         formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del usuario", "Nombres", "Apellidos");
     }
 
@@ -167,7 +168,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
             @Override
             public UsersEntity update(UsersEntity user) {
-
+                getLoadIdRol(user);
                 controllerUser.updateUser(user);
                 return user;
             }
@@ -184,8 +185,9 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         while (iterator.hasNext()) {
             RolesEntity rolesEntity = (RolesEntity) iterator.next();
 
-            if (rolesEntity.getDescriptionrole().equalsIgnoreCase(user.getListRoles())) {
+            if (rolesEntity.getNamerole().equalsIgnoreCase(user.getListRoles())) {
                 user.setIdrol(rolesEntity.getIdrol());
+//                user.setRolesByIdrol(rolesEntity);
                 break;
             }
 
