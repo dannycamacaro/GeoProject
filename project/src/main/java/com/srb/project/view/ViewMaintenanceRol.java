@@ -142,14 +142,9 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         btnNew.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                txtDescription.setVisible(true);
-                txtNameRol.setVisible(true);
-                txtNameRol.setEnabled(true);
-                txtDescription.setEnabled(true);
-                btnAccept.setVisible(true);
-                btnCancel.setVisible(true);
-                txtNameRol.setValue("");
-                txtDescription.setValue("");
+                visibleComponents();
+                enabledComponents();
+                emptySetValue();
                 action.setValue("new");
                 acceptRolAction();
                 cancelRolAction();
@@ -184,10 +179,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         btnEdit.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                txtDescription.setVisible(true);
-                txtNameRol.setVisible(true);
-                btnAccept.setVisible(true);
-                btnCancel.setVisible(true);
+                visibleComponents();
                 action.setValue("edit");
                 acceptRolAction();
                 cancelRolAction();
@@ -200,12 +192,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         btnDelete.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                txtDescription.setVisible(true);
-                txtNameRol.setVisible(true);
-                txtNameRol.setEnabled(false);
-                txtDescription.setEnabled(false);
-                btnAccept.setVisible(true);
-                btnCancel.setVisible(true);
+                visibleComponents();
+                notEnabledComponents();
                 action.setValue("delete");
                 acceptRolAction();
                 cancelRolAction();
@@ -217,13 +205,10 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         btnCancel.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                txtDescription.setVisible(false);
-                txtNameRol.setVisible(false);
-                txtNameRol.setEnabled(false);
-                txtDescription.setEnabled(false);
-                btnAccept.setVisible(false);
-                btnCancel.setVisible(false);
-                action.setValue("");
+
+                notEnabledComponents();
+                notVisibleComponents();
+                emptySetValue();
             }
         });
     }
@@ -235,13 +220,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         controllerRol.save(rolesEntity);
         Notification.show(EnumMessages.MESSAGES_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
         refreshInformationGrid();
-        action.setValue("");
-        txtDescription.setValue("");
-        txtNameRol.setValue("");
-        txtDescription.setVisible(false);
-        txtNameRol.setVisible(false);
-        btnAccept.setVisible(false);
-        btnCancel.setVisible(false);
+        emptySetValue();
+        notVisibleComponents();
     }
 
     private void processUpdateRol() {
@@ -254,13 +234,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         controllerRol.updateRol(rolesEntity);
         Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
         refreshInformationGrid();
-        action.setValue("");
-        txtDescription.setValue("");
-        txtNameRol.setValue("");
-        txtDescription.setVisible(false);
-        txtNameRol.setVisible(false);
-        btnAccept.setVisible(false);
-        btnCancel.setVisible(false);
+        emptySetValue();
+        notVisibleComponents();
     }
 
     private void processDeleteRol() {
@@ -288,7 +263,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     }
 
     private void notEnabledComponents() {
-
+        txtNameRol.setEnabled(false);
+        txtDescription.setEnabled(false);
     }
 
     private void notVisibleComponents() {
@@ -300,6 +276,9 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     }
 
     private void visibleComponents() {
-
+        txtDescription.setVisible(true);
+        txtNameRol.setVisible(true);
+        btnAccept.setVisible(true);
+        btnCancel.setVisible(true);
     }
 }
