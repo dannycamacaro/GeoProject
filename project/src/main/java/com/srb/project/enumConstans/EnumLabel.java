@@ -11,6 +11,8 @@ public enum EnumLabel {
     ROW_COUNT_CAPTION_LABEL("%d registro(s) encontrados"),
     REFRESCAR_LABEL("Refrescar"),
     ELIMINAR_REGISTRO_LABEL("¿Desea eliminar el registro?"),
+    NAME_ROL_LABEL("Nombre de rol"),
+    DESCRIPTION_ROL_LABEL("Descripcion de rol"),
     CANCELAR_LABEL("Cancelar");
 
     EnumLabel(String label) {

@@ -4,123 +4,302 @@ import com.srb.project.controller.ControllerRol;
 import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.RolesEntity;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.crudui.crud.CrudListener;
-import org.vaadin.crudui.crud.CrudOperation;
-import org.vaadin.crudui.crud.impl.GridCrud;
-import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
-import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @UIScope
 @SpringView(name = ViewMaintenanceRol.VIEW_NAME)
-public class ViewMaintenanceRol extends VerticalLayout implements View {
+public class ViewMaintenanceRol extends HorizontalLayout implements View {
     public static final String VIEW_NAME = "rol";
-    private HorizontalSplitCrudLayout horizontalSplitCrudLayout;
-    private GridCrud<RolesEntity> crud;
-    private GridLayoutCrudFormFactory<RolesEntity> formFactory;
+    private TextField txtDescription;
+    private TextField txtNameRol;
+    private Button btnNew;
+    private Button btnAccept;
+    private Button btnEdit;
+    private Button btnDelete;
+    private Button btnCancel;
+    private VerticalLayout leftPanel;
+    private VerticalLayout rightPanel;
+    private HorizontalLayout operationButtons;
+    private HorizontalLayout operationButtonsFooter;
+    private HorizontalLayout fieldForm;
+    private Label action;
+    private RolesEntity roles;
+    Grid<RolesEntity> grid = new Grid<>();
+    ListDataProvider<RolesEntity> dataProvider;
+    private Collection<RolesEntity> collectionRol;
 
     @Autowired
     ControllerRol controllerRol;
 
+
     public ViewMaintenanceRol() {
-        horizontalSplitCrudLayout = new HorizontalSplitCrudLayout();
-        horizontalSplitCrudLayout.setFormCaption(CrudOperation.DELETE,EnumLabel.ELIMINAR_REGISTRO_LABEL.getLabel());
-        crud = new GridCrud<>(RolesEntity.class, horizontalSplitCrudLayout);
-        formFactory = new GridLayoutCrudFormFactory<>(RolesEntity.class, 2, 2);
-        buildForm();
 
     }
 
     public void buildForm() {
+        leftPanel = new VerticalLayout();
+        rightPanel = new VerticalLayout();
+        operationButtons = new HorizontalLayout();
+        operationButtonsFooter = new HorizontalLayout();
+        fieldForm = new HorizontalLayout();
+        grid = new Grid<>();
+        action = new Label("");
+
+        setPropertiesField();
+        setLeftPanel();
+        setRightPanel();
         this.setSizeFull();
         this.setWidth("100%");
-
-        loadSetColumns();
-        loadSetVisibleProperties();
-        loadSetFieldCaptions();
-        loadSetButtonCaption();
-        loadMessagesForm();
-        actionButtons();
-        formFactory.setUseBeanValidation(true);
-        crud.setCrudFormFactory(formFactory);
-        this.addComponent(crud);
+        this.addComponent(leftPanel);
+        this.addComponent(rightPanel);
+        this.setSizeFull();
 
 
     }
 
-    private void loadSetColumns() {
-
-        crud.getGrid().setColumns("namerole", "descriptionrole");
-        crud.getGrid().getColumn("namerole").setCaption("Nombre del rol");
-        crud.getGrid().getColumn("descriptionrole").setCaption("Descripcion");
+    private void setLeftPanel() {
+        leftPanel.setWidth("100%");
+        leftPanel.setHeight("100%");
+        leftPanel.setMargin(new MarginInfo(true, false, false, true));
+        leftPanel.setSpacing(false);
+        loadInformationGrid();
+        leftPanel.addComponent(grid);
     }
 
-    private void loadSetVisibleProperties() {
-        formFactory.setVisibleProperties(CrudOperation.READ, "namerole", "descriptionrole");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "namerole", "descriptionrole");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "namerole", "descriptionrole");
-        formFactory.setVisibleProperties(CrudOperation.DELETE, "namerole", "descriptionrole");
-    }
+    private void setRightPanel() {
 
-    private void loadSetFieldCaptions() {
-        formFactory.setFieldCaptions(CrudOperation.READ, "Nombre del rol", "Descripcion del rol");
-        formFactory.setFieldCaptions(CrudOperation.ADD, "Nombre del rol", "Descripcion del rol");
-        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Nombre del rol", "Descripcion del rol");
-        formFactory.setFieldCaptions(CrudOperation.DELETE, "Nombre del rol", "Descripcion del rol");
-    }
-
-    private void loadSetButtonCaption() {
-        formFactory.setButtonCaption(CrudOperation.READ,EnumLabel.ACEPTAR_LABEL.getLabel());
-        formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
-        formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
-        formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
-        formFactory.setCancelButtonCaption(EnumLabel.CANCELAR_LABEL.getLabel());
-        formFactory.setValidationErrorMessage(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage());
+        rightPanel.setHeight("100%");
+        rightPanel.setWidth("100%");
+        operationButtons.addComponent(btnNew);
+        operationButtons.addComponent(btnEdit);
+        operationButtons.addComponent(btnDelete);
+        operationButtonsFooter.addComponent(btnAccept);
+        operationButtonsFooter.addComponent(btnCancel);
+        fieldForm.addComponent(txtNameRol);
+        fieldForm.addComponent(txtDescription);
+        newRolAction();
+        editRolAction();
+        deleteRolAction();
+        rightPanel.addComponent(operationButtons);
+        rightPanel.addComponent(fieldForm);
+        rightPanel.addComponent(operationButtonsFooter);
 
     }
 
-    private void loadMessagesForm() {
-
-        crud.setSavedMessage(EnumLabel.REGISTRO_SALVADO_LABEL.getLabel());
-        crud.setDeletedMessage(EnumLabel.REGISTRO_ELIMINADO_LABEL.getLabel());
-        crud.setRowCountCaption(EnumLabel.ROW_COUNT_CAPTION_LABEL.getLabel());
-        crud.getFindAllButton().setDescription(EnumLabel.REFRESCAR_LABEL.getLabel());
-        crud.getAddButton().setDescription(EnumLabel.REGISTRAR_LABEL.getLabel());
-        crud.getUpdateButton().setDescription(EnumLabel.EDITAR_LABEL.getLabel());
-        crud.getDeleteButton().setDescription(EnumLabel.ELIMINAR_LABEL.getLabel());
+    private void setPropertiesField() {
+        txtDescription = new TextField(EnumLabel.DESCRIPTION_ROL_LABEL.getLabel());
+        txtNameRol = new TextField(EnumLabel.NAME_ROL_LABEL.getLabel());
+        txtDescription.setVisible(false);
+        txtNameRol.setVisible(false);
+        action.setVisible(false);
+        btnNew = new Button(EnumLabel.REGISTRAR_LABEL.getLabel());
+        btnAccept = new Button(EnumLabel.ACEPTAR_LABEL.getLabel());
+        btnEdit = new Button(EnumLabel.EDITAR_LABEL.getLabel());
+        btnDelete = new Button(EnumLabel.ELIMINAR_LABEL.getLabel());
+        btnCancel = new Button(EnumLabel.CANCELAR_LABEL.getLabel());
+        btnAccept.setVisible(false);
+        btnCancel.setVisible(false);
     }
 
-    private void actionButtons() {
-        crud.setCrudListener(new CrudListener<RolesEntity>() {
+    private void loadInformationGrid() {
+        collectionRol = controllerRol.findAllRoles();
+        dataProvider = DataProvider.ofCollection(collectionRol);
+
+        grid.setEnabled(true);
+        grid.addColumn(RolesEntity::getNamerole).setCaption(EnumLabel.NAME_ROL_LABEL.getLabel());
+        grid.addColumn(RolesEntity::getDescriptionrole).setCaption(EnumLabel.DESCRIPTION_ROL_LABEL.getLabel());
+        grid.setDataProvider(dataProvider);
+        grid.addItemClickListener(new ItemClickListener<RolesEntity>() {
             @Override
-            public Collection<RolesEntity> findAll() {
-                return controllerRol.findAllRoles();
-            }
-
-            @Override
-            public RolesEntity add(RolesEntity rol) {
-                controllerRol.save(rol);
-                return rol;
-            }
-
-            @Override
-            public RolesEntity update(RolesEntity user) {
-                RolesEntity rol = new RolesEntity();
-                controllerRol.updateRol(user);
-                return rol;
-            }
-
-            @Override
-            public void delete(RolesEntity user) {
-                controllerRol.deleteRol(user);
+            public void itemClick(Grid.ItemClick<RolesEntity> event) {
+                grid.getUI().setData(event.getItem());
+                roles = event.getItem();
+                txtDescription.setValue(event.getItem().getDescriptionrole());
+                txtNameRol.setValue(event.getItem().getNamerole());
             }
         });
+    }
+
+    @Override
+    public void attach() {
+
+        buildForm();
+
+    }
+
+
+    private void newRolAction() {
+        btnNew.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                txtDescription.setVisible(true);
+                txtNameRol.setVisible(true);
+                txtNameRol.setEnabled(true);
+                txtDescription.setEnabled(true);
+                btnAccept.setVisible(true);
+                btnCancel.setVisible(true);
+                txtNameRol.setValue("");
+                txtDescription.setValue("");
+                action.setValue("new");
+                acceptRolAction();
+                cancelRolAction();
+            }
+        });
+    }
+
+    private void acceptRolAction() {
+        btnAccept.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                if (action.getValue().equalsIgnoreCase("new")) {
+                    processAddRol();
+                } else if (action.getValue().equalsIgnoreCase("edit")) {
+                    processUpdateRol();
+                } else if (action.getValue().equalsIgnoreCase("delete")) {
+
+                    processDeleteRol();
+
+                }
+            }
+        });
+    }
+
+    private void refreshInformationGrid() {
+        collectionRol = controllerRol.findAllRoles();
+        dataProvider = DataProvider.ofCollection(collectionRol);
+        grid.setDataProvider(dataProvider);
+    }
+
+    private void editRolAction() {
+        btnEdit.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                txtDescription.setVisible(true);
+                txtNameRol.setVisible(true);
+                btnAccept.setVisible(true);
+                btnCancel.setVisible(true);
+                action.setValue("edit");
+                acceptRolAction();
+                cancelRolAction();
+            }
+        });
+
+    }
+
+    private void deleteRolAction() {
+        btnDelete.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                txtDescription.setVisible(true);
+                txtNameRol.setVisible(true);
+                txtNameRol.setEnabled(false);
+                txtDescription.setEnabled(false);
+                btnAccept.setVisible(true);
+                btnCancel.setVisible(true);
+                action.setValue("delete");
+                acceptRolAction();
+                cancelRolAction();
+            }
+        });
+    }
+
+    private void cancelRolAction() {
+        btnCancel.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                txtDescription.setVisible(false);
+                txtNameRol.setVisible(false);
+                txtNameRol.setEnabled(false);
+                txtDescription.setEnabled(false);
+                btnAccept.setVisible(false);
+                btnCancel.setVisible(false);
+                action.setValue("");
+            }
+        });
+    }
+
+    private void processAddRol() {
+        RolesEntity rolesEntity = new RolesEntity();
+        rolesEntity.setNamerole(txtNameRol.getValue());
+        rolesEntity.setDescriptionrole(txtDescription.getValue());
+        controllerRol.save(rolesEntity);
+        Notification.show(EnumMessages.MESSAGES_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+        refreshInformationGrid();
+        action.setValue("");
+        txtDescription.setValue("");
+        txtNameRol.setValue("");
+        txtDescription.setVisible(false);
+        txtNameRol.setVisible(false);
+        btnAccept.setVisible(false);
+        btnCancel.setVisible(false);
+    }
+
+    private void processUpdateRol() {
+        txtDescription.setVisible(true);
+        txtNameRol.setVisible(true);
+        RolesEntity rolesEntity = new RolesEntity();
+        rolesEntity.setIdrol(roles.getIdrol());
+        rolesEntity.setNamerole(txtNameRol.getValue());
+        rolesEntity.setDescriptionrole(txtDescription.getValue());
+        controllerRol.updateRol(rolesEntity);
+        Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+        refreshInformationGrid();
+        action.setValue("");
+        txtDescription.setValue("");
+        txtNameRol.setValue("");
+        txtDescription.setVisible(false);
+        txtNameRol.setVisible(false);
+        btnAccept.setVisible(false);
+        btnCancel.setVisible(false);
+    }
+
+    private void processDeleteRol() {
+        txtDescription.setVisible(true);
+        txtNameRol.setVisible(true);
+        RolesEntity rolesEntity = new RolesEntity();
+        rolesEntity.setIdrol(roles.getIdrol());
+        controllerRol.deleteRol(rolesEntity);
+        Notification.show(EnumMessages.MESSAGE_SUCESS_DELETE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+        refreshInformationGrid();
+        emptySetValue();
+        enabledComponents();
+        notVisibleComponents();
+    }
+
+    private void emptySetValue() {
+        action.setValue("");
+        txtDescription.setValue("");
+        txtNameRol.setValue("");
+    }
+
+    private void enabledComponents() {
+        txtNameRol.setEnabled(true);
+        txtDescription.setEnabled(true);
+    }
+
+    private void notEnabledComponents() {
+
+    }
+
+    private void notVisibleComponents() {
+        txtDescription.setVisible(false);
+        txtNameRol.setVisible(false);
+        btnAccept.setVisible(false);
+        btnCancel.setVisible(false);
+
+    }
+
+    private void visibleComponents() {
+
     }
 }

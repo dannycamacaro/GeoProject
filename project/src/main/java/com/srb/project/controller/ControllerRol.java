@@ -82,6 +82,7 @@ public class ControllerRol {
             rolesEntityBd = servicesRol.findByIdRol(rolesEntity.getIdrol());
             if (rolesEntityBd != null) {
                 if (!rolesEntity.equals(rolesEntityBd)) {
+                    rolesEntity.setStatedelete((byte)1);
                     servicesRol.update(rolesEntity);
                     auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
                     servicesAudit.save(auditsEntity);
