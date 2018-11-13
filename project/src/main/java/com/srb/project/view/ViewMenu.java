@@ -76,7 +76,7 @@ public class ViewMenu extends VerticalLayout implements View {
         mainMenu.addItem("Detalle de rutas", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceRoutesDetail.VIEW_NAME);
+                UniverseNavigator.navigate(ViewSelectRoute.VIEW_NAME);
             }
         });
 

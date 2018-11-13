@@ -2,7 +2,7 @@ package com.srb.project;
 
 
 import com.srb.project.controller.ControllerLogin;
-import com.srb.project.model.UsersEntity;
+import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.navigator.UniverseNavigator;
 import com.srb.project.persister.ServicesLogin;
 import com.srb.project.view.ViewMenu;
@@ -13,8 +13,6 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.navigator.SpringViewProvider;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +34,6 @@ public class ViewLogin extends UI implements View{
     @Autowired
     private SpringViewProvider viewProvider;
 
-
-
     @Autowired
     private ControllerLogin controllerLogin;
 
@@ -46,18 +42,27 @@ public class ViewLogin extends UI implements View{
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         panelPrincipal.setSizeFull();
+        HorizontalLayout root = new HorizontalLayout();
+        VerticalLayout visitantes = new VerticalLayout();
+        VerticalLayout login = new VerticalLayout();
 
-        VerticalLayout root = new VerticalLayout();
+        visitantes.setHeight("100%");
+        visitantes.setWidth("50%");
+
+        login.setHeight("100%");
+        login.setWidth("50%");
+
         root.addStyleName(ValoTheme.PANEL_BORDERLESS);
         //Formulario de login
         FormLayout loginForm = new FormLayout();
         loginForm.addStyleName(ValoTheme.LABEL_COLORED);
-        Label lblTitle = new Label("Login");
+        Label lblTitle = new Label(EnumMessages.MESSAGES_LOGIN.getMessage());
         lblTitle.addStyleName(ValoTheme.LABEL_H1);
         lblTitle.setSizeFull();
         loginForm.setWidth("600px");
         loginForm.setHeight("200px");
         loginForm.addStyleNames(ValoTheme.PANEL_BORDERLESS);
+        loginForm.setStyleName("Background-color: white");
 
         TextField txtUser = new TextField();
         txtUser.addStyleName(ValoTheme.TEXTFIELD_LARGE);
@@ -83,24 +88,25 @@ public class ViewLogin extends UI implements View{
         });
         btnEntrar.addStyleName(ValoTheme.BUTTON_PRIMARY);
         btnEntrar.setWidth("200px");
-       /* GoogleMap googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc",null,"spanish");
-        LatLon latLon = new LatLon();
-        latLon.setLon(60.654654);
-        latLon.setLat(51.000000);
-        googleMap.setCenter(latLon);
-        googleMap.setSizeFull();
-        loginForm.addComponent(googleMap);*/
 
         loginForm.addComponent(lblTitle);
         loginForm.addComponent(txtUser);
         loginForm.addComponent(txtPassword);
         loginForm.addComponent(btnEntrar);
-        loginForm.setComponentAlignment(lblTitle, Alignment.MIDDLE_CENTER);
-        root.addComponent(loginForm);
+        login.addComponent(loginForm);
+        login.setStyleName("Background-color: white");
+        root.addComponent(visitantes);
+        root.addComponent(login);
+        root.setComponentAlignment(login, Alignment.MIDDLE_CENTER);
         root.setSizeFull();
-        root.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
+        root.setStyleName("Background-color: white");
+
+        //Alineamiento de los componentes
+        loginForm.setComponentAlignment(lblTitle, Alignment.MIDDLE_CENTER);
+//        root.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
         root.addStyleNames(ValoTheme.LAYOUT_WELL);
         panelPrincipal.setContent(root);
+        panelPrincipal.setStyleName("Background-color: white");
         setContent(panelPrincipal);
 
     }

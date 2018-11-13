@@ -105,8 +105,8 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
     private void loadSetVisibleProperties() {
         formFactory.setVisibleProperties(CrudOperation.READ, "username", "firstname", "lastname");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email", "listRoles");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email","listRoles");
+        formFactory.setVisibleProperties(CrudOperation.ADD, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email", "idrol");
+        formFactory.setVisibleProperties(CrudOperation.UPDATE, "username", "password", "firstname", "lastname", "identitydocument", "age", "phonenumber", "email","idrol");
         formFactory.setVisibleProperties(CrudOperation.DELETE, "username", "firstname", "lastname");
     }
 
@@ -185,9 +185,8 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         while (iterator.hasNext()) {
             RolesEntity rolesEntity = (RolesEntity) iterator.next();
 
-            if (rolesEntity.getNamerole().equalsIgnoreCase(user.getListRoles())) {
+            if (rolesEntity.getIdrol() == (user.getIdrol())) {
                 user.setIdrol(rolesEntity.getIdrol());
-//                user.setRolesByIdrol(rolesEntity);
                 break;
             }
 
