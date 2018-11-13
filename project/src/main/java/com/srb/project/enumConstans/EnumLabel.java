@@ -2,6 +2,7 @@ package com.srb.project.enumConstans;
 
 public enum EnumLabel {
     REGISTRAR_LABEL("Registrar"),
+    NUEVO_LABEL("Nuevo"),
     EDITAR_LABEL("Editar"),
     ELIMINAR_LABEL("Eliminar"),
     ACEPTAR_LABEL("Aceptar"),
