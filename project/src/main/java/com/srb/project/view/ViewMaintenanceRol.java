@@ -32,7 +32,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     private HorizontalLayout operationButtons;
     private HorizontalLayout operationButtonsFooter;
     private HorizontalLayout fieldForm;
-    private Label action;
+    private String action;
     private RolesEntity roles;
     Grid<RolesEntity> grid = new Grid<>();
     ListDataProvider<RolesEntity> dataProvider;
@@ -53,7 +53,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         operationButtonsFooter = new HorizontalLayout();
         fieldForm = new HorizontalLayout();
         grid = new Grid<>();
-        action = new Label("");
+        action = "";
 
         setPropertiesField();
         setLeftPanel();
@@ -101,7 +101,6 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         txtNameRol = new TextField(EnumLabel.NAME_ROL_LABEL.getLabel());
         txtDescription.setVisible(false);
         txtNameRol.setVisible(false);
-        action.setVisible(false);
         btnNew = new Button(EnumLabel.REGISTRAR_LABEL.getLabel());
         btnAccept = new Button(EnumLabel.ACEPTAR_LABEL.getLabel());
         btnEdit = new Button(EnumLabel.EDITAR_LABEL.getLabel());
@@ -109,6 +108,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         btnCancel = new Button(EnumLabel.CANCELAR_LABEL.getLabel());
         btnAccept.setVisible(false);
         btnCancel.setVisible(false);
+        txtNameRol.setRequiredIndicatorVisible(true);
+        txtDescription.setRequiredIndicatorVisible(true);
     }
 
     private void loadInformationGrid() {
@@ -145,7 +146,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
                 visibleComponents();
                 enabledComponents();
                 emptySetValue();
-                action.setValue("new");
+                action = "new";
                 acceptRolAction();
                 cancelRolAction();
             }
@@ -156,14 +157,12 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         btnAccept.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (action.getValue().equalsIgnoreCase("new")) {
+                if (action.equalsIgnoreCase("new")) {
                     processAddRol();
-                } else if (action.getValue().equalsIgnoreCase("edit")) {
+                } else if (action.equalsIgnoreCase("edit")) {
                     processUpdateRol();
-                } else if (action.getValue().equalsIgnoreCase("delete")) {
-
+                } else if (action.equalsIgnoreCase("delete")) {
                     processDeleteRol();
-
                 }
             }
         });
@@ -180,7 +179,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 visibleComponents();
-                action.setValue("edit");
+                action = "edit";
                 acceptRolAction();
                 cancelRolAction();
             }
@@ -194,7 +193,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
             public void buttonClick(Button.ClickEvent event) {
                 visibleComponents();
                 notEnabledComponents();
-                action.setValue("delete");
+                action = "delete";
                 acceptRolAction();
                 cancelRolAction();
             }
@@ -215,6 +214,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
 
     private void processAddRol() {
         RolesEntity rolesEntity = new RolesEntity();
+        if(!isValidationFieldEmpty()){
         rolesEntity.setNamerole(txtNameRol.getValue());
         rolesEntity.setDescriptionrole(txtDescription.getValue());
         controllerRol.save(rolesEntity);
@@ -222,6 +222,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         refreshInformationGrid();
         emptySetValue();
         notVisibleComponents();
+        }
     }
 
     private void processUpdateRol() {
@@ -252,7 +253,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     }
 
     private void emptySetValue() {
-        action.setValue("");
+        action = "";
         txtDescription.setValue("");
         txtNameRol.setValue("");
     }
@@ -280,5 +281,14 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         txtNameRol.setVisible(true);
         btnAccept.setVisible(true);
         btnCancel.setVisible(true);
+    }
+
+    private boolean isValidationFieldEmpty() {
+        boolean validation = false;
+        if (txtNameRol.getValue().isEmpty() || txtDescription.getValue().isEmpty()) {
+            Notification.show("Debe de introducir todos los campos", Notification.Type.ERROR_MESSAGE);
+            validation = true;
+        }
+        return validation;
     }
 }
