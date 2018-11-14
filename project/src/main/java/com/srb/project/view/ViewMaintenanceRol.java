@@ -34,8 +34,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     private HorizontalLayout fieldForm;
     private String action;
     private RolesEntity roles;
-    Grid<RolesEntity> grid = new Grid<>();
-    ListDataProvider<RolesEntity> dataProvider;
+    private Grid<RolesEntity> grid = new Grid<>();
+    private ListDataProvider<RolesEntity> dataProvider;
     private Collection<RolesEntity> collectionRol;
 
     @Autowired
@@ -90,6 +90,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         newRolAction();
         editRolAction();
         deleteRolAction();
+        operationButtonsFooter.setVisible(false);
+        fieldForm.setVisible(false);
         rightPanel.addComponent(operationButtons);
         rightPanel.addComponent(fieldForm);
         rightPanel.addComponent(operationButtonsFooter);
@@ -99,15 +101,12 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     private void setPropertiesField() {
         txtDescription = new TextField(EnumLabel.DESCRIPTION_ROL_LABEL.getLabel());
         txtNameRol = new TextField(EnumLabel.NAME_ROL_LABEL.getLabel());
-        txtDescription.setVisible(false);
-        txtNameRol.setVisible(false);
         btnNew = new Button(EnumLabel.REGISTRAR_LABEL.getLabel());
         btnAccept = new Button(EnumLabel.ACEPTAR_LABEL.getLabel());
         btnEdit = new Button(EnumLabel.EDITAR_LABEL.getLabel());
         btnDelete = new Button(EnumLabel.ELIMINAR_LABEL.getLabel());
         btnCancel = new Button(EnumLabel.CANCELAR_LABEL.getLabel());
-        btnAccept.setVisible(false);
-        btnCancel.setVisible(false);
+
         txtNameRol.setRequiredIndicatorVisible(true);
         txtDescription.setRequiredIndicatorVisible(true);
     }
@@ -131,20 +130,20 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         });
     }
 
-    @Override
-    public void attach() {
-
-        buildForm();
-
+    private void refreshInformationGrid() {
+        collectionRol = controllerRol.findAllRoles();
+        dataProvider = DataProvider.ofCollection(collectionRol);
+        grid.setDataProvider(dataProvider);
     }
-
 
     private void newRolAction() {
         btnNew.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                visibleComponents();
-                enabledComponents();
+
+                visibleFieldForm(true);
+                enabledFieldForm(true);
+                visibleOperationButtonsFooter(true);
                 emptySetValue();
                 action = "new";
                 acceptRolAction();
@@ -168,20 +167,20 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         });
     }
 
-    private void refreshInformationGrid() {
-        collectionRol = controllerRol.findAllRoles();
-        dataProvider = DataProvider.ofCollection(collectionRol);
-        grid.setDataProvider(dataProvider);
-    }
-
     private void editRolAction() {
         btnEdit.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                visibleComponents();
-                action = "edit";
-                acceptRolAction();
-                cancelRolAction();
+                if (!txtDescription.isEmpty() && !txtNameRol.isEmpty()) {
+                    visibleFieldForm(true);
+                    enabledFieldForm(true);
+                    visibleOperationButtonsFooter(true);
+                    action = "edit";
+                    acceptRolAction();
+                    cancelRolAction();
+                } else {
+                    Notification.show("Debe seleccionar un rol", Notification.Type.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -191,11 +190,16 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         btnDelete.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                visibleComponents();
-                notEnabledComponents();
-                action = "delete";
-                acceptRolAction();
-                cancelRolAction();
+                if (!txtDescription.isEmpty() && !txtNameRol.isEmpty()) {
+                    visibleFieldForm(true);
+                    enabledFieldForm(false);
+                    visibleOperationButtonsFooter(true);
+                    action = "delete";
+                    acceptRolAction();
+                    cancelRolAction();
+                } else {
+                    Notification.show("Debe seleccionar un rol", Notification.Type.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -205,8 +209,9 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent event) {
 
-                notEnabledComponents();
-                notVisibleComponents();
+                enabledFieldForm(false);
+                visibleFieldForm(false);
+                visibleOperationButtonsFooter(false);
                 emptySetValue();
             }
         });
@@ -214,14 +219,15 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
 
     private void processAddRol() {
         RolesEntity rolesEntity = new RolesEntity();
-        if(!isValidationFieldEmpty()){
-        rolesEntity.setNamerole(txtNameRol.getValue());
-        rolesEntity.setDescriptionrole(txtDescription.getValue());
-        controllerRol.save(rolesEntity);
-        Notification.show(EnumMessages.MESSAGES_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-        refreshInformationGrid();
-        emptySetValue();
-        notVisibleComponents();
+        if (!isValidationFieldEmpty()) {
+            rolesEntity.setNamerole(txtNameRol.getValue());
+            rolesEntity.setDescriptionrole(txtDescription.getValue());
+            controllerRol.save(rolesEntity);
+            Notification.show(EnumMessages.MESSAGES_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+            refreshInformationGrid();
+            emptySetValue();
+            visibleFieldForm(false);
+            visibleOperationButtonsFooter(false);
         }
     }
 
@@ -236,7 +242,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
         refreshInformationGrid();
         emptySetValue();
-        notVisibleComponents();
+        visibleFieldForm(false);
+        visibleOperationButtonsFooter(false);
     }
 
     private void processDeleteRol() {
@@ -248,8 +255,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         Notification.show(EnumMessages.MESSAGE_SUCESS_DELETE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
         refreshInformationGrid();
         emptySetValue();
-        enabledComponents();
-        notVisibleComponents();
+        visibleFieldForm(false);
+        visibleOperationButtonsFooter(false);
     }
 
     private void emptySetValue() {
@@ -258,29 +265,22 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         txtNameRol.setValue("");
     }
 
-    private void enabledComponents() {
-        txtNameRol.setEnabled(true);
-        txtDescription.setEnabled(true);
-    }
-
-    private void notEnabledComponents() {
-        txtNameRol.setEnabled(false);
-        txtDescription.setEnabled(false);
-    }
-
-    private void notVisibleComponents() {
-        txtDescription.setVisible(false);
-        txtNameRol.setVisible(false);
-        btnAccept.setVisible(false);
-        btnCancel.setVisible(false);
+    private void visibleOperationButtonsFooter(boolean visible) {
+        operationButtonsFooter.setVisible(visible);
 
     }
 
-    private void visibleComponents() {
-        txtDescription.setVisible(true);
-        txtNameRol.setVisible(true);
-        btnAccept.setVisible(true);
-        btnCancel.setVisible(true);
+    private void enabledOperationButtonsFooter(boolean visible) {
+        operationButtonsFooter.setEnabled(visible);
+    }
+
+    private void visibleFieldForm(boolean visible) {
+        fieldForm.setVisible(visible);
+
+    }
+
+    private void enabledFieldForm(boolean visible) {
+        fieldForm.setEnabled(visible);
     }
 
     private boolean isValidationFieldEmpty() {
@@ -290,5 +290,12 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
             validation = true;
         }
         return validation;
+    }
+
+    @Override
+    public void attach() {
+
+        buildForm();
+
     }
 }
