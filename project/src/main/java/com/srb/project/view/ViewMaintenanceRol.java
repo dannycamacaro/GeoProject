@@ -14,6 +14,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 
 @UIScope
@@ -46,6 +47,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
 
     }
 
+    @PostConstruct
     public void buildForm() {
         leftPanel = new VerticalLayout();
         rightPanel = new VerticalLayout();
@@ -292,10 +294,5 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
         return validation;
     }
 
-    @Override
-    public void attach() {
 
-        buildForm();
-
-    }
 }
