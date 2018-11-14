@@ -6,6 +6,7 @@ public enum EnumMessages {
     MESSAGES_ERROR_SAVE("Error al Guardar!"),
     MESSAGES_SAVE("Agregado exitosamente"),
     MESSAGES_EDIT("Editado exitosamente"),
+    SELECT_ROL("Debe seleccionar un rol"),
     MESSAGES_LOGIN("Ingresar");
 
     EnumMessages(String message) {

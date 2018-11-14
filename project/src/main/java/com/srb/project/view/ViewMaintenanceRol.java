@@ -181,7 +181,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
                     acceptRolAction();
                     cancelRolAction();
                 } else {
-                    Notification.show("Debe seleccionar un rol", Notification.Type.ERROR_MESSAGE);
+                    Notification.show(EnumMessages.SELECT_ROL.getMessage(), Notification.Type.ERROR_MESSAGE);
                 }
             }
         });
@@ -200,7 +200,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
                     acceptRolAction();
                     cancelRolAction();
                 } else {
-                    Notification.show("Debe seleccionar un rol", Notification.Type.ERROR_MESSAGE);
+                    Notification.show(EnumMessages.SELECT_ROL.getMessage(), Notification.Type.ERROR_MESSAGE);
                 }
             }
         });
@@ -222,43 +222,47 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     private void processAddRol() {
         RolesEntity rolesEntity = new RolesEntity();
         if (!isValidationFieldEmpty()) {
-            rolesEntity.setNamerole(txtNameRol.getValue());
-            rolesEntity.setDescriptionrole(txtDescription.getValue());
-            controllerRol.save(rolesEntity);
-            Notification.show(EnumMessages.MESSAGES_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-            refreshInformationGrid();
-            emptySetValue();
-            visibleFieldForm(false);
-            visibleOperationButtonsFooter(false);
+            try {
+                rolesEntity.setNamerole(txtNameRol.getValue());
+                rolesEntity.setDescriptionrole(txtDescription.getValue());
+                controllerRol.save(rolesEntity);
+                Notification.show(EnumMessages.MESSAGES_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                refreshInformationGrid();
+                emptySetValue();
+                visibleFieldForm(false);
+                visibleOperationButtonsFooter(false);
+            } catch (Exception e) {
+                Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
+            }
         }
     }
 
     private void processUpdateRol() {
-        txtDescription.setVisible(true);
-        txtNameRol.setVisible(true);
-        RolesEntity rolesEntity = new RolesEntity();
-        rolesEntity.setIdrol(roles.getIdrol());
-        rolesEntity.setNamerole(txtNameRol.getValue());
-        rolesEntity.setDescriptionrole(txtDescription.getValue());
-        controllerRol.updateRol(rolesEntity);
-        Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-        refreshInformationGrid();
-        emptySetValue();
-        visibleFieldForm(false);
-        visibleOperationButtonsFooter(false);
+        try {
+            roles.setNamerole(txtNameRol.getValue());
+            roles.setDescriptionrole(txtDescription.getValue());
+            controllerRol.updateRol(roles);
+            Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+            refreshInformationGrid();
+            emptySetValue();
+            visibleFieldForm(false);
+            visibleOperationButtonsFooter(false);
+        } catch (Exception e) {
+            Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
+        }
     }
 
     private void processDeleteRol() {
-        txtDescription.setVisible(true);
-        txtNameRol.setVisible(true);
-        RolesEntity rolesEntity = new RolesEntity();
-        rolesEntity.setIdrol(roles.getIdrol());
-        controllerRol.deleteRol(rolesEntity);
-        Notification.show(EnumMessages.MESSAGE_SUCESS_DELETE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-        refreshInformationGrid();
-        emptySetValue();
-        visibleFieldForm(false);
-        visibleOperationButtonsFooter(false);
+        try {
+            controllerRol.deleteRol(roles);
+            Notification.show(EnumMessages.MESSAGE_SUCESS_DELETE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+            refreshInformationGrid();
+            emptySetValue();
+            visibleFieldForm(false);
+            visibleOperationButtonsFooter(false);
+        } catch (Exception e) {
+            Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
+        }
     }
 
     private void emptySetValue() {
@@ -288,7 +292,7 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
     private boolean isValidationFieldEmpty() {
         boolean validation = false;
         if (txtNameRol.getValue().isEmpty() || txtDescription.getValue().isEmpty()) {
-            Notification.show("Debe de introducir todos los campos", Notification.Type.ERROR_MESSAGE);
+            Notification.show(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage(), Notification.Type.ERROR_MESSAGE);
             validation = true;
         }
         return validation;
