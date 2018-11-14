@@ -37,8 +37,8 @@ public class ViewMenu extends VerticalLayout implements View {
 
     }
 
-    public  MenuBar buildMenu(){
-        mainMenu = new MenuBar();
+    public static MenuBar buildMenu(){
+        MenuBar mainMenu = new MenuBar();
 
         mainMenu.addItem("Roles",new MenuBar.Command() {
             @Override

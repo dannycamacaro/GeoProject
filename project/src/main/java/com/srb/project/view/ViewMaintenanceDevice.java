@@ -2,15 +2,23 @@ package com.srb.project.view;
 
 
 import com.srb.project.controller.ControllerDevice;
+import com.srb.project.controller.ControllerVehicle;
 import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.model.DeviceEntity;
+import com.srb.project.model.RoutedetailEntity;
 import com.srb.project.model.VehicleEntity;
+import com.srb.project.navigator.UniverseNavigator;
 import com.srb.project.persister.ServicesVehicle;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.CrudListener;
 import org.vaadin.crudui.crud.CrudOperation;
@@ -28,133 +36,239 @@ import java.util.Iterator;
 public class ViewMaintenanceDevice extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "dispositivos";
-    private HorizontalSplitCrudLayout horizontalSplitCrudLayout;
-    private GridCrud<DeviceEntity> crud;
-    private GridLayoutCrudFormFactory<DeviceEntity> formFactory;
+
     @Autowired
     ControllerDevice controllerDevice;
     @Autowired
-    ServicesVehicle servicesVehicle;
-    Collection vehicles;
+    ControllerVehicle controllerVehicle;
+
+    Collection<VehicleEntity> collectionVehicles;
+    Collection<String> plateVehicles = new ArrayList<>();
+    Collection<DeviceEntity> collectionDevice;
+
+    MenuBar mainMenu;
+
+    // componentes de la vista
+
+    TextField txtMark = new TextField("Marca");
+    TextField txtModel = new TextField("Modelo");
+    TextField txtImei = new TextField("IMEI");
+    TextField txtPhoneNumber = new TextField("N° Telefono");
+    ComboBox<String> cmbVehicle = new ComboBox<>("Vehiculo");
+
+    //Botones
+
+    Button btnSave = new Button(EnumLabel.REGISTRAR_LABEL.getLabel());
+    Button btnEdit = new Button(EnumLabel.EDITAR_LABEL.getLabel());
+    Button btnDelete = new Button(EnumLabel.ELIMINAR_LABEL.getLabel());
+
+    Button btnAccept = new Button("Aceptar");
+    Button btnCancel = new Button("Cancelar");
+
+    VerticalLayout leftPanel = new VerticalLayout();
+    VerticalLayout rightPanel = new VerticalLayout();
+
+    HorizontalLayout contenedor = new HorizontalLayout();
+    HorizontalLayout buttonsPanel = new HorizontalLayout();
+    HorizontalLayout infoPanel = new HorizontalLayout();
+    HorizontalLayout infoPanel2 = new HorizontalLayout();
+    HorizontalLayout infoPanel3 = new HorizontalLayout();
+    HorizontalLayout buttonLayout2 = new HorizontalLayout();
+
+    private ListDataProvider<DeviceEntity> dataProvider;
+    private Grid<DeviceEntity> grid;
+
+    String action="";
 
     @PostConstruct
     void init() {
-
-        formFactory.setFieldType("nameVehicle", com.vaadin.ui.ComboBox.class);
-        vehicles = servicesVehicle.findAllVehicle();
-        ArrayList<String> stringArrayList = new ArrayList<>();
-
-        formFactory.setFieldProvider("nameVehicle", () -> new ComboBox("nameVehicle", stringArrayList));
-        formFactory.setFieldCreationListener("nameVehicle", field -> {
-            com.vaadin.ui.ComboBox comboBox = (com.vaadin.ui.ComboBox) field;
-            Iterator iterator = vehicles.iterator();
-            stringArrayList.clear();
-
-            while (iterator.hasNext()) {
-                VehicleEntity vehicleEntity = (VehicleEntity) iterator.next();
-                stringArrayList.add(vehicleEntity.getLicenseplate());
-
-            }
-            comboBox.setItems(stringArrayList);
-        });
-
-    }
-
-    public ViewMaintenanceDevice() {
-        horizontalSplitCrudLayout = new HorizontalSplitCrudLayout();
-        horizontalSplitCrudLayout.setFormCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_REGISTRO_LABEL.getLabel());
-        crud = new GridCrud<>(DeviceEntity.class, horizontalSplitCrudLayout);
-        formFactory = new GridLayoutCrudFormFactory<>(DeviceEntity.class, 2, 2);
-        buildForm();
-
-    }
-
-    private void buildForm() {
+        hideContent();
         this.setSizeFull();
-        this.setWidth("100%");
+        VerticalLayout menuPanel = new VerticalLayout();
+        if (mainMenu == null) {
+            mainMenu = ViewMenu.buildMenu();
+        }
+        menuPanel.addComponents(mainMenu);
+        menuPanel.setComponentAlignment(mainMenu, Alignment.TOP_CENTER);
+        menuPanel.setHeight("100%");
+        menuPanel.setHeight("30px");
+        menuPanel.setMargin(new MarginInfo(false, false, false, false));
 
-        loadSetColumns();
-        loadSetVisibleProperties();
-        loadSetFieldCaptions();
-        loadSetButtonCaption();
-        loadMessagesForm();
-        actionButtons();
+        loadAllData();
 
-        crud.setCrudFormFactory(formFactory);
-        this.addComponent(crud);
-
-
+        buildLeftPanel();
+        buildRightPanel();
+        this.addComponent(menuPanel);
+        contenedor.setSizeFull();
+        this.addComponent(contenedor);
+        this.setSizeUndefined();
     }
 
-    private void loadSetColumns() {
+    private void buildRightPanel() {
+        rightPanel.setSpacing(true);
+        rightPanel.setSizeFull();
+        buttonsPanel = new HorizontalLayout();
+        buttonsPanel.setHeight("50px");
+        buttonsPanel.addComponents(btnSave, btnEdit, btnDelete, cmbVehicle);
 
-        crud.getGrid().setColumns("mark", "model", "imei", "phonenumber");
-        crud.getGrid().getColumn("mark").setCaption("Marca");
-        crud.getGrid().getColumn("model").setCaption("Modelo");
-        crud.getGrid().getColumn("imei").setCaption("IMEI");
-        crud.getGrid().getColumn("phonenumber").setCaption("Numero de telefono");
-//        crud.getGrid().getColumn("nameVehicle").setCaption("Vehiculo asociado");
-
-    }
-
-    private void loadSetVisibleProperties() {
-        formFactory.setVisibleProperties(CrudOperation.READ, "mark", "model", "imei", "phonenumber");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "mark", "model", "imei", "phonenumber","nameVehicle");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "mark", "model", "imei", "phonenumber","nameVehicle");
-        formFactory.setVisibleProperties(CrudOperation.DELETE, "mark", "model", "imei", "phonenumber");
-    }
-
-    private void loadSetFieldCaptions() {
-        formFactory.setFieldCaptions(CrudOperation.READ, "Marca", "Modelo", "IMEI", "Numero de telefono");
-        formFactory.setFieldCaptions(CrudOperation.ADD, "Marca", "Modelo", "IMEI", "Numero de telefono","Vehiculo");
-        formFactory.setFieldCaptions(CrudOperation.UPDATE, "Marca", "Modelo", "IMEI", "Numero de telefono","Vehiculo");
-        formFactory.setFieldCaptions(CrudOperation.DELETE, "Marca", "Modelo", "IMEI", "Numero de telefono");
-    }
-
-    private void loadSetButtonCaption() {
-        formFactory.setButtonCaption(CrudOperation.READ, EnumLabel.ACEPTAR_LABEL.getLabel());
-        formFactory.setButtonCaption(CrudOperation.ADD, EnumLabel.REGISTRAR_LABEL.getLabel());
-        formFactory.setButtonCaption(CrudOperation.UPDATE, EnumLabel.EDITAR_LABEL.getLabel());
-        formFactory.setButtonCaption(CrudOperation.DELETE, EnumLabel.ELIMINAR_LABEL.getLabel());
-        formFactory.setCancelButtonCaption(EnumLabel.CANCELAR_LABEL.getLabel());
-    }
-
-    private void loadMessagesForm() {
-
-        crud.setSavedMessage(EnumLabel.REGISTRO_SALVADO_LABEL.getLabel());
-        crud.setDeletedMessage(EnumLabel.REGISTRO_ELIMINADO_LABEL.getLabel());
-        crud.setRowCountCaption(EnumLabel.ROW_COUNT_CAPTION_LABEL.getLabel());
-        crud.getFindAllButton().setDescription(EnumLabel.REFRESCAR_LABEL.getLabel());
-        crud.getAddButton().setDescription(EnumLabel.REGISTRAR_LABEL.getLabel());
-        crud.getUpdateButton().setDescription(EnumLabel.EDITAR_LABEL.getLabel());
-        crud.getDeleteButton().setDescription(EnumLabel.ELIMINAR_LABEL.getLabel());
-    }
-
-    private void actionButtons() {
-        crud.setCrudListener(new CrudListener<DeviceEntity>() {
+        btnSave.addClickListener(new Button.ClickListener() {
             @Override
-            public Collection<DeviceEntity> findAll() {
-                return controllerDevice.findAllDevice();
-            }
-
-            @Override
-            public DeviceEntity add(DeviceEntity device) {
-                controllerDevice.save(device);
-                return device;
-            }
-
-            @Override
-            public DeviceEntity update(DeviceEntity device) {
-
-                controllerDevice.updateDevice(device);
-                return device;
-            }
-
-            @Override
-            public void delete(DeviceEntity device) {
-                controllerDevice.deleteDevice(device);
+            public void buttonClick(Button.ClickEvent event) {
+            showContent();
+            action = "new";
             }
         });
+
+        btnDelete.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                showContent();
+                action = "new";
+            }
+        });
+
+        btnEdit.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                showContent();
+                action = "new";
+            }
+        });
+
+        buttonsPanel.setSpacing(false);
+        buttonsPanel.setMargin(new MarginInfo(false, false, false, false));
+
+        for (VehicleEntity vehicles : collectionVehicles) {
+            plateVehicles.add(vehicles.getLicenseplate());
+        }
+
+        cmbVehicle.setItems(plateVehicles);
+
+        rightPanel.addComponent(buttonsPanel);
+        infoPanel.addComponents(txtMark, txtModel);
+        infoPanel.setSizeUndefined();
+        infoPanel2.addComponents(txtImei, txtPhoneNumber);
+        infoPanel2.setSizeUndefined();
+        infoPanel3.addComponents(cmbVehicle);
+        infoPanel3.setSizeUndefined();
+
+        rightPanel.addComponents(infoPanel);
+        rightPanel.addComponents(infoPanel2);
+        rightPanel.addComponents(infoPanel3);
+
+        buttonLayout2.addComponents(btnCancel, btnAccept);
+
+        btnAccept.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                if (action.equalsIgnoreCase("new")) {
+                    processAddDevice();
+                } else if (action.equalsIgnoreCase("edit")) {
+                    processUpdateDevice();
+                } else if (action.equalsIgnoreCase("delete")) {
+                    processDeleteDevice();
+                }
+            }
+        });
+
+        btnCancel.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                hideContent();
+                action = "new";
+            }
+        });
+
+
+        rightPanel.addComponents(buttonLayout2);
+
+        rightPanel.setComponentAlignment(buttonsPanel, Alignment.MIDDLE_LEFT);
+        rightPanel.setComponentAlignment(buttonLayout2, Alignment.BOTTOM_LEFT);
+        contenedor.addComponent(rightPanel);
+    }
+
+    private void processDeleteDevice() {
+    }
+
+    private void processUpdateDevice() {
+    }
+
+    private void processAddDevice() {
+        DeviceEntity deviceEntity = new DeviceEntity();
+        deviceEntity.setStatedelete(Byte.valueOf("1"));
+        deviceEntity.setImei(txtImei.getValue());
+        deviceEntity.setMark(txtMark.getValue());
+        deviceEntity.setModel(txtModel.getValue());
+        deviceEntity.setPhonenumber(txtPhoneNumber.getValue());
+        for (VehicleEntity vehicle:collectionVehicles) {
+            if (vehicle.getLicenseplate().equalsIgnoreCase(cmbVehicle.getValue())){
+                deviceEntity.setIdvehicle(vehicle.getIdvehicle());
+                deviceEntity.setIdvehicle(vehicle.getIdvehicle());
+                deviceEntity.setVehicleByIdvehicle(vehicle);
+                break;
+            }
+        }
+        try{
+            controllerDevice.save(deviceEntity);
+            hideContent();
+            Notification.show("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
+            refresGrid();
+        }catch (Exception e){
+            Notification.show("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
+            hideContent();
+        }
+    }
+
+    private void refresGrid() {
+        collectionDevice = controllerDevice.findAllDevice();
+        dataProvider = DataProvider.ofCollection(collectionDevice);
+        grid.setDataProvider(dataProvider);
+    }
+
+    private void buildLeftPanel() {
+        dataProvider = DataProvider.ofCollection(collectionDevice);
+        grid = new Grid<>();
+        grid.setEnabled(true);
+        grid.addColumn(DeviceEntity::getPhonenumber).setCaption("Numero Telefonico");
+        grid.addColumn(DeviceEntity::getMark).setCaption("Marca");
+        grid.addColumn(DeviceEntity::getImei).setCaption("Imei");
+        grid.addColumn(DeviceEntity::getModel).setCaption("Modelo");
+        grid.setDataProvider(dataProvider);
+        grid.addItemClickListener(new ItemClickListener<DeviceEntity>() {
+            @Override
+            public void itemClick(Grid.ItemClick<DeviceEntity> event) {
+                txtMark.setValue(event.getItem().getMark());
+                txtModel.setValue(event.getItem().getModel());
+                txtImei.setValue(event.getItem().getImei());
+                txtPhoneNumber.setValue(event.getItem().getPhonenumber());
+            }
+        });
+        leftPanel.setSpacing(true);
+        leftPanel.setMargin(new MarginInfo(true, true, true, true));
+        leftPanel.setSizeFull();
+        grid.setSizeFull();
+        leftPanel.addComponent(grid);
+        contenedor.addComponent(leftPanel);
+    }
+
+
+    private void loadAllData() {
+        collectionDevice = controllerDevice.findAllDevice();
+        collectionVehicles = controllerVehicle.findAllVehicle();
+    }
+
+    private void hideContent() {
+        infoPanel.setVisible(false);
+        infoPanel2.setVisible(false);
+        infoPanel3.setVisible(false);
+        buttonLayout2.setVisible(false);
+    }
+
+    private void showContent() {
+        infoPanel.setVisible(true);
+        infoPanel2.setVisible(true);
+        infoPanel3.setVisible(true);
+        buttonLayout2.setVisible(true);
     }
 
 }

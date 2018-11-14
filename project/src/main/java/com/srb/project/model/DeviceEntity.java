@@ -40,9 +40,6 @@ public class DeviceEntity {
     @Column(name = "STATEDELETE")
     private Byte statedelete;
 
-    @Transient
-    private String  nameVehicle;
-
     public void setIddevice(Integer iddevice) {
         this.iddevice = iddevice;
     }
@@ -105,13 +102,6 @@ public class DeviceEntity {
         this.phonenumber = phonenumber;
     }
 
-    public String getNameVehicle() {
-        return nameVehicle;
-    }
-
-    public void setNameVehicle(String nameVehicle) {
-        this.nameVehicle = nameVehicle;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -150,7 +140,6 @@ public class DeviceEntity {
                 ", imei='" + imei + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", statedelete=" + statedelete +
-                ", nameVehicle='" + nameVehicle + '\'' +
                 '}';
     }
 

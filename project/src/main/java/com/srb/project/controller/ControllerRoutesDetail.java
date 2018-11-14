@@ -99,4 +99,11 @@ public class ControllerRoutesDetail {
 
         return routesEntities;
     }
+    public Collection<RoutedetailEntity> findRoutesDetailByIdRoute(Integer id) {
+        servicesRouteDetail.findDetailsByIdRoute(id);
+        Collection<RoutedetailEntity> routesEntities = new ArrayList<>();
+        routesEntities = servicesRouteDetail.findAllRoutesDetail();
+
+        return routesEntities;
+    }
 }
