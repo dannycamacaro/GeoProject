@@ -72,7 +72,8 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
 
     @PostConstruct
     private void buildForm() {
-        this.setSizeFull();
+        this.setWidth("100%");
+        this.setHeightUndefined();
         this.setSpacing(false);
         createMenu();
         hideFields();
@@ -84,8 +85,20 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
 
     private void createLeftLayout() {
         leftLayout.setSizeFull();
-        refreshInformationGrid();
         leftLayout.addComponent(grid);
+        refreshInformationGrid();
+        grid.addColumn(RoutesEntity::getNameroutes).setCaption("Nombre de Ruta");
+        grid.addColumn(RoutesEntity::getDescription).setCaption("Descripcion de Ruta");
+        grid.setDataProvider(dataProvider);
+        grid.addItemClickListener(new ItemClickListener<RoutesEntity>() {
+            @Override
+            public void itemClick(Grid.ItemClick<RoutesEntity> event) {
+                routesEntitySelected = event.getItem();
+                txtNameRoute.setValue(routesEntitySelected.getNameroutes());
+                txtDescription.setValue(routesEntitySelected.getDescription());
+            }
+        });
+        grid.setDataProvider(dataProvider);
         grid.setSizeFull();
         principalLayout.addComponent(leftLayout);
     }
@@ -96,6 +109,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         btnNew.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                clearFields();
                 showFields();
                 action = "new";
             }
@@ -105,7 +119,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 showFields();
-                action = "new";
+                action = "edit";
             }
         });
 
@@ -113,7 +127,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 showFields();
-                action = "new";
+                action = "delete";
             }
         });
 
@@ -169,6 +183,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         try {
             controllerRoutes.updateRoutes(routesEntitySelected);
             hideContent();
+            clearFields();
             refreshInformationGrid();
             showMessage("Edicion Exitosa", Notification.Type.HUMANIZED_MESSAGE);
         } catch (Exception e) {
@@ -186,6 +201,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         try {
             controllerRoutes.save(routesEntity);
             hideContent();
+            clearFields();
             refreshInformationGrid();
             showMessage("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
         } catch (Exception e) {

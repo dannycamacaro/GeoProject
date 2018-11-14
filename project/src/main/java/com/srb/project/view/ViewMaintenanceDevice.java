@@ -263,6 +263,16 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     }
 
     private void buildLeftPanel() {
+        loadInformationGrid();
+        leftPanel.setSpacing(true);
+        leftPanel.setMargin(new MarginInfo(true, true, true, true));
+        leftPanel.setSizeFull();
+        grid.setSizeFull();
+        leftPanel.addComponent(grid);
+        contenedor.addComponent(leftPanel);
+    }
+
+    private void loadInformationGrid() {
         dataProvider = DataProvider.ofCollection(collectionDevice);
         grid = new Grid<>();
         grid.setEnabled(true);
@@ -286,14 +296,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
                 }
             }
         });
-        leftPanel.setSpacing(true);
-        leftPanel.setMargin(new MarginInfo(true, true, true, true));
-        leftPanel.setSizeFull();
-        grid.setSizeFull();
-        leftPanel.addComponent(grid);
-        contenedor.addComponent(leftPanel);
     }
-
 
     private void loadAllData() {
         collectionDevice = controllerDevice.findAllDevice();
