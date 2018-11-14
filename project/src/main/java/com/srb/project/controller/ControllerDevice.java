@@ -28,9 +28,6 @@ public class ControllerDevice {
         AuditsEntity auditsEntity = new AuditsEntity();
         try {
             auditsEntity = ControllerAudit.loadInformationAudit(device.toString(), EnumOperation.ADD_DEVICE.getIdOperation(), "controllerLogin", appContext);
-
-            device.setStatedelete((byte) 1);
-            device.setIdvehicle(2); // TODO AJUSTAR CON LA LISTA DE LA VISTA
             servicesDevice.save(device);
             auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
             servicesAudit.save(auditsEntity);

@@ -63,5 +63,13 @@ public class ServicesRouteDetail {
         return routesEntities;
     }
 
+    public List<RoutedetailEntity> findDetailsByIdRoute(Integer id) {
+        List<RoutedetailEntity> routedetailEntitys = new ArrayList<>();
+        Query query;
+        query = entityManager.createQuery("from RoutedetailEntity where idroutes=:id", RoutedetailEntity.class);
+        query = query.setParameter("id", id);
+        routedetailEntitys = query.getResultList();
+        return routedetailEntitys;
+    }
 
 }

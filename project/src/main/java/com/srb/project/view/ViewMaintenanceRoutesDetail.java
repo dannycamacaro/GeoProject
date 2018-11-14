@@ -44,9 +44,9 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
     private GridCrud<RoutedetailEntity> crud;
     private GridLayoutCrudFormFactory<RoutedetailEntity> formFactory;
     public RoutesEntity route;
-    private ArrayList<LatLon> detailLatLon= new ArrayList<>();
+    private ArrayList<LatLon> detailLatLon = new ArrayList<>();
     private ArrayList<RoutedetailEntity> detailRoute = new ArrayList<>();
-    GoogleMap googleMap =  new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc",null,"spanish");
+    GoogleMap googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc", null, "spanish");
     Collection<RoutedetailEntity> routes = new ArrayList<>();
     Grid<RoutedetailEntity> grid = new Grid<>();
     ListDataProvider<RoutedetailEntity> dataProvider;
@@ -68,10 +68,19 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
     }
 
     private void buildForm() {
+
+        // verificar si existen detalles de rutas
+        if (route != null & route.getIdroutes() > 0) {
+            routes = controllerRoutesDetail.findRoutesDetailByIdRoute(route.getIdroutes());
+        }
+
+        if (routes.size() > 0) {
+
+        }
         // creacion de formuladrio de detalle
         VerticalLayout leftPanel = new VerticalLayout();
         leftPanel.setWidth("100%");
-        leftPanel.setMargin(new MarginInfo(true,false,false,true));
+        leftPanel.setMargin(new MarginInfo(true, false, false, true));
         leftPanel.setSpacing(false);
         buildFormDetail(leftPanel);
 
@@ -114,7 +123,7 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
         txtLongitud.setEnabled(false);
 
         HorizontalLayout latlonLayout = new HorizontalLayout();
-        latlonLayout.addComponents(txtLatitud,txtLongitud);
+        latlonLayout.addComponents(txtLatitud, txtLongitud);
 
         leftPanel.addComponent(txtDescription);
         leftPanel.addComponent(latlonLayout);
@@ -123,12 +132,12 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
         btnAgregar.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if(!ValidationsString.isEmptyOrNull(txtDescription.getValue())
-                    && !ValidationsString.isEmptyOrNull(txtLatitud.getValue())
-                    && !ValidationsString.isEmptyOrNull(txtLongitud.getValue())){
+                if (!ValidationsString.isEmptyOrNull(txtDescription.getValue())
+                        && !ValidationsString.isEmptyOrNull(txtLatitud.getValue())
+                        && !ValidationsString.isEmptyOrNull(txtLongitud.getValue())) {
 
-                    LatLon position = new LatLon(Double.valueOf(txtLatitud.getValue()),Double.valueOf(txtLongitud.getValue()));
-                    detailLatLon.add(position) ;
+                    LatLon position = new LatLon(Double.valueOf(txtLatitud.getValue()), Double.valueOf(txtLongitud.getValue()));
+                    detailLatLon.add(position);
                     RoutedetailEntity detailRoute = new RoutedetailEntity();
                     detailRoute.setIdroutes(route.getIdroutes());
                     detailRoute.setDescription(txtDescription.getValue());
@@ -141,7 +150,7 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
                     googleMap.addMarker(marker);
                     routes.add(detailRoute);
 
-                    if (routes.size()> 1){
+                    if (routes.size() > 1) {
                         googleMap.removePolyline(lineRoute);
                         lineRoute = new GoogleMapPolyline();
                         lineRoute.setCoordinates(detailLatLon);
@@ -165,12 +174,12 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
         btnSaveDetails.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                for (RoutedetailEntity detail: routes) {
+                for (RoutedetailEntity detail : routes) {
                     try {
                         controllerRoutesDetail.save(detail);
                         Notification.show("Ruta Guardada con Exito.", Notification.Type.HUMANIZED_MESSAGE);
                         UniverseNavigator.navigate(ViewSelectRoute.VIEW_NAME);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Notification.show("No se pudo guardar la ruta.", Notification.Type.HUMANIZED_MESSAGE);
                     }
                 }
@@ -186,7 +195,7 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
         });
 
         HorizontalLayout botonera = new HorizontalLayout();
-        botonera.addComponents(btnAgregar,btnClean);
+        botonera.addComponents(btnAgregar, btnClean);
 
         leftPanel.addComponent(botonera);
         leftPanel.addComponent(grid);
@@ -205,9 +214,37 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
     private void buildMap(VerticalLayout rightPanel) {
         rightPanel.setWidth("50%");
         rightPanel.setHeight("100%");
-        rightPanel.setMargin(new MarginInfo(true,false,false,false));
+        rightPanel.setMargin(new MarginInfo(true, false, false, false));
         rightPanel.setSpacing(false);
-        LatLon latLon= new LatLon(10.54646,-66.546466);
+        LatLon latLon ;
+
+        if (routes.size()>0){
+            RoutedetailEntity objects = (RoutedetailEntity)((ArrayList) routes).get(0);
+            latLon = new LatLon(Double.valueOf(objects.getRoutelatitude()), Double.valueOf(objects.getRoutelength()));
+
+            for (RoutedetailEntity coordenadas:routes) {
+                detailLatLon.add(new LatLon(Double.valueOf(coordenadas.getRoutelatitude()),Double.valueOf(coordenadas.getRoutelength())));
+            }
+
+            for (LatLon mark:detailLatLon) {
+                GoogleMapMarker marker = new GoogleMapMarker();
+                marker.setPosition(mark);
+                marker.setAnimationEnabled(true);
+                googleMap.addMarker(marker);
+            }
+
+            if (routes.size() > 1) {
+                lineRoute = new GoogleMapPolyline();
+                lineRoute.setCoordinates(detailLatLon);
+                googleMap.addPolyline(lineRoute);
+            }
+
+            dataProvider = DataProvider.ofCollection(routes);
+            grid.setDataProvider(dataProvider);
+
+        }else {
+            latLon = new LatLon(10.54646, -66.546466);
+        }
         googleMap.setCenter(latLon);
         googleMap.setWidth("600px");
         googleMap.setHeight("600px");
@@ -238,8 +275,8 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
 
     @Override
     public void attach() {
-        if(this.getUI() != null && this.getUI().getSession().getAttribute(RoutesEntity.class)!= null){
-            route =this.getUI().getSession().getAttribute(RoutesEntity.class);
+        if (this.getUI() != null && this.getUI().getSession().getAttribute(RoutesEntity.class) != null) {
+            route = this.getUI().getSession().getAttribute(RoutesEntity.class);
             buildForm();
         }
     }

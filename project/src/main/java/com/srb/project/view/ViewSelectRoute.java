@@ -1,6 +1,7 @@
 package com.srb.project.view;
 
 import com.srb.project.controller.ControllerRoutes;
+import com.srb.project.controller.ControllerRoutesDetail;
 import com.srb.project.model.RoutesEntity;
 import com.srb.project.navigator.UniverseNavigator;
 import com.vaadin.data.provider.DataProvider;
