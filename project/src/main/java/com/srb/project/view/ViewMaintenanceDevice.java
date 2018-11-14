@@ -46,6 +46,8 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     Collection<String> plateVehicles = new ArrayList<>();
     Collection<DeviceEntity> collectionDevice;
 
+    DeviceEntity deviceEntity;
+
     MenuBar mainMenu;
 
     // componentes de la vista
@@ -78,7 +80,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     private ListDataProvider<DeviceEntity> dataProvider;
     private Grid<DeviceEntity> grid;
 
-    String action="";
+    String action = "";
 
     @PostConstruct
     void init() {
@@ -114,8 +116,9 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         btnSave.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-            showContent();
-            action = "new";
+                clearFields();
+                showContent();
+                action = "new";
             }
         });
 
@@ -123,7 +126,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 showContent();
-                action = "new";
+                action = "delete";
             }
         });
 
@@ -131,7 +134,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 showContent();
-                action = "new";
+                action = "edit";
             }
         });
 
@@ -174,6 +177,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         btnCancel.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                clearFields();
                 hideContent();
                 action = "new";
             }
@@ -188,9 +192,42 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     }
 
     private void processDeleteDevice() {
+        try {
+            controllerDevice.deleteDevice(deviceEntity);
+            hideContent();
+            clearFields();
+            refresGrid();
+            showMessage("Registro eliminado", Notification.Type.HUMANIZED_MESSAGE);
+        }catch (Exception e){
+            showMessage("No se pudo eliminar el registro", Notification.Type.HUMANIZED_MESSAGE);
+        }
     }
 
     private void processUpdateDevice() {
+        deviceEntity.setStatedelete(Byte.valueOf("1"));
+        deviceEntity.setImei(txtImei.getValue());
+        deviceEntity.setMark(txtMark.getValue());
+        deviceEntity.setModel(txtModel.getValue());
+        deviceEntity.setPhonenumber(txtPhoneNumber.getValue());
+        for (VehicleEntity vehicle : collectionVehicles) {
+            if (vehicle.getLicenseplate().equalsIgnoreCase(cmbVehicle.getValue())) {
+                deviceEntity.setIdvehicle(vehicle.getIdvehicle());
+                deviceEntity.setIdvehicle(vehicle.getIdvehicle());
+                deviceEntity.setVehicleByIdvehicle(vehicle);
+                break;
+            }
+        }
+        try {
+            controllerDevice.updateDevice(deviceEntity);
+            clearFields();
+            hideContent();
+            showMessage("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
+            refresGrid();
+        } catch (Exception e) {
+            showMessage("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
+            clearFields();
+            hideContent();
+        }
     }
 
     private void processAddDevice() {
@@ -200,21 +237,21 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         deviceEntity.setMark(txtMark.getValue());
         deviceEntity.setModel(txtModel.getValue());
         deviceEntity.setPhonenumber(txtPhoneNumber.getValue());
-        for (VehicleEntity vehicle:collectionVehicles) {
-            if (vehicle.getLicenseplate().equalsIgnoreCase(cmbVehicle.getValue())){
+        for (VehicleEntity vehicle : collectionVehicles) {
+            if (vehicle.getLicenseplate().equalsIgnoreCase(cmbVehicle.getValue())) {
                 deviceEntity.setIdvehicle(vehicle.getIdvehicle());
                 deviceEntity.setIdvehicle(vehicle.getIdvehicle());
                 deviceEntity.setVehicleByIdvehicle(vehicle);
                 break;
             }
         }
-        try{
+        try {
             controllerDevice.save(deviceEntity);
             hideContent();
-            Notification.show("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
             refresGrid();
-        }catch (Exception e){
-            Notification.show("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
+            showMessage("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
+        } catch (Exception e) {
+            showMessage("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
             hideContent();
         }
     }
@@ -237,12 +274,13 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         grid.addItemClickListener(new ItemClickListener<DeviceEntity>() {
             @Override
             public void itemClick(Grid.ItemClick<DeviceEntity> event) {
+                deviceEntity = event.getItem();
                 txtMark.setValue(event.getItem().getMark());
                 txtModel.setValue(event.getItem().getModel());
                 txtImei.setValue(event.getItem().getImei());
                 txtPhoneNumber.setValue(event.getItem().getPhonenumber());
-                for(VehicleEntity vehicle : collectionVehicles){
-                    if (vehicle.getIdvehicle() == event.getItem().getIdvehicle()){
+                for (VehicleEntity vehicle : collectionVehicles) {
+                    if (vehicle.getIdvehicle() == event.getItem().getIdvehicle()) {
                         cmbVehicle.setSelectedItem(vehicle.getLicenseplate());
                     }
                 }
@@ -276,4 +314,15 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         buttonLayout2.setVisible(true);
     }
 
+    private void clearFields() {
+        txtImei.clear();
+        txtMark.clear();
+        txtModel.clear();
+        txtPhoneNumber.clear();
+        cmbVehicle.setSelectedItem("");
+    }
+
+    private void showMessage(String mensaje, Notification.Type type){
+        Notification.show(mensaje, type);
+    }
 }
