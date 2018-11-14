@@ -241,6 +241,11 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
                 txtModel.setValue(event.getItem().getModel());
                 txtImei.setValue(event.getItem().getImei());
                 txtPhoneNumber.setValue(event.getItem().getPhonenumber());
+                for(VehicleEntity vehicle : collectionVehicles){
+                    if (vehicle.getIdvehicle() == event.getItem().getIdvehicle()){
+                        cmbVehicle.setSelectedItem(vehicle.getLicenseplate());
+                    }
+                }
             }
         });
         leftPanel.setSpacing(true);
