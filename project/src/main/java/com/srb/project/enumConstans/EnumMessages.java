@@ -7,6 +7,7 @@ public enum EnumMessages {
     MESSAGES_SAVE("Agregado exitosamente"),
     MESSAGES_EDIT("Editado exitosamente"),
     SELECT_ROL("Debe seleccionar un rol"),
+    SELECT_USER("Debe seleccionar un usuario"),
     MESSAGES_LOGIN("Ingresar");
 
     EnumMessages(String message) {

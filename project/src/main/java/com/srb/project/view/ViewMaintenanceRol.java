@@ -19,7 +19,7 @@ import java.util.Collection;
 
 @UIScope
 @SpringView(name = ViewMaintenanceRol.VIEW_NAME)
-public class ViewMaintenanceRol extends HorizontalLayout implements View {
+public class ViewMaintenanceRol extends VerticalLayout implements View {
     public static final String VIEW_NAME = "rol";
     private TextField txtDescription;
     private TextField txtNameRol;
@@ -267,8 +267,8 @@ public class ViewMaintenanceRol extends HorizontalLayout implements View {
 
     private void emptySetValue() {
         action = "";
-        txtDescription.setValue("");
-        txtNameRol.setValue("");
+        txtDescription.clear();
+        txtNameRol.clear();
     }
 
     private void visibleOperationButtonsFooter(boolean visible) {

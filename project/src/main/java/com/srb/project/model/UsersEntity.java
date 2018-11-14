@@ -30,25 +30,20 @@ public class UsersEntity {
     private String lastname;
 
     @NotNull
-    @Digits(integer = 8, fraction = 0)
     @Basic
     @Column(name = "IDENTITYDOCUMENT", nullable = true, length = 45)
     private String identitydocument;
 
     @Basic
     @NotNull
-    @Min(18)
-    @Max(60)
     @Column(name = "AGE", nullable = true)
     private Integer age;
 
     @NotNull
-    @Pattern (regexp = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$")
     @Basic
     @Column(name = "PHONENUMBER", nullable = true, length = 45)
     private String phonenumber;
 
-    @Email
     @NotNull
     @Basic
     @Column(name = "EMAIL", nullable = true, length = 200)
