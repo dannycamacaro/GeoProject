@@ -226,7 +226,7 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
                 rolesEntity.setNamerole(txtNameRol.getValue());
                 rolesEntity.setDescriptionrole(txtDescription.getValue());
                 controllerRol.save(rolesEntity);
-                Notification.show(EnumMessages.MESSAGES_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
                 refreshInformationGrid();
                 emptySetValue();
                 visibleFieldForm(false);

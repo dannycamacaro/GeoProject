@@ -8,8 +8,6 @@ import com.srb.project.model.VehicleEntity;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.CrudListener;
@@ -91,8 +89,8 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
 
     private void loadMessagesForm() {
 
-        crud.setSavedMessage(EnumLabel.REGISTRO_SALVADO_LABEL.getLabel());
-        crud.setDeletedMessage(EnumLabel.REGISTRO_ELIMINADO_LABEL.getLabel());
+        crud.setSavedMessage(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage());
+        crud.setDeletedMessage(EnumMessages.MESSAGE_SUCESS_DELETE.getMessage());
         crud.setRowCountCaption(EnumLabel.ROW_COUNT_CAPTION_LABEL.getLabel());
         crud.getFindAllButton().setDescription(EnumLabel.REFRESCAR_LABEL.getLabel());
         crud.getAddButton().setDescription(EnumLabel.REGISTRAR_LABEL.getLabel());

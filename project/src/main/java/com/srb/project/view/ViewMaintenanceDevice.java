@@ -4,27 +4,19 @@ package com.srb.project.view;
 import com.srb.project.controller.ControllerDevice;
 import com.srb.project.controller.ControllerVehicle;
 import com.srb.project.enumConstans.EnumLabel;
+import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.DeviceEntity;
-import com.srb.project.model.RoutedetailEntity;
 import com.srb.project.model.VehicleEntity;
-import com.srb.project.navigator.UniverseNavigator;
-import com.srb.project.persister.ServicesVehicle;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.crudui.crud.CrudListener;
-import org.vaadin.crudui.crud.CrudOperation;
-import org.vaadin.crudui.crud.impl.GridCrud;
-import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
-import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
+
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -52,11 +44,11 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
 
     // componentes de la vista
 
-    TextField txtMark = new TextField("Marca");
-    TextField txtModel = new TextField("Modelo");
-    TextField txtImei = new TextField("IMEI");
-    TextField txtPhoneNumber = new TextField("N° Telefono");
-    ComboBox<String> cmbVehicle = new ComboBox<>("Vehiculo");
+    TextField txtMark = new TextField(EnumLabel.MARCA_LABEL.getLabel());
+    TextField txtModel = new TextField(EnumLabel.MODELO_LABEL.getLabel());
+    TextField txtImei = new TextField(EnumLabel.IMEI_LABEL.getLabel());
+    TextField txtPhoneNumber = new TextField(EnumLabel.NUMERO_TELEFONO_LABEL.getLabel());
+    ComboBox<String> cmbVehicle = new ComboBox<>(EnumLabel.VEHICULO_LABEL.getLabel());
 
     //Botones
 
@@ -64,8 +56,8 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     Button btnEdit = new Button(EnumLabel.EDITAR_LABEL.getLabel());
     Button btnDelete = new Button(EnumLabel.ELIMINAR_LABEL.getLabel());
 
-    Button btnAccept = new Button("Aceptar");
-    Button btnCancel = new Button("Cancelar");
+    Button btnAccept = new Button(EnumLabel.ACEPTAR_LABEL.getLabel());
+    Button btnCancel = new Button(EnumLabel.CANCELAR_LABEL.getLabel());
 
     VerticalLayout leftPanel = new VerticalLayout();
     VerticalLayout rightPanel = new VerticalLayout();
@@ -197,9 +189,9 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
             hideContent();
             clearFields();
             refresGrid();
-            showMessage("Registro eliminado", Notification.Type.HUMANIZED_MESSAGE);
+            showMessage(EnumMessages.MESSAGE_SUCESS_DELETE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
         }catch (Exception e){
-            showMessage("No se pudo eliminar el registro", Notification.Type.HUMANIZED_MESSAGE);
+            showMessage(EnumMessages.MESSAGES_ERROR_DELETE.getMessage() ,Notification.Type.ERROR_MESSAGE);
         }
     }
 
@@ -221,10 +213,10 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
             controllerDevice.updateDevice(deviceEntity);
             clearFields();
             hideContent();
-            showMessage("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
+            showMessage(EnumMessages.MESSAGE_SUCESS_UPDATE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
             refresGrid();
         } catch (Exception e) {
-            showMessage("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
+            showMessage(EnumMessages.MESSAGES_ERROR_UPDATE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
             clearFields();
             hideContent();
         }
@@ -249,9 +241,9 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
             controllerDevice.save(deviceEntity);
             hideContent();
             refresGrid();
-            showMessage("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
+            showMessage(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
         } catch (Exception e) {
-            showMessage("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
+            showMessage(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
             hideContent();
         }
     }
@@ -276,10 +268,10 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         dataProvider = DataProvider.ofCollection(collectionDevice);
         grid = new Grid<>();
         grid.setEnabled(true);
-        grid.addColumn(DeviceEntity::getPhonenumber).setCaption("Numero Telefonico");
-        grid.addColumn(DeviceEntity::getMark).setCaption("Marca");
-        grid.addColumn(DeviceEntity::getImei).setCaption("Imei");
-        grid.addColumn(DeviceEntity::getModel).setCaption("Modelo");
+        grid.addColumn(DeviceEntity::getPhonenumber).setCaption(EnumLabel.NUMERO_TELEFONO_LABEL.getLabel());
+        grid.addColumn(DeviceEntity::getMark).setCaption((EnumLabel.MARCA_LABEL.getLabel()));
+        grid.addColumn(DeviceEntity::getImei).setCaption((EnumLabel.IMEI_LABEL.getLabel()));
+        grid.addColumn(DeviceEntity::getModel).setCaption((EnumLabel.MODELO_LABEL.getLabel()));
         grid.setDataProvider(dataProvider);
         grid.addItemClickListener(new ItemClickListener<DeviceEntity>() {
             @Override
