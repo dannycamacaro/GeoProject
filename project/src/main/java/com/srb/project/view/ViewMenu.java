@@ -30,11 +30,13 @@ public class ViewMenu extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if(mainMenu==null){
-            addComponent(buildMenu());
+            mainMenu = buildMenu();
+            addComponent(mainMenu);
         }else {
             addComponent(mainMenu);
         }
-
+        this.setSizeFull();
+        this.setComponentAlignment(mainMenu,Alignment.TOP_CENTER);
     }
 
     public static MenuBar buildMenu(){

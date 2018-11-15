@@ -35,7 +35,7 @@ public class ViewSelectRoute extends VerticalLayout implements View {
     @PostConstruct
     private void buildForm() {
 
-        this.setSizeFull();
+        this.setHeightUndefined();
         this.setWidth("100%");
         Grid<RoutesEntity> grid = new Grid<>();
         grid.addColumn(RoutesEntity::getNameroutes).setCaption("Ruta");
@@ -65,12 +65,13 @@ public class ViewSelectRoute extends VerticalLayout implements View {
             });
         });
 
-        txtFilter.setStyleName(ValoTheme.TEXTFIELD_LARGE);
+        txtFilter.setStyleName("width:100px");
         grid.setSizeFull();
         this.setMargin(new MarginInfo(true,true,true,true));
         this.setSpacing(false);
         this.addComponent(txtFilter);
         this.addComponent(grid);
+
     }
 
 }

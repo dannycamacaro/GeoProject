@@ -255,6 +255,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         dataProvider = DataProvider.ofCollection(collectionRoutes);
         grid.setDataProvider(dataProvider);
     }
+
     private void showMessage(String mensaje, Notification.Type type){
         Notification.show(mensaje, type);
     }

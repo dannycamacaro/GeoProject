@@ -43,7 +43,6 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     MenuBar mainMenu;
 
     // componentes de la vista
-
     TextField txtMark = new TextField(EnumLabel.MARCA_LABEL.getLabel());
     TextField txtModel = new TextField(EnumLabel.MODELO_LABEL.getLabel());
     TextField txtImei = new TextField(EnumLabel.IMEI_LABEL.getLabel());
@@ -51,11 +50,9 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     ComboBox<String> cmbVehicle = new ComboBox<>(EnumLabel.VEHICULO_LABEL.getLabel());
 
     //Botones
-
     Button btnSave = new Button(EnumLabel.REGISTRAR_LABEL.getLabel());
     Button btnEdit = new Button(EnumLabel.EDITAR_LABEL.getLabel());
     Button btnDelete = new Button(EnumLabel.ELIMINAR_LABEL.getLabel());
-
     Button btnAccept = new Button(EnumLabel.ACEPTAR_LABEL.getLabel());
     Button btnCancel = new Button(EnumLabel.CANCELAR_LABEL.getLabel());
 
@@ -77,32 +74,31 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     @PostConstruct
     void init() {
         hideContent();
-        this.setSizeFull();
+        this.setWidth("100%");
+        this.setHeightUndefined();
         VerticalLayout menuPanel = new VerticalLayout();
         if (mainMenu == null) {
             mainMenu = ViewMenu.buildMenu();
         }
         menuPanel.addComponents(mainMenu);
         menuPanel.setComponentAlignment(mainMenu, Alignment.TOP_CENTER);
-        menuPanel.setHeight("100%");
-        menuPanel.setHeight("30px");
-        menuPanel.setMargin(new MarginInfo(false, false, false, false));
+        menuPanel.setSizeFull();
+        contenedor.setSizeFull();
+        menuPanel.setSizeFull();
 
         loadAllData();
 
         buildLeftPanel();
         buildRightPanel();
         this.addComponent(menuPanel);
+        this.setComponentAlignment(menuPanel, Alignment.TOP_CENTER);
         contenedor.setSizeFull();
         this.addComponent(contenedor);
         this.setSizeUndefined();
     }
 
     private void buildRightPanel() {
-        rightPanel.setSpacing(true);
         rightPanel.setSizeFull();
-        buttonsPanel = new HorizontalLayout();
-        buttonsPanel.setHeight("50px");
         buttonsPanel.addComponents(btnSave, btnEdit, btnDelete, cmbVehicle);
 
         btnSave.addClickListener(new Button.ClickListener() {
@@ -129,9 +125,6 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
                 action = "edit";
             }
         });
-
-        buttonsPanel.setSpacing(false);
-        buttonsPanel.setMargin(new MarginInfo(false, false, false, false));
 
         for (VehicleEntity vehicles : collectionVehicles) {
             plateVehicles.add(vehicles.getLicenseplate());
@@ -256,8 +249,6 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
 
     private void buildLeftPanel() {
         loadInformationGrid();
-        leftPanel.setSpacing(true);
-        leftPanel.setMargin(new MarginInfo(true, true, true, true));
         leftPanel.setSizeFull();
         grid.setSizeFull();
         leftPanel.addComponent(grid);

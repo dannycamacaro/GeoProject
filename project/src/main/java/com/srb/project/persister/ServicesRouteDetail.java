@@ -34,9 +34,6 @@ public class ServicesRouteDetail {
         if(routedetailEntityBD != null){
             entityManager.remove(routedetailEntityBD);
         }
-
-
-
     }
 
     public List<RoutedetailEntity> findAll() {
