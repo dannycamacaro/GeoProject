@@ -87,6 +87,14 @@ public class ViewMenu extends VerticalLayout implements View {
             }
         });
 
+        mainMenu.addItem("Reportes", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewConsultReport.VIEW_NAME);
+            }
+        });
+
+
         mainMenu.addItem("Mapa", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
