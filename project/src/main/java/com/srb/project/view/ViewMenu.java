@@ -3,22 +3,13 @@ package com.srb.project.view;
 import com.srb.project.ViewLogin;
 import com.srb.project.navigator.UniverseNavigator;
 import com.vaadin.annotations.Title;
-import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.sass.internal.util.StringUtil;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.LatLon;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.MenuBar;
-import org.springframework.context.annotation.Bean;
-
-import javax.annotation.PostConstruct;
-import java.awt.*;
+import com.vaadin.ui.VerticalLayout;
 
 @UIScope
 

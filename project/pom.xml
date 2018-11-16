@@ -62,6 +62,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.vaadin.reports</groupId>
+			<artifactId>report-ui</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.vaadin.crudui</groupId>
 			<artifactId>crudui</artifactId>
 			<version>2.3.0</version>
