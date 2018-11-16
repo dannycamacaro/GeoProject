@@ -26,8 +26,11 @@ public enum EnumLabel {
     NUMERO_TELEFONO_LABEL("N° Telefono"),
     VEHICULO_LABEL("Vehiculo"),
     USER_LABEL("Usuario"),
+    DEVICE_LABEL("Dispositivo"),
+    ROUTES_LABEL("Rutas"),
     EMAIL_LABEL("Email"),
     LICENSEPLATE_LABEL("Placa"),
+    ROUTE_NAME_LABEL("Ruta"),
     CANCELAR_LABEL("Cancelar");
 
     EnumLabel(String label) {

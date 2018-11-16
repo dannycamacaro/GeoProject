@@ -24,6 +24,10 @@ public class AssignedroutesEntity {
     @ManyToOne
     @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES", insertable = false, updatable = false, nullable = false)
     private RoutesEntity routesByIdroutes;
+    @Transient
+    String phoneNumber;
+    @Transient
+    String nameRoute;
 
     public void setIdassignedroutes(Integer idassignedroutes) {
         this.idassignedroutes = idassignedroutes;
@@ -100,5 +104,21 @@ public class AssignedroutesEntity {
 
     public void setRoutesByIdroutes(RoutesEntity routesByIdroutes) {
         this.routesByIdroutes = routesByIdroutes;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getNameRoute() {
+        return nameRoute;
+    }
+
+    public void setNameRoute(String nameRoute) {
+        this.nameRoute = nameRoute;
     }
 }
