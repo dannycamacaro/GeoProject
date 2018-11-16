@@ -76,7 +76,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         hideContent();
         this.setWidth("100%");
         this.setHeightUndefined();
-        VerticalLayout menuPanel = new VerticalLayout();
+        HorizontalLayout  menuPanel = new HorizontalLayout();
         if (mainMenu == null) {
             mainMenu = ViewMenu.buildMenu();
         }
@@ -84,7 +84,6 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         menuPanel.setComponentAlignment(mainMenu, Alignment.TOP_CENTER);
         menuPanel.setSizeFull();
         contenedor.setSizeFull();
-        menuPanel.setSizeFull();
 
         loadAllData();
 
@@ -92,9 +91,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         buildRightPanel();
         this.addComponent(menuPanel);
         this.setComponentAlignment(menuPanel, Alignment.TOP_CENTER);
-        contenedor.setSizeFull();
         this.addComponent(contenedor);
-        this.setSizeUndefined();
     }
 
     private void buildRightPanel() {
