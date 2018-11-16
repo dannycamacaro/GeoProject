@@ -2,7 +2,6 @@ package com.srb.project.view;
 
 
 import com.srb.project.controller.ControllerVehicle;
-import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.VehicleEntity;
 import com.vaadin.data.provider.DataProvider;
@@ -13,7 +12,6 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.crudui.crud.impl.GridCrud;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
@@ -38,7 +36,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
     //fields
     private TextField txtMark = new TextField("Marca");
     private TextField txtLicense = new TextField("Matricula");
-    private TextField txtAño = new TextField("Año");
+    private TextField txtYear = new TextField("Año");
     private TextField txtTon = new TextField("Toneladas");
 
     //Buttons
@@ -106,7 +104,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
     }
 
     private void createFields() {
-        fieldsLayout.addComponents(txtLicense,txtMark,txtAño,txtTon);
+        fieldsLayout.addComponents(txtLicense,txtMark, txtYear,txtTon);
         rightLayout.addComponent(fieldsLayout);
         principalLayout.addComponent(rightLayout);
     }
@@ -168,7 +166,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
                 vehicleSelected  = event.getItem();
                 txtLicense.setValue(vehicleSelected.getLicenseplate());
                 txtMark.setValue(vehicleSelected.getMark());
-                txtAño.setValue(vehicleSelected.getVehicleyear().toString());
+                txtYear.setValue(vehicleSelected.getVehicleyear().toString());
                 txtTon.setValue(vehicleSelected.getTon().toString());
             }
         });
@@ -180,7 +178,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
     private void clearFields(){
         txtLicense.clear();
         txtMark.clear();
-        txtAño.clear();
+        txtYear.clear();
         txtTon.clear();
     }
 
@@ -212,7 +210,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
                 vehicleEntity.setMark(txtMark.getValue());
                 vehicleEntity.setLicenseplate(txtLicense.getValue());
                 vehicleEntity.setTon(Integer.valueOf(txtTon.getValue()));
-                vehicleEntity.setVehicleyear(Integer.valueOf(txtAño.getValue()));
+                vehicleEntity.setVehicleyear(Integer.valueOf(txtYear.getValue()));
                 controllerVehicle.save(vehicleEntity);
                 Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
                 refreshInformationGrid();
@@ -230,7 +228,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
             vehicleSelected.setMark(txtMark.getValue());
             vehicleSelected.setLicenseplate(txtLicense.getValue());
             vehicleSelected.setTon(Integer.valueOf(txtTon.getValue()));
-            vehicleSelected.setVehicleyear(Integer.valueOf(txtAño.getValue()));
+            vehicleSelected.setVehicleyear(Integer.valueOf(txtYear.getValue()));
             controllerVehicle.updateVehicle(vehicleSelected);
             Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
             refreshInformationGrid();
@@ -255,7 +253,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
 
     private boolean isValidationFieldEmpty() {
         boolean validation = false;
-        if (txtMark.getValue().isEmpty() || txtLicense.getValue().isEmpty() || txtAño.getValue().isEmpty() || txtTon.getValue().isEmpty()) {
+        if (txtMark.getValue().isEmpty() || txtLicense.getValue().isEmpty() || txtYear.getValue().isEmpty() || txtTon.getValue().isEmpty()) {
             Notification.show(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage(), Notification.Type.ERROR_MESSAGE);
             validation = true;
         }

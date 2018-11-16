@@ -82,6 +82,13 @@ public class ViewMenu extends VerticalLayout implements View {
             }
         });
 
+        mainMenu.addItem("Asignar vehiculo", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceAssignedVehicle.VIEW_NAME);
+            }
+        });
+
         mainMenu.addItem("Mapa", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {

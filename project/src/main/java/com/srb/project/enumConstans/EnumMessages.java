@@ -11,6 +11,7 @@ public enum EnumMessages {
     MESSAGES_EDIT("Editado exitosamente"),
     SELECT_ROL("Debe seleccionar un rol"),
     SELECT_USER("Debe seleccionar un usuario"),
+    SELECT_REGISTER("Debe seleccionar un registro"),
     MESSAGES_LOGIN("Ingresar");
 
     EnumMessages(String message) {

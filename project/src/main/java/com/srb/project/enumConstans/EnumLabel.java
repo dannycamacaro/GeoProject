@@ -19,11 +19,15 @@ public enum EnumLabel {
     AGE_LABEL("Edad"),
     PHONE_NUMBER_LABEL("Numero de telefono"),
     MARCA_LABEL("Marca"),
+    INIT_DATE_LABEL("Fecha inicio"),
+    FINISH_DATE_LABEL("Fecha fin"),
     MODELO_LABEL("Modelo"),
     IMEI_LABEL("Imei"),
     NUMERO_TELEFONO_LABEL("N° Telefono"),
     VEHICULO_LABEL("Vehiculo"),
+    USER_LABEL("Usuario"),
     EMAIL_LABEL("Email"),
+    LICENSEPLATE_LABEL("Placa"),
     CANCELAR_LABEL("Cancelar");
 
     EnumLabel(String label) {

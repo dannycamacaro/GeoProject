@@ -34,7 +34,11 @@ public enum EnumOperation {
     //MODULO VEHICLE
     ADD_VEHICLE("22", "Add vehicle"),
     EDIT_VEHICLE("23", "Edit vehicle"),
-    DELETE_VEHICLE("24", "Delete vehicle");
+    DELETE_VEHICLE("24", "Delete vehicle"),
+    //MODULO ASSIGNEDVEHICLE
+    ADD_ASSIGNEDVEHICLE("25", "Add assignedvehicle"),
+    EDIT_ASSIGNEDVEHICLE("26", "Edit assignedvehicle"),
+    DELETE_ASSIGNEDVEHICLE("27", "Delete assignedvehicle");
 
     EnumOperation(String idOperation, String operationName) {
         this.idOperation = idOperation;

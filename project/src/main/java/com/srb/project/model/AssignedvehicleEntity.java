@@ -1,6 +1,7 @@
 package com.srb.project.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,20 +20,24 @@ public class AssignedvehicleEntity {
     private int idvehicle;
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "INITIALDATE", nullable = true)
-    private Date initialdate;
+    private LocalDate initialdate;
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FINISHDATE", nullable = true)
-    private Date finishdate;
+    private LocalDate finishdate;
     @ManyToOne
     @JoinColumn(name = "IDUSERS", referencedColumnName = "IDUSERS", insertable = false, updatable = false, nullable = false)
     private UsersEntity usersByIdusers;
     @ManyToOne
     @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE", insertable = false, updatable = false, nullable = false)
     private VehicleEntity vehicleByIdvehicle;
+
+    @Transient
+    private String nameUser;
+
+    @Transient
+    private String licensePlate;
 
     public void setIdassignedvehicle(Integer idassignedvehicle) {
         this.idassignedvehicle = idassignedvehicle;
@@ -68,21 +73,37 @@ public class AssignedvehicleEntity {
     }
 
 
-    public Date getInitialdate() {
+    public LocalDate  getInitialdate() {
         return initialdate;
     }
 
-    public void setInitialdate(Date initialdate) {
+    public void setInitialdate(LocalDate initialdate) {
         this.initialdate = initialdate;
     }
 
 
-    public Date getFinishdate() {
+    public LocalDate getFinishdate() {
         return finishdate;
     }
 
-    public void setFinishdate(Date finishdate) {
+    public void setFinishdate(LocalDate finishdate) {
         this.finishdate = finishdate;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
     @Override
