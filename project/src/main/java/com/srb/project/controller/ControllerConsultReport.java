@@ -5,7 +5,10 @@ import com.srb.project.enumConstans.EnumOperation;
 import com.srb.project.model.AuditsEntity;
 import com.srb.project.model.VehicleEntity;
 import com.srb.project.persister.ServicesAudit;
+import com.srb.project.persister.ServicesDevice;
 import com.srb.project.persister.ServicesVehicle;
+import com.srb.project.pojo.ConsultReportAssignedDevice;
+import com.srb.project.pojo.ConsultReportAudit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -20,12 +23,13 @@ public class ControllerConsultReport {
     ServicesVehicle servicesVehicle;
 
     @Autowired
+    ServicesDevice servicesDevice;
+
+    @Autowired
     ServicesAudit servicesAudit;
 
     @Autowired
     private ApplicationContext appContext;
-
-
 
 
     public Collection<VehicleEntity> findAllVehicleActive() {
@@ -36,7 +40,46 @@ public class ControllerConsultReport {
         return vehicleEntities;
     }
 
+    public Collection<ConsultReportAssignedDevice> findAssignedDevice() {
 
+        Collection<ConsultReportAssignedDevice> consultReportAssignedDevices = new ArrayList<>();
+
+        consultReportAssignedDevices = servicesDevice.findAssignedDevice();
+
+        return consultReportAssignedDevices;
+
+    }
+
+
+    public Collection<ConsultReportAudit> loadAudit() {
+
+        Collection<ConsultReportAudit> consultReportAudits = new ArrayList<>();
+        Collection<AuditsEntity> auditsEntities = new ArrayList<>();
+
+        auditsEntities = servicesAudit.findAllAudits();
+        for (AuditsEntity auditsEntity : auditsEntities) {
+            ConsultReportAudit reportAudit = new ConsultReportAudit();
+
+            reportAudit.setIp(auditsEntity.getIp());
+            reportAudit.setNombreUsuario(auditsEntity.getUsersByIdusers().getUsername());
+            reportAudit.setFechaOperacion(auditsEntity.getAuditDate().toString());
+            reportAudit.setContenido(auditsEntity.getContent());
+            reportAudit.setTipoOperacion(getTyperOperation(auditsEntity.getTypeoperation()));
+            consultReportAudits.add(reportAudit);
+        }
+
+        return consultReportAudits;
+
+    }
+
+    private String getTyperOperation(String typeoperation) {
+        for (EnumOperation enumOperation : EnumOperation.values()) {
+            if (enumOperation.getIdOperation().equalsIgnoreCase(typeoperation)) {
+                return enumOperation.getOperationName();
+            }
+        }
+        return "";
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.srb.project.persister;
 
 import com.srb.project.model.DeviceEntity;
+import com.srb.project.pojo.ConsultReportAssignedDevice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +53,12 @@ public class ServicesDevice {
     }
 
 
+    public Collection<ConsultReportAssignedDevice> findAssignedDevice() {
+        Query query = entityManager.createQuery("from DeviceEntity as dev join dev.vehicleByIdvehicle as veh");
+        Collection <ConsultReportAssignedDevice> consultReportAssignedDevices = new ArrayList<>();
+        consultReportAssignedDevices = query.getResultList();
+
+    return  consultReportAssignedDevices;
+    }
 
 }

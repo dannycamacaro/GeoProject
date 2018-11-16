@@ -3,6 +3,7 @@ package com.srb.project.view;
 import com.srb.project.controller.ControllerConsultReport;
 import com.srb.project.model.VehicleEntity;
 import com.srb.project.pojo.ConsultReportAssignedDevice;
+import com.srb.project.pojo.ConsultReportAudit;
 import com.vaadin.navigator.View;
 import com.vaadin.server.SerializableSupplier;
 import com.vaadin.spring.annotation.SpringView;
@@ -29,8 +30,10 @@ public class ViewConsultReport extends VerticalLayout implements View {
     private VerticalLayout menuLayout = new VerticalLayout();
     private PrintPreviewReport<VehicleEntity>  reportVehicleActive = new PrintPreviewReport<>(VehicleEntity.class, "idvehicle", "mark","licenseplate");
     private PrintPreviewReport<ConsultReportAssignedDevice>  reportAssignedDevice = new PrintPreviewReport<>(ConsultReportAssignedDevice.class);
+    private PrintPreviewReport<ConsultReportAudit>  reportAudit = new PrintPreviewReport<>(ConsultReportAudit.class);
     private Button buttonVehicleActive = new Button("Consulta vehiculos activos");
     private Button buttonAssignedDevice = new Button("Consulta de vehiculos asignados");
+    private Button buttonAudit = new Button("Consulta de auditoria");
 
 
     public ViewConsultReport() {
@@ -40,7 +43,9 @@ public class ViewConsultReport extends VerticalLayout implements View {
     @PostConstruct
     private void buildForm() {
         generateReportVehicleActive();
+        generateReportAudit();
         menuLayout.addComponent(buttonVehicleActive);
+        menuLayout.addComponent(buttonAudit);
         this.addComponent(menuLayout);
 
     }
@@ -56,6 +61,14 @@ public class ViewConsultReport extends VerticalLayout implements View {
 
     private void generateReportAssignedDevice(){
 
+
+    }
+    private void generateReportAudit(){
+        Collection collection = controllerConsultReport.loadAudit();
+        List list = new ArrayList(collection);
+        SerializableSupplier<List<? extends ConsultReportAudit>> itemsSupplier = () -> list;
+        reportAudit.setItems(list);
+        reportAudit.downloadPdfOnClick(buttonVehicleActive, "ReporteDeAuditoria.pdf", itemsSupplier);
 
     }
 }

@@ -58,6 +58,14 @@ public enum EnumOperation {
         this.idOperation = idOperation;
     }
 
+    public String getOperationName() {
+        return operationName;
+    }
+
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
+
     String idOperation;
     String operationName;
 
