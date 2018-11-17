@@ -73,7 +73,6 @@ public class ViewConsultReport extends VerticalLayout implements View {
         generateReportVehicleActive();
         generateReportAudit();
         generateReportAssignedDevice();
-//        generateReportRute();
         this.addComponent(principalLayout);
 
     }
@@ -114,23 +113,12 @@ public class ViewConsultReport extends VerticalLayout implements View {
             public void itemClick(Grid.ItemClick<RoutesEntity> event) {
                 routesEntitySelected = event.getItem();
                 collectionRoutes.clear();
-//                buttonGenerateRute = new Button("Generar reporte de rutas");
-//                rightLayout.replaceComponent(buttonGenerateRute,buttonGenerateRute);
-                /*if (buttonGenerateRute == null) {
-                    buttonGenerateRute = new Button("Generar reporte de rutas");
-                }*/
                 generateReportRute();
-               /* buttonGenerateRute = null;
-                reportDetailRute =null;*/
-
-
             }
         });
         grid.setDataProvider(dataProvider);
         rightLayout.addComponent(buttonGenerateRute);
-//        buttonLayout.addComponent(buttonGenerateRute);
         rightLayout.addComponent(gridLayout);
-//        rightLayout.addComponent(buttonLayout);
         principalLayout.addComponent(rightLayout);
     }
 
