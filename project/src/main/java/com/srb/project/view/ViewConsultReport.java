@@ -10,6 +10,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.reports.PrintPreviewReport;
@@ -29,11 +30,13 @@ public class ViewConsultReport extends VerticalLayout implements View {
 
     private VerticalLayout menuLayout = new VerticalLayout();
     private PrintPreviewReport<VehicleEntity>  reportVehicleActive = new PrintPreviewReport<>(VehicleEntity.class, "idvehicle", "mark","licenseplate");
-    private PrintPreviewReport<ConsultReportAssignedDevice>  reportAssignedDevice = new PrintPreviewReport<>(ConsultReportAssignedDevice.class);
+    private PrintPreviewReport<ConsultReportAssignedDevice>  reportAssignedDevice = new PrintPreviewReport<>(ConsultReportAssignedDevice.class,"imei","numeroTelefono","marca","placa");
     private PrintPreviewReport<ConsultReportAudit>  reportAudit = new PrintPreviewReport<>(ConsultReportAudit.class);
     private Button buttonVehicleActive = new Button("Consulta vehiculos activos");
-    private Button buttonAssignedDevice = new Button("Consulta de vehiculos asignados");
+    private Button buttonAssignedDevice = new Button("Consulta de dispositivos asignados");
     private Button buttonAudit = new Button("Consulta de auditoria");
+/*    private Button buttonRute = new Button("Consulta de rutas");
+    private Button buttonGenerateRute = new Button("Generar reporte de rutas");private Grid<RoutesEntity> grid = new Grid<>();*/
 
 
     public ViewConsultReport() {
@@ -44,8 +47,11 @@ public class ViewConsultReport extends VerticalLayout implements View {
     private void buildForm() {
         generateReportVehicleActive();
         generateReportAudit();
+        generateReportAssignedDevice();
         menuLayout.addComponent(buttonVehicleActive);
+        menuLayout.addComponent(buttonAssignedDevice);
         menuLayout.addComponent(buttonAudit);
+//        menuLayout.addComponent(buttonRute);
         this.addComponent(menuLayout);
 
     }
@@ -60,7 +66,11 @@ public class ViewConsultReport extends VerticalLayout implements View {
     }
 
     private void generateReportAssignedDevice(){
-
+        Collection collection = controllerConsultReport.findAssignedDevice();
+        List list = new ArrayList(collection);
+        SerializableSupplier<List<? extends ConsultReportAssignedDevice>> itemsSupplier = () -> list;
+        reportAssignedDevice.setItems(list);
+        reportAssignedDevice.downloadPdfOnClick(buttonAssignedDevice, "ReporteDispositivosAsignados.pdf", itemsSupplier);
 
     }
     private void generateReportAudit(){

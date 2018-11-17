@@ -3,6 +3,7 @@ package com.srb.project.controller;
 
 import com.srb.project.enumConstans.EnumOperation;
 import com.srb.project.model.AuditsEntity;
+import com.srb.project.model.DeviceEntity;
 import com.srb.project.model.VehicleEntity;
 import com.srb.project.persister.ServicesAudit;
 import com.srb.project.persister.ServicesDevice;
@@ -42,9 +43,19 @@ public class ControllerConsultReport {
 
     public Collection<ConsultReportAssignedDevice> findAssignedDevice() {
 
+        Collection<DeviceEntity> deviceEntityCollection = new ArrayList<>();
         Collection<ConsultReportAssignedDevice> consultReportAssignedDevices = new ArrayList<>();
 
-        consultReportAssignedDevices = servicesDevice.findAssignedDevice();
+        deviceEntityCollection = servicesDevice.findAssignedDevice();
+
+        for(DeviceEntity deviceEntity : deviceEntityCollection){
+            ConsultReportAssignedDevice reportAssignedDevice = new ConsultReportAssignedDevice();
+            reportAssignedDevice.setNumeroTelefono(deviceEntity.getPhonenumber());
+            reportAssignedDevice.setImei(deviceEntity.getImei());
+            reportAssignedDevice.setPlaca(deviceEntity.getVehicleByIdvehicle().getLicenseplate());
+            reportAssignedDevice.setMarca(deviceEntity.getVehicleByIdvehicle().getMark());
+            consultReportAssignedDevices.add(reportAssignedDevice);
+        }
 
         return consultReportAssignedDevices;
 

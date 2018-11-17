@@ -2,40 +2,40 @@ package com.srb.project.pojo;
 
 public class ConsultReportAssignedDevice {
 
-    private String nombre;
-    private String apellido;
-    private String dispositivo;
-    private String vehiculo;
+    private String imei;
+    private String numeroTelefono;
+    private String marca;
+    private String placa;
 
-    public String getNombre() {
-        return nombre;
+    public String getImei() {
+        return imei;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
-    public String getDispositivo() {
-        return dispositivo;
+    public String getNumeroTelefono() {
+        return numeroTelefono;
     }
 
-    public void setDispositivo(String dispositivo) {
-        this.dispositivo = dispositivo;
+    public void setNumeroTelefono(String numeroTelefono) {
+        this.numeroTelefono = numeroTelefono;
     }
 
-    public String getVehiculo() {
-        return vehiculo;
+    public String getPlaca() {
+        return placa;
     }
 
-    public void setVehiculo(String vehiculo) {
-        this.vehiculo = vehiculo;
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 }

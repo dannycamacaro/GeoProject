@@ -53,9 +53,9 @@ public class ServicesDevice {
     }
 
 
-    public Collection<ConsultReportAssignedDevice> findAssignedDevice() {
-        Query query = entityManager.createQuery("from DeviceEntity as dev join dev.vehicleByIdvehicle as veh");
-        Collection <ConsultReportAssignedDevice> consultReportAssignedDevices = new ArrayList<>();
+    public Collection<DeviceEntity> findAssignedDevice() {
+        Query query = entityManager.createQuery("from DeviceEntity as dev");
+        Collection <DeviceEntity> consultReportAssignedDevices = new ArrayList<>();
         consultReportAssignedDevices = query.getResultList();
 
     return  consultReportAssignedDevices;
