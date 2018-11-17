@@ -102,7 +102,7 @@ public class ControllerRoutesDetail {
     public Collection<RoutedetailEntity> findRoutesDetailByIdRoute(Integer id) {
         servicesRouteDetail.findDetailsByIdRoute(id);
         Collection<RoutedetailEntity> routesEntities = new ArrayList<>();
-        routesEntities = servicesRouteDetail.findAllRoutesDetail();
+        routesEntities = servicesRouteDetail.findDetailsByIdRoute(id);
 
         return routesEntities;
     }

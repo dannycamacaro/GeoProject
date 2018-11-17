@@ -101,6 +101,12 @@ public class ViewMenu extends VerticalLayout implements View {
                 UniverseNavigator.navigate(ViewMapsUbication.VIEW_NAME);
             }
         });
+        mainMenu.addItem("Ubicar Vehiculo", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewUserLocation.VIEW_NAME);
+            }
+        });
 
         return mainMenu;
     }

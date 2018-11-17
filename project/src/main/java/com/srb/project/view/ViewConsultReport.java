@@ -68,7 +68,7 @@ public class ViewConsultReport extends VerticalLayout implements View {
         List list = new ArrayList(collection);
         SerializableSupplier<List<? extends ConsultReportAudit>> itemsSupplier = () -> list;
         reportAudit.setItems(list);
-        reportAudit.downloadPdfOnClick(buttonVehicleActive, "ReporteDeAuditoria.pdf", itemsSupplier);
+        reportAudit.downloadPdfOnClick(buttonAudit, "ReporteDeAuditoria.pdf", itemsSupplier);
 
     }
 }

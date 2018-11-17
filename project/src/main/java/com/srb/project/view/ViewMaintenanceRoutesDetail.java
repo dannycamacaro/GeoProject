@@ -68,9 +68,10 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
     }
 
     private void buildForm() {
-
+        googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc", null, "spanish");
         // verificar si existen detalles de rutas
         if (route != null & route.getIdroutes() > 0) {
+            routes.clear();
             routes = controllerRoutesDetail.findRoutesDetailByIdRoute(route.getIdroutes());
         }
 
@@ -216,17 +217,17 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
         rightPanel.setHeight("100%");
         rightPanel.setMargin(new MarginInfo(true, false, false, false));
         rightPanel.setSpacing(false);
-        LatLon latLon ;
-
-        if (routes.size()>0){
-            RoutedetailEntity objects = (RoutedetailEntity)((ArrayList) routes).get(0);
+        LatLon latLon;
+        detailLatLon.clear();
+        if (routes.size() > 0) {
+            RoutedetailEntity objects = (RoutedetailEntity) ((ArrayList) routes).get(0);
             latLon = new LatLon(Double.valueOf(objects.getRoutelatitude()), Double.valueOf(objects.getRoutelength()));
 
-            for (RoutedetailEntity coordenadas:routes) {
-                detailLatLon.add(new LatLon(Double.valueOf(coordenadas.getRoutelatitude()),Double.valueOf(coordenadas.getRoutelength())));
+            for (RoutedetailEntity coordenadas : routes) {
+                detailLatLon.add(new LatLon(Double.valueOf(coordenadas.getRoutelatitude()), Double.valueOf(coordenadas.getRoutelength())));
             }
 
-            for (LatLon mark:detailLatLon) {
+            for (LatLon mark : detailLatLon) {
                 GoogleMapMarker marker = new GoogleMapMarker();
                 marker.setPosition(mark);
                 marker.setAnimationEnabled(true);
@@ -242,7 +243,7 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
             dataProvider = DataProvider.ofCollection(routes);
             grid.setDataProvider(dataProvider);
 
-        }else {
+        } else {
             latLon = new LatLon(10.54646, -66.546466);
         }
         googleMap.setCenter(latLon);
