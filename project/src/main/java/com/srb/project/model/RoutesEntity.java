@@ -25,7 +25,8 @@ public class RoutesEntity {
     @OneToMany(mappedBy = "routesByIdroutes")
     private Collection<AssignedroutesEntity> assignedroutesByIdroutes;
 
-    @OneToMany(mappedBy = "routesByIdroutes")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IDROUTES", referencedColumnName = "IDROUTES",insertable = false, updatable = false, nullable = false)
     private Collection<RoutedetailEntity> routedetailsByIdroutes;
 
     @Basic

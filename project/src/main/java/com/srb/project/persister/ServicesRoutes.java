@@ -48,4 +48,12 @@ public class ServicesRoutes {
 
         return routesEntities;
     }
+
+    public Collection<RoutesEntity> findListById(Integer idRoute) {
+        Collection <RoutesEntity> routesEntities = new ArrayList<>();
+        RoutesEntity routesEntity;
+        routesEntity = entityManager.find(RoutesEntity.class, idRoute);
+        routesEntities.add(routesEntity);
+        return routesEntities;
+    }
 }

@@ -1,6 +1,6 @@
 package com.srb.project.pojo;
 
-public class ConsultReportAudit {
+public class ConsultReportAudit  {
 
     private String  nombreUsuario;
     private String ip;

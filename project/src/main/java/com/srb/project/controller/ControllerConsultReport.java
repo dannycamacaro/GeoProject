@@ -2,14 +2,14 @@ package com.srb.project.controller;
 
 
 import com.srb.project.enumConstans.EnumOperation;
-import com.srb.project.model.AuditsEntity;
-import com.srb.project.model.DeviceEntity;
-import com.srb.project.model.VehicleEntity;
+import com.srb.project.model.*;
 import com.srb.project.persister.ServicesAudit;
 import com.srb.project.persister.ServicesDevice;
+import com.srb.project.persister.ServicesRoutes;
 import com.srb.project.persister.ServicesVehicle;
 import com.srb.project.pojo.ConsultReportAssignedDevice;
 import com.srb.project.pojo.ConsultReportAudit;
+import com.srb.project.pojo.ConsultReportDetailRoute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -30,6 +30,9 @@ public class ControllerConsultReport {
     ServicesAudit servicesAudit;
 
     @Autowired
+    ServicesRoutes servicesRoutes;
+
+    @Autowired
     private ApplicationContext appContext;
 
 
@@ -48,7 +51,7 @@ public class ControllerConsultReport {
 
         deviceEntityCollection = servicesDevice.findAssignedDevice();
 
-        for(DeviceEntity deviceEntity : deviceEntityCollection){
+        for (DeviceEntity deviceEntity : deviceEntityCollection) {
             ConsultReportAssignedDevice reportAssignedDevice = new ConsultReportAssignedDevice();
             reportAssignedDevice.setNumeroTelefono(deviceEntity.getPhonenumber());
             reportAssignedDevice.setImei(deviceEntity.getImei());
@@ -93,4 +96,32 @@ public class ControllerConsultReport {
     }
 
 
+    public Collection loadRoute(RoutesEntity routesEntitySelected) {
+
+        Collection<RoutesEntity> routesEntityCollection = new ArrayList<>();
+        Collection<ConsultReportDetailRoute> consultReportDetailRoutes = new ArrayList<>();
+        routesEntityCollection = servicesRoutes.findListById(routesEntitySelected.getIdroutes());
+
+        for (RoutesEntity routesEntity : routesEntityCollection) {
+            if (routesEntity.getRoutedetailsByIdroutes().size() > 0) {
+                for (RoutedetailEntity routedetailEntity : routesEntity.getRoutedetailsByIdroutes()) {
+                    ConsultReportDetailRoute reportDetailRute = new ConsultReportDetailRoute();
+                    reportDetailRute.setNombreRuta(routesEntity.getNameroutes());
+                    reportDetailRute.setNombreDetalleRuta(routedetailEntity.getDescription());
+                    reportDetailRute.setCoordenadaLatitud(routedetailEntity.getRoutelatitude());
+                    reportDetailRute.setCoordenadaLongitud(routedetailEntity.getRoutelength());
+                    consultReportDetailRoutes.add(reportDetailRute);
+                }
+
+
+            }else{
+                ConsultReportDetailRoute reportDetailRute = new ConsultReportDetailRoute();
+                reportDetailRute.setNombreRuta(routesEntity.getNameroutes());
+                consultReportDetailRoutes.add(reportDetailRute);
+            }
+        }
+
+
+        return consultReportDetailRoutes;
+    }
 }
