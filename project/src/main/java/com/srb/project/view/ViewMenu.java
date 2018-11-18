@@ -5,6 +5,7 @@ import com.srb.project.navigator.UniverseNavigator;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -18,90 +19,94 @@ import com.vaadin.ui.VerticalLayout;
 public class ViewMenu extends VerticalLayout implements View {
     public static final String VIEW_NAME = "menu";
     MenuBar mainMenu;
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if(mainMenu==null){
+        if (mainMenu == null) {
             mainMenu = buildMenu();
             addComponent(mainMenu);
-        }else {
+        } else {
             addComponent(mainMenu);
         }
         this.setSizeFull();
-        this.setComponentAlignment(mainMenu,Alignment.TOP_CENTER);
+        this.setComponentAlignment(mainMenu, Alignment.TOP_CENTER);
     }
 
-    public static MenuBar buildMenu(){
+    public static MenuBar buildMenu() {
         MenuBar mainMenu = new MenuBar();
 
-        mainMenu.addItem("Roles",new MenuBar.Command() {
+        // A top-level menu item that opens a submenu
+        MenuBar.MenuItem mantenimientoDeUsuario = mainMenu.addItem("Mantenimiento de Usuario", null, null);
+        // Submenu item with a sub-submenu
+        MenuBar.MenuItem roles = mantenimientoDeUsuario.addItem("Roles", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceRol.VIEW_NAME);
             }
         });
-
-        mainMenu.addItem("Usuario", null, new MenuBar.Command() {
+        MenuBar.MenuItem usuario = mantenimientoDeUsuario.addItem("Usuario", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceUser.VIEW_NAME);
             }
         });
-        mainMenu.addItem("Vehiculos", null, new MenuBar.Command() {
+
+        MenuBar.MenuItem mantenimientoDeVehiculo = mainMenu.addItem("Mantenimiento de Vehiculo", null, null);
+
+        MenuBar.MenuItem vehiculo = mantenimientoDeVehiculo.addItem("Vehiculo", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceVehicle.VIEW_NAME);
             }
         });
-        mainMenu.addItem("Dispositivos", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceDevice.VIEW_NAME);
-            }
-        });
 
-        mainMenu.addItem("Rutas", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceRoutes.VIEW_NAME);
-            }
-        });
-
-        mainMenu.addItem("Detalle de rutas", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewSelectRoute.VIEW_NAME);
-            }
-        });
-
-        mainMenu.addItem("Asignar vehiculo", null, new MenuBar.Command() {
+        MenuBar.MenuItem asignarVehiculo = mantenimientoDeVehiculo.addItem("Asignar Vehiculo", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceAssignedVehicle.VIEW_NAME);
             }
         });
 
-        mainMenu.addItem("Asignar rutas", null, new MenuBar.Command() {
+        MenuBar.MenuItem dispositivo = mantenimientoDeVehiculo.addItem("Dispositivo", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceDevice.VIEW_NAME);
+            }
+        });
+
+        MenuBar.MenuItem mantenimientoDeRutas = mainMenu.addItem("Mantenimiento de Rutas", null, null);
+
+        MenuBar.MenuItem rutas = mantenimientoDeRutas.addItem("Rutas", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewMaintenanceRoutes.VIEW_NAME);
+            }
+        });
+
+        MenuBar.MenuItem detalleRutas = mantenimientoDeRutas.addItem("Detalle de Rutas", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewSelectRoute.VIEW_NAME);
+            }
+        });
+
+        MenuBar.MenuItem asignarRutas = mantenimientoDeRutas.addItem("Asignar  Rutas", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewMaintenanceAssignedRoutes.VIEW_NAME);
             }
         });
 
-        mainMenu.addItem("Reportes", null, new MenuBar.Command() {
+        MenuBar.MenuItem consulta = mainMenu.addItem("Consulta", null, null);
+
+        MenuBar.MenuItem reportes = consulta.addItem("Reportes", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewConsultReport.VIEW_NAME);
             }
         });
 
-
-        mainMenu.addItem("Mapa", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMapsUbication.VIEW_NAME);
-            }
-        });
-        mainMenu.addItem("Ubicar Vehiculo", null, new MenuBar.Command() {
+        MenuBar.MenuItem ubicarVehiculo = consulta.addItem("Ubicar Vehiculo", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 UniverseNavigator.navigate(ViewUserLocation.VIEW_NAME);

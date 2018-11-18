@@ -1,6 +1,7 @@
 package com.srb.project;
 
 
+import com.google.gwt.resources.client.ImageResource;
 import com.srb.project.controller.ControllerLogin;
 import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.navigator.UniverseNavigator;
@@ -9,6 +10,9 @@ import com.srb.project.view.ViewMenu;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.View;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.Resource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringView;
@@ -44,8 +48,10 @@ public class ViewLogin extends UI implements View{
         panelPrincipal.setSizeFull();
         HorizontalLayout root = new HorizontalLayout();
         VerticalLayout visitantes = new VerticalLayout();
+        ExternalResource externalResource = new ExternalResource("VAADIN/img/logo.png");
+        visitantes.setIcon(externalResource);
         VerticalLayout login = new VerticalLayout();
-
+        Resource resource= new ThemeResource("VAADIN/img/logo.png");
         visitantes.setHeight("100%");
         visitantes.setWidth("50%");
 
