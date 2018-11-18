@@ -211,11 +211,15 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
                 vehicleEntity.setLicenseplate(txtLicense.getValue());
                 vehicleEntity.setTon(Integer.valueOf(txtTon.getValue()));
                 vehicleEntity.setVehicleyear(Integer.valueOf(txtYear.getValue()));
-                controllerVehicle.save(vehicleEntity);
-                Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-                refreshInformationGrid();
-                clearFields();
-                hideFields();
+                if (controllerVehicle.validateVehicle(vehicleEntity.getLicenseplate())) {
+                    controllerVehicle.save(vehicleEntity);
+                    Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                    refreshInformationGrid();
+                    clearFields();
+                    hideFields();
+                }else {
+                    Notification.show(EnumMessages.EXIST_VEHICLE.getMessage(), Notification.Type.ERROR_MESSAGE);
+                }
             } catch (Exception e) {
                 Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
             }
@@ -224,16 +228,20 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
 
     private void processUpdateRol() {
         try {
-            vehicleSelected.setStatedelete(new Byte("1"));
-            vehicleSelected.setMark(txtMark.getValue());
-            vehicleSelected.setLicenseplate(txtLicense.getValue());
-            vehicleSelected.setTon(Integer.valueOf(txtTon.getValue()));
-            vehicleSelected.setVehicleyear(Integer.valueOf(txtYear.getValue()));
-            controllerVehicle.updateVehicle(vehicleSelected);
-            Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-            refreshInformationGrid();
-            clearFields();
-            hideFields();
+            if ((txtLicense.getValue().equalsIgnoreCase(vehicleSelected.getLicenseplate())) || (controllerVehicle.validateVehicle(txtLicense.getValue()))) {
+                vehicleSelected.setStatedelete(new Byte("1"));
+                vehicleSelected.setMark(txtMark.getValue());
+                vehicleSelected.setLicenseplate(txtLicense.getValue());
+                vehicleSelected.setTon(Integer.valueOf(txtTon.getValue()));
+                vehicleSelected.setVehicleyear(Integer.valueOf(txtYear.getValue()));
+                controllerVehicle.updateVehicle(vehicleSelected);
+                Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                refreshInformationGrid();
+                clearFields();
+                hideFields();
+            }else{
+                Notification.show(EnumMessages.EXIST_VEHICLE.getMessage(), Notification.Type.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
             Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
         }

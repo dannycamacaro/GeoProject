@@ -13,7 +13,8 @@ public enum EnumMessages {
     EXIST_ROL("Introduzca un nombre distinto para el rol. El nombre del rol ya existe"),
     SELECT_USER("Debe seleccionar un usuario"),
     SELECT_REGISTER("Debe seleccionar un registro"),
-    MESSAGES_LOGIN("Ingresar");
+    MESSAGES_LOGIN("Ingresar"),
+    EXIST_VEHICLE("El vehiculo ya se encuentra registrado");
 
     EnumMessages(String message) {
         this.message = message;
