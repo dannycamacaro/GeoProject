@@ -50,4 +50,13 @@ public class ServicesVehicle {
         return vehicleEntities;
     }
 
+    public int loadVehicleByLicensePlate(Object licensePlateValue) {
+        Query existRol = entityManager.createQuery("from VehicleEntity where  upper(licenseplate)=:licensePlateValue and  statedelete=:state");
+        String licensePlate = (String) licensePlateValue;
+        existRol.setParameter("licensePlateValue", licensePlate.toUpperCase());
+        existRol.setParameter("state", (byte)1);
+        int value = existRol.getResultList().size();
+        return value;
+    }
+
 }

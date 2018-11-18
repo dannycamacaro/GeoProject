@@ -38,9 +38,11 @@ public class ServicesRol {
 
     }
 
-    public int loadRolByName(Object nameRole) {
-        Query existRol = entityManager.createQuery("from RolesEntity where  namerole=:nameroles");
-        existRol.setParameter("nameroles", nameRole);
+    public int loadRolByName(Object nameRoleValue) {
+        Query existRol = entityManager.createQuery("from RolesEntity where  upper(namerole)=:nameroles and  statedelete=:state");
+        String nameRole = (String) nameRoleValue;
+        existRol.setParameter("nameroles", nameRole.toUpperCase());
+        existRol.setParameter("state", (byte)1);
         int value = existRol.getResultList().size();
         return value;
     }

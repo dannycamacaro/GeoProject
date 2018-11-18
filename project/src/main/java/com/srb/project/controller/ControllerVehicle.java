@@ -30,8 +30,8 @@ public class ControllerVehicle {
         AuditsEntity auditsEntity = new AuditsEntity();
 
         try {
-            auditsEntity = ControllerAudit.loadInformationAudit(vehicleEntity.toString(), EnumOperation.ADD_VEHICLE.getIdOperation(),"controllerLogin",appContext);
-            vehicleEntity.setStatedelete((byte) 1);
+            auditsEntity = ControllerAudit.loadInformationAudit(vehicleEntity.toString(), EnumOperation.ADD_VEHICLE.getIdOperation(), "controllerLogin", appContext);
+
             servicesVehicle.save(vehicleEntity);
             auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
             servicesAudit.save(auditsEntity);
@@ -52,7 +52,7 @@ public class ControllerVehicle {
 
     public VehicleEntity updateVehicle(VehicleEntity vehicleEntity) {
         VehicleEntity vehicleEntityBd = null;
-        AuditsEntity  auditsEntity = ControllerAudit.loadInformationAudit(vehicleEntity.toString(),EnumOperation.EDIT_VEHICLE.getIdOperation(),"controllerLogin",appContext);
+        AuditsEntity auditsEntity = ControllerAudit.loadInformationAudit(vehicleEntity.toString(), EnumOperation.EDIT_VEHICLE.getIdOperation(), "controllerLogin", appContext);
 
 
         try {
@@ -67,7 +67,8 @@ public class ControllerVehicle {
             }
 
         } catch (Exception e) {
-            auditsEntity.setStatusoperation(AuditsEntity.OPERATION_NOT_SUCCESSFUL);;
+            auditsEntity.setStatusoperation(AuditsEntity.OPERATION_NOT_SUCCESSFUL);
+            ;
             servicesAudit.save(auditsEntity);
         }
 
@@ -78,7 +79,7 @@ public class ControllerVehicle {
 
         boolean deleteVehicle = false;
         VehicleEntity vehicleEntityBd = null;
-        AuditsEntity  auditsEntity = ControllerAudit.loadInformationAudit(vehicle.toString(),EnumOperation.DELETE_VEHICLE.getIdOperation(),"controllerLogin",appContext);
+        AuditsEntity auditsEntity = ControllerAudit.loadInformationAudit(vehicle.toString(), EnumOperation.DELETE_VEHICLE.getIdOperation(), "controllerLogin", appContext);
 
         try {
             vehicleEntityBd = servicesVehicle.findById(vehicle.getIdvehicle());
@@ -92,8 +93,26 @@ public class ControllerVehicle {
 
         } catch (Exception e) {
             auditsEntity.setStatusoperation(AuditsEntity.OPERATION_NOT_SUCCESSFUL);
-            servicesAudit.save(auditsEntity);        }
+            servicesAudit.save(auditsEntity);
+        }
 
         return deleteVehicle;
+    }
+
+    public boolean validateVehicle(String nameRole) {
+        boolean expresion = false;
+        if (!existVehicleByLicensePlate(nameRole)) {
+            expresion = true;
+        }
+        return expresion;
+    }
+
+    private boolean existVehicleByLicensePlate(String licensePlate) {
+        boolean existe = false;
+        if (servicesVehicle.loadVehicleByLicensePlate(licensePlate) > 0) {
+            existe = true;
+        }
+        return existe;
+
     }
 }
