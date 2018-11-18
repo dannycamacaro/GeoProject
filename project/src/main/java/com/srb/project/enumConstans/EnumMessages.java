@@ -10,6 +10,7 @@ public enum EnumMessages {
     MESSAGES_ERROR_DELETE("No se pudo eliminar el registro"),
     MESSAGES_EDIT("Editado exitosamente"),
     SELECT_ROL("Debe seleccionar un rol"),
+    EXIST_ROL("Introduzca un nombre distinto para el rol. El nombre del rol ya existe"),
     SELECT_USER("Debe seleccionar un usuario"),
     SELECT_REGISTER("Debe seleccionar un registro"),
     MESSAGES_LOGIN("Ingresar");

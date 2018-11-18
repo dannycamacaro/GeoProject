@@ -189,11 +189,15 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
             try {
                 rolesEntity.setNamerole(txtNameRol.getValue());
                 rolesEntity.setDescriptionrole(txtDescription.getValue());
-                controllerRol.save(rolesEntity);
-                Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-                refreshInformationGrid();
-                clearFields();
-                showFields(false);
+                if (controllerRol.validateRol(rolesEntity.getNamerole())) {
+                    controllerRol.save(rolesEntity);
+                    Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                    refreshInformationGrid();
+                    clearFields();
+                    showFields(false);
+                } else {
+                    Notification.show(EnumMessages.EXIST_ROL.getMessage(), Notification.Type.ERROR_MESSAGE);
+                }
             } catch (Exception e) {
                 Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
             }
@@ -202,13 +206,17 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
 
     private void processUpdateRol() {
         try {
-            roles.setNamerole(txtNameRol.getValue());
-            roles.setDescriptionrole(txtDescription.getValue());
-            controllerRol.updateRol(roles);
-            Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-            refreshInformationGrid();
-            clearFields();
-            showFields(false);
+            if ((txtNameRol.getValue().equalsIgnoreCase(roles.getNamerole())) || (controllerRol.validateRol(txtNameRol.getValue()))) {
+                roles.setNamerole(txtNameRol.getValue());
+                roles.setDescriptionrole(txtDescription.getValue());
+                controllerRol.updateRol(roles);
+                Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                refreshInformationGrid();
+                clearFields();
+                showFields(false);
+            } else {
+                Notification.show(EnumMessages.EXIST_ROL.getMessage(), Notification.Type.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
             Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
         }
@@ -228,7 +236,7 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
     }
 
     private void clearFields() {
-        action="";
+        action = "";
         txtDescription.clear();
         txtNameRol.clear();
     }
