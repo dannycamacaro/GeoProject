@@ -94,4 +94,11 @@ public class ControllerDevice {
 
         return deviceEntities;
     }
+    public DeviceEntity findDeviceByIdVehicle(Integer id) {
+
+        DeviceEntity deviceEntities = new DeviceEntity();
+        deviceEntities = servicesDevice.findByIdVehicle(id);
+
+        return deviceEntities;
+    }
 }

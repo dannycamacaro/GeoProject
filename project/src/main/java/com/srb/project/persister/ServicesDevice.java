@@ -42,6 +42,15 @@ public class ServicesDevice {
         return deviceEntity;
     }
 
+    public DeviceEntity findByIdVehicle(Integer idVehicle) {
+        DeviceEntity deviceEntity;
+        Query query = entityManager.createQuery("from DeviceEntity device where idvehicle=:idVehicle and statedelete=:state");
+        query.setParameter("idVehicle", idVehicle);
+        query.setParameter("state",(byte)1);
+        deviceEntity = (DeviceEntity) query.getSingleResult();
+        return deviceEntity;
+    }
+
     public Collection<DeviceEntity> findAllDevice() {
 
         Query query = entityManager.createQuery("from DeviceEntity device where statedelete=:state");

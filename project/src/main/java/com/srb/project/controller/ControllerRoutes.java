@@ -95,4 +95,10 @@ public class ControllerRoutes {
 
         return routesEntities;
     }
+    public RoutesEntity findRouteById(Integer idRoute) {
+        RoutesEntity routesEntity = new RoutesEntity();
+        routesEntity = servicesRoutes.findById(idRoute);
+
+        return routesEntity;
+    }
 }

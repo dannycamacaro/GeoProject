@@ -51,4 +51,12 @@ public class ServicesAssignedRoutes {
         return assignedroutesEntity;
     }
 
+    public Collection<AssignedroutesEntity> findByIdDevice(Integer idDevice) {
+        Collection<AssignedroutesEntity> assignedroutesEntity = new ArrayList<>();
+        Query query = entityManager.createQuery("from AssignedroutesEntity av where av.iddevice=:idDevice");
+        query.setParameter("idDevice",idDevice);
+        assignedroutesEntity = query.getResultList();
+        return assignedroutesEntity;
+    }
+
 }

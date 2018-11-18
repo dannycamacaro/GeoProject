@@ -4,6 +4,7 @@ package com.srb.project.controller;
 import com.srb.project.enumConstans.EnumOperation;
 import com.srb.project.model.AssignedvehicleEntity;
 import com.srb.project.model.AuditsEntity;
+import com.srb.project.model.VehicleEntity;
 import com.srb.project.persister.ServicesAssignedVehicle;
 import com.srb.project.persister.ServicesAudit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,5 +100,10 @@ public class ControllerAssignedVehicle {
             servicesAudit.save(auditsEntity);        }
 
         return deleteVehicle;
+    }
+
+    public AssignedvehicleEntity findUserByVehicleID(VehicleEntity vehicleEntity) {
+        AssignedvehicleEntity asignedVehicle = servicesAssignedVehicle.findById(vehicleEntity.getIdvehicle());
+        return asignedVehicle;
     }
 }

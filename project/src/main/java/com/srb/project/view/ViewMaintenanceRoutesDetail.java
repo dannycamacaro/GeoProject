@@ -37,7 +37,7 @@ import java.util.Locale;
 @UIScope
 @Widgetset(value = "WidgetSet")
 @SpringView(name = ViewMaintenanceRoutesDetail.VIEW_NAME)
-public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements View {
+public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "detalleRuta";
     private HorizontalSplitCrudLayout horizontalSplitCrudLayout;
@@ -62,13 +62,26 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
     @Autowired
     ControllerRoutesDetail controllerRoutesDetail;
 
+
+    private HorizontalLayout menuLayout = new HorizontalLayout();
+    private HorizontalLayout principalLayout = new HorizontalLayout();
+    private VerticalLayout leftPanel = new VerticalLayout();
+    private VerticalLayout rightPanel = new VerticalLayout();
+    private MenuBar menuBar;
+
     public ViewMaintenanceRoutesDetail() {
 
 
     }
 
     private void buildForm() {
-        googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc", null, "spanish");
+        this.setWidth("100%");
+        this.setHeightUndefined();
+
+        if (menuBar == null)
+            menuBar = ViewMenu.buildMenu();
+        menuLayout.addComponent(menuBar);
+
         // verificar si existen detalles de rutas
         if (route != null & route.getIdroutes() > 0) {
             routes.clear();
@@ -79,21 +92,18 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
 
         }
         // creacion de formuladrio de detalle
-        VerticalLayout leftPanel = new VerticalLayout();
         leftPanel.setWidth("100%");
         leftPanel.setMargin(new MarginInfo(true, false, false, true));
         leftPanel.setSpacing(false);
         buildFormDetail(leftPanel);
 
         // creacion formulario de mapa
-        VerticalLayout rightPanel = new VerticalLayout();
         rightPanel.setHeight("100%");
         rightPanel.setWidth("100%");
         buildMap(rightPanel);
 
-        this.addComponent(leftPanel);
-        this.addComponent(rightPanel);
-        this.setSizeFull();
+        principalLayout.addComponents(leftPanel,rightPanel);
+        this.addComponents(menuLayout,principalLayout);
     }
 
     private void buildFormDetail(VerticalLayout leftPanel) {
@@ -244,7 +254,7 @@ public class ViewMaintenanceRoutesDetail extends HorizontalLayout implements Vie
             grid.setDataProvider(dataProvider);
 
         } else {
-            latLon = new LatLon(10.54646, -66.546466);
+            latLon = new LatLon(10.4159194,-66.9022335);
         }
         googleMap.setCenter(latLon);
         googleMap.setWidth("600px");

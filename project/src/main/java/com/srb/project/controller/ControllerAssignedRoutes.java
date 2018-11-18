@@ -100,4 +100,8 @@ public class ControllerAssignedRoutes {
 
         return deleteRoutes;
     }
+
+    public Collection<AssignedroutesEntity> findAllAssignedRoutesByIdDevice(int iddevice) {
+        return servicesAssignedRoutes.findByIdDevice(iddevice);
+    }
 }

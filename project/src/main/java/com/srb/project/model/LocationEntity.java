@@ -23,7 +23,7 @@ public class LocationEntity {
     @Column(name = "LOCATIONLENGTH", nullable = true, length = 100)
     private String locationlength;
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "LOCATIONDATE", nullable = true)
     private Date locationdate;
 

@@ -10,9 +10,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,14 @@ public class ViewSelectRoute extends VerticalLayout implements View {
     @Autowired
     ControllerRoutes controllerRoutes;
 
+    private MenuBar menuBar;
+    private Grid<RoutesEntity> grid = new Grid<>();
+    private TextField txtFilter = new TextField("Filtro por nombre de ruta");
+    private HorizontalLayout menuLayout = new HorizontalLayout();
+    private HorizontalLayout principalLayout= new HorizontalLayout();
+    private VerticalLayout leftLayout = new VerticalLayout();
+    private VerticalLayout rightLayout = new VerticalLayout();
+
     public ViewSelectRoute() {
 
     }
@@ -37,11 +43,24 @@ public class ViewSelectRoute extends VerticalLayout implements View {
 
         this.setHeightUndefined();
         this.setWidth("100%");
-        Grid<RoutesEntity> grid = new Grid<>();
+
+        if (menuBar == null)
+            menuBar = ViewMenu.buildMenu();
+        menuLayout.addComponent(menuBar);
+
+
+        createGrid();
+
+        this.setMargin(new MarginInfo(true,true,true,true));
+        this.setSpacing(false);
+        this.addComponents(menuLayout,principalLayout);
+        this.setComponentAlignment(menuLayout, Alignment.MIDDLE_CENTER);
+    }
+
+    private void createGrid() {
+        Collection<RoutesEntity> routes = controllerRoutes.findAllRoutes();
         grid.addColumn(RoutesEntity::getNameroutes).setCaption("Ruta");
         grid.addColumn(RoutesEntity::getDescription).setCaption("Descripcion de la ruta");
-
-        Collection<RoutesEntity> routes = controllerRoutes.findAllRoutes();
         ListDataProvider<RoutesEntity> dataProvider = DataProvider.ofCollection(routes);
         grid.setDataProvider(dataProvider);
         grid.addItemClickListener(new ItemClickListener<RoutesEntity>() {
@@ -53,25 +72,21 @@ public class ViewSelectRoute extends VerticalLayout implements View {
             }
         });
 
-        TextField txtFilter = new TextField("Filtro por nombre de ruta");
+
         txtFilter.setPlaceholder("Nombre filtro");
         txtFilter.addValueChangeListener(event -> {
             dataProvider.setFilter(RoutesEntity::getNameroutes, name -> {
-                String nameLower = name == null ? ""
-                        : name.toLowerCase(Locale.ENGLISH);
+                String nameLower = name == null ? "" : name.toLowerCase(Locale.ENGLISH);
                 String filterLower = event.getValue()
                         .toLowerCase(Locale.ENGLISH);
                 return nameLower.contains(filterLower);
             });
         });
-
-        txtFilter.setStyleName("width:100px");
         grid.setSizeFull();
-        this.setMargin(new MarginInfo(true,true,true,true));
-        this.setSpacing(false);
-        this.addComponent(txtFilter);
-        this.addComponent(grid);
-
+        txtFilter.setStyleName("width:300px");
+        leftLayout.addComponent(txtFilter);
+        leftLayout.addComponent(grid);
+        principalLayout.addComponents(leftLayout,rightLayout);
     }
 
 }
