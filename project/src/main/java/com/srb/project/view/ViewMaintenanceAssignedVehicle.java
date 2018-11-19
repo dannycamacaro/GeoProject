@@ -191,7 +191,7 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
             assignedVehicleSelected.setFinishdate(txtFinishDate.getValue());
 
             controllerAssignedVehicle.updateAssigneVehicle(assignedVehicleSelected);
-                Notification.show(EnumMessages.MESSAGE_SUCESS_UPDATE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+            Notification.show(EnumMessages.MESSAGE_SUCESS_UPDATE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
             refreshInformationGrid();
             clearFields();
             showFields(false);

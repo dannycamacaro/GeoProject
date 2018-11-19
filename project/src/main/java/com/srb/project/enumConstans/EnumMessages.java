@@ -14,7 +14,8 @@ public enum EnumMessages {
     SELECT_USER("Debe seleccionar un usuario"),
     SELECT_REGISTER("Debe seleccionar un registro"),
     MESSAGES_LOGIN("Ingresar"),
-    EXIST_VEHICLE("El vehiculo ya se encuentra registrado");
+    EXIST_VEHICLE("El vehiculo ya se encuentra registrado"),
+    EXIST_DEVICE("Introduzca un IMEI distinto. El IMEI del dispositivo ya existe");
 
     EnumMessages(String message) {
         this.message = message;

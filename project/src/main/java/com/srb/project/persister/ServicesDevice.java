@@ -70,4 +70,12 @@ public class ServicesDevice {
     return  consultReportAssignedDevices;
     }
 
+    public int loadDeviceByImei(String imei) {
+        Query existRol = entityManager.createQuery("from DeviceEntity where  upper(imei)=:imei and  statedelete=:state");
+        String nameRole = (String) imei;
+        existRol.setParameter("imei", imei.toUpperCase());
+        existRol.setParameter("state", (byte)1);
+        int value = existRol.getResultList().size();
+        return value;
+    }
 }

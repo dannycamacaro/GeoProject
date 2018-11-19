@@ -101,4 +101,21 @@ public class ControllerDevice {
 
         return deviceEntities;
     }
+
+    public boolean validateDevice(String imei) {
+
+        boolean expresion = false;
+        if (!existDeviceByImei(imei)) {
+            expresion = true;
+        }
+        return expresion;
+    }
+
+    private boolean existDeviceByImei(String imei) {
+        boolean existe = false;
+        if (servicesDevice.loadDeviceByImei(imei) > 0) {
+            existe = true;
+        }
+        return existe;
+    }
 }
