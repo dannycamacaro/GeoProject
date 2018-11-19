@@ -4,6 +4,7 @@ public enum EnumMessages {
     MESSAGE_REQUIRED_FIELD ("Debe introducir todos los campos requeridos"),
     MESSAGES_SUCESS_SAVE("Agregado exitosamente"),
     MESSAGES_ERROR_SAVE("Error al Guardar!"),
+    MESSAGES_ERROR_NUMBERFORMAT("Debe introducir un formato numerico"),
     MESSAGE_SUCESS_UPDATE("Actualizado exitosamente!"),
     MESSAGES_ERROR_UPDATE("No se pudo actualizar el registro"),
     MESSAGE_SUCESS_DELETE("Eliminado exitosamente!"),

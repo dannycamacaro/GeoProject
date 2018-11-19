@@ -34,7 +34,10 @@ public enum EnumLabel {
     CANCELAR_LABEL("Cancelar"),
     NAME_ROUTE("Nombre de Ruta"),
     DESCRIPTION_ROUTE("Descripcion de Ruta"),
-    ROL_LABEL("Roles");
+    ROL_LABEL("Roles"), 
+    MATRICULA_LABEL("Matricula"),
+    YEAR_LABEL("Año"),
+    TONELADAS_LABEL("Toneladas");
 
     EnumLabel(String label) {
         this.label = label;

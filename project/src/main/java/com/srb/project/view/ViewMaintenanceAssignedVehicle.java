@@ -110,8 +110,6 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
         buildFields();
         buildButtonsFooter();
         principalLayout.addComponent(rightLayout);
-
-
     }
 
     private void loadInformationCombox() {
