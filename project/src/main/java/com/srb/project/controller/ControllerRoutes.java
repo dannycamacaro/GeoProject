@@ -101,4 +101,23 @@ public class ControllerRoutes {
 
         return routesEntity;
     }
+
+    public boolean validateRoutes(String nameroutes) {
+
+        boolean expresion = false;
+        if (!existRoutesByName(nameroutes)) {
+            expresion = true;
+        }
+        return expresion;
+    }
+
+    private boolean existRoutesByName(String nameroutes) {
+
+        boolean existe = false;
+        if (servicesRoutes.loadRouteByName(nameroutes) > 0) {
+            existe = true;
+        }
+        return existe;
+    }
+
 }

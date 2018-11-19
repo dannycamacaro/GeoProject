@@ -4,8 +4,6 @@ package com.srb.project.view;
 import com.srb.project.controller.ControllerRoutes;
 import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.enumConstans.EnumMessages;
-import com.srb.project.model.RolesEntity;
-import com.srb.project.model.RoutesEntity;
 import com.srb.project.model.RoutesEntity;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
@@ -14,18 +12,13 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
-import com.vaadin.ui.declarative.DesignContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.crudui.crud.CrudListener;
-import org.vaadin.crudui.crud.CrudOperation;
 import org.vaadin.crudui.crud.impl.GridCrud;
-import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
-import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
+
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 
-import static com.srb.project.view.ViewMenu.buildMenu;
 
 @UIScope
 @SpringView(name = ViewMaintenanceRoutes.VIEW_NAME)
@@ -37,12 +30,12 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "routes";
     private GridCrud<RoutesEntity> crud;
-    private GridLayoutCrudFormFactory<RoutesEntity> formFactory;
-    private Button btnNew = new Button("Registrar");
-    private Button btnAccept = new Button("Aceptar");
-    private Button btnEdit = new Button("Editar");
-    private Button btnDelete = new Button("Eliminar");
-    private Button btnCancel = new Button("Cancelar");
+    //Buttons
+    private Button btnNew = new Button(EnumLabel.REGISTRAR_LABEL.getLabel());
+    private Button btnAccept = new Button(EnumLabel.ACEPTAR_LABEL.getLabel());
+    private Button btnEdit = new Button(EnumLabel.EDITAR_LABEL.getLabel());
+    private Button btnDelete = new Button(EnumLabel.ELIMINAR_LABEL.getLabel());
+    private Button btnCancel = new Button(EnumLabel.CANCELAR_LABEL.getLabel());
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
     private VerticalLayout leftLayout = new VerticalLayout();
@@ -53,8 +46,8 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
     private Grid<RoutesEntity> grid = new Grid<>();
     private ListDataProvider<RoutesEntity> dataProvider;
     private RoutesEntity routesEntitySelected;
-    private TextField txtNameRoute = new TextField("Nombre de Ruta");
-    private TextField txtDescription = new TextField("Descripcion de Ruta");
+    private TextField txtNameRoute = new TextField(EnumLabel.NAME_ROUTE.getLabel());
+    private TextField txtDescription = new TextField(EnumLabel.DESCRIPTION_ROUTE.getLabel());
     private String action;
 
     public ViewMaintenanceRoutes() {
@@ -87,9 +80,10 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         leftLayout.setSizeFull();
         leftLayout.addComponent(grid);
         refreshInformationGrid();
-        grid.addColumn(RoutesEntity::getNameroutes).setCaption("Nombre de Ruta");
-        grid.addColumn(RoutesEntity::getDescription).setCaption("Descripcion de Ruta");
+        grid.addColumn(RoutesEntity::getNameroutes).setCaption(EnumLabel.NAME_ROUTE.getLabel());
+        grid.addColumn(RoutesEntity::getDescription).setCaption(EnumLabel.DESCRIPTION_ROUTE.getLabel());
         grid.setDataProvider(dataProvider);
+
         grid.addItemClickListener(new ItemClickListener<RoutesEntity>() {
             @Override
             public void itemClick(Grid.ItemClick<RoutesEntity> event) {
@@ -105,6 +99,8 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
 
     private void createRightLayout() {
         principalButtonsLayout.addComponents(btnNew, btnEdit, btnDelete);
+        txtNameRoute.setRequiredIndicatorVisible(true);
+        txtDescription.setRequiredIndicatorVisible(true);
 
         btnNew.addClickListener(new Button.ClickListener() {
             @Override
@@ -118,16 +114,25 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         btnEdit.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                showFields();
-                action = "edit";
+                if (!txtNameRoute.isEmpty() && !txtDescription.isEmpty()) {
+                    showFields();
+                    action = "edit";
+                } else {
+                    Notification.show(EnumMessages.SELECT_ROUTES.getMessage(), Notification.Type.ERROR_MESSAGE);
+                }
             }
         });
 
         btnDelete.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                showFields();
-                action = "delete";
+                if (!txtNameRoute.isEmpty() && !txtDescription.isEmpty()) {
+                    showFields();
+                    action = "delete";
+                    enableFields(false);
+                } else {
+                    Notification.show(EnumMessages.SELECT_ROUTES.getMessage(), Notification.Type.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -137,7 +142,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         rightLayout.setComponentAlignment(fieldsLayout, Alignment.MIDDLE_LEFT);
 
         secondaryButtonsLayout.addComponents(btnCancel, btnAccept);
-        
+
         btnCancel.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -145,7 +150,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
                 hideFields();
             }
         });
-        
+
         btnAccept.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -166,49 +171,61 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
     private void processDeleteRoute() {
         try {
             controllerRoutes.deleteRoutes(routesEntitySelected);
+            showMessage(EnumMessages.MESSAGE_SUCESS_DELETE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
             hideContent();
             clearFields();
             refreshInformationGrid();
-            showMessage("Registro eliminado", Notification.Type.HUMANIZED_MESSAGE);
-        }catch (Exception e){
-            showMessage("No se pudo eliminar el registro", Notification.Type.HUMANIZED_MESSAGE);
+            enableFields(true);
+        } catch (Exception e) {
+            showMessage(EnumMessages.MESSAGES_ERROR_DELETE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
         }
     }
 
     private void processUpdateRoute() {
-        routesEntitySelected.setStatedelete(Byte.valueOf("1"));
-        routesEntitySelected.setNameroutes(txtNameRoute.getValue());
-        routesEntitySelected.setDescription(txtDescription.getValue());
-
         try {
-            controllerRoutes.updateRoutes(routesEntitySelected);
-            hideContent();
-            clearFields();
-            refreshInformationGrid();
-            showMessage("Edicion Exitosa", Notification.Type.HUMANIZED_MESSAGE);
+            if ((txtNameRoute.getValue().equalsIgnoreCase(routesEntitySelected.getNameroutes())) || (controllerRoutes.validateRoutes(txtNameRoute.getValue()))) {
+                routesEntitySelected.setStatedelete(Byte.valueOf("1"));
+                routesEntitySelected.setNameroutes(txtNameRoute.getValue());
+                routesEntitySelected.setDescription(txtDescription.getValue());
+
+                controllerRoutes.updateRoutes(routesEntitySelected);
+                hideContent();
+                clearFields();
+                refreshInformationGrid();
+                Notification.show(EnumMessages.MESSAGE_SUCESS_UPDATE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+            } else {
+                Notification.show(EnumMessages.EXIST_ROUTES.getMessage(), Notification.Type.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
-            showMessage("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
+            Notification.show(EnumMessages.MESSAGES_ERROR_UPDATE.getMessage(), Notification.Type.ERROR_MESSAGE);
             hideContent();
         }
     }
 
     private void processAddRoute() {
         RoutesEntity routesEntity = new RoutesEntity();
-        routesEntity.setStatedelete(Byte.valueOf("1"));
-        routesEntity.setNameroutes(txtNameRoute.getValue());
-        routesEntity.setDescription(txtDescription.getValue());
-
         try {
-            controllerRoutes.save(routesEntity);
-            hideContent();
-            clearFields();
-            refreshInformationGrid();
-            showMessage("Guardado Exitoso", Notification.Type.HUMANIZED_MESSAGE);
+            if (!isValidationAllField(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage())) {
+
+                routesEntity.setStatedelete(Byte.valueOf("1"));
+                routesEntity.setNameroutes(txtNameRoute.getValue());
+                routesEntity.setDescription(txtDescription.getValue());
+                if (controllerRoutes.validateRoutes(routesEntity.getNameroutes())) {
+                    controllerRoutes.save(routesEntity);
+                    hideContent();
+                    clearFields();
+                    refreshInformationGrid();
+                    Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                }else{
+                    Notification.show(EnumMessages.EXIST_ROUTES.getMessage(), Notification.Type.ERROR_MESSAGE);
+                }
+            }
         } catch (Exception e) {
-            showMessage("Ocurrio un Error", Notification.Type.HUMANIZED_MESSAGE);
+            Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
             hideContent();
         }
     }
+
 
     private void hideContent() {
         fieldsLayout.setVisible(false);
@@ -256,7 +273,33 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         grid.setDataProvider(dataProvider);
     }
 
-    private void showMessage(String mensaje, Notification.Type type){
+    private void showMessage(String mensaje, Notification.Type type) {
         Notification.show(mensaje, type);
     }
+
+    private boolean isValidationAllField(String message) {
+        if (isValidationFieldEmpty(txtDescription.getValue())) {
+            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (isValidationFieldEmpty(txtNameRoute.getValue())) {
+            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isValidationFieldEmpty(String textField) {
+        boolean validation = false;
+        if (textField == null || textField.isEmpty()) {
+
+            validation = true;
+        }
+        return validation;
+    }
+
+    private void enableFields(boolean value) {
+        txtDescription.setEnabled(value);
+        txtNameRoute.setEnabled(value);
+    }
+
 }

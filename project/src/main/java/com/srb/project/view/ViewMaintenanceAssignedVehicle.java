@@ -221,10 +221,8 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
                         break;
                     }
                 }
-
                 assignedvehicleEntity.setInitialdate(txtInitDate.getValue());
                 assignedvehicleEntity.setFinishdate(txtFinishDate.getValue());
-
                 controllerAssignedVehicle.save(assignedvehicleEntity);
                 Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
                 refreshInformationGrid();

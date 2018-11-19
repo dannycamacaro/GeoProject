@@ -56,4 +56,14 @@ public class ServicesRoutes {
         routesEntities.add(routesEntity);
         return routesEntities;
     }
+
+    public int loadRouteByName(String nameroutes) {
+
+
+        Query existRol = entityManager.createQuery("from RoutesEntity where  upper(nameroutes)=:nameroutes and  statedelete=:state");
+        existRol.setParameter("nameroutes", nameroutes.toUpperCase());
+        existRol.setParameter("state", (byte)1);
+        int value = existRol.getResultList().size();
+        return value;
+    }
 }

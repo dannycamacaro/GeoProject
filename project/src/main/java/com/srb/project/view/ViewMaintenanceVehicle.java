@@ -235,7 +235,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
                 vehicleSelected.setTon(Integer.valueOf(txtTon.getValue()));
                 vehicleSelected.setVehicleyear(Integer.valueOf(txtYear.getValue()));
                 controllerVehicle.updateVehicle(vehicleSelected);
-                Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                Notification.show(EnumMessages.MESSAGE_SUCESS_UPDATE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
                 refreshInformationGrid();
                 clearFields();
                 hideFields();

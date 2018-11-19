@@ -8,14 +8,15 @@ public enum EnumMessages {
     MESSAGES_ERROR_UPDATE("No se pudo actualizar el registro"),
     MESSAGE_SUCESS_DELETE("Eliminado exitosamente!"),
     MESSAGES_ERROR_DELETE("No se pudo eliminar el registro"),
-    MESSAGES_EDIT("Editado exitosamente"),
     SELECT_ROL("Debe seleccionar un rol"),
-    EXIST_ROL("Introduzca un nombre distinto para el rol. El nombre del rol ya existe"),
     SELECT_USER("Debe seleccionar un usuario"),
     SELECT_REGISTER("Debe seleccionar un registro"),
+    SELECT_ROUTES("Debe seleccionar una ruta"),
     MESSAGES_LOGIN("Ingresar"),
-    EXIST_VEHICLE("El vehiculo ya se encuentra registrado"),
-    EXIST_DEVICE("Introduzca un IMEI distinto. El IMEI del dispositivo ya existe");
+    EXIST_ROL("Introduzca un nombre distinto para el rol. El nombre del rol ya existe"),
+    EXIST_VEHICLE("Introduzca una matricula distinta, el vehiculo ya se encuentra registrado"),
+    EXIST_DEVICE("Introduzca un IMEI distinto, el IMEI del dispositivo ya existe"),
+    EXIST_ROUTES("Introduzca un nombre de ruta distinto, el nombre de la ruta ya se encuentra registrada");
 
     EnumMessages(String message) {
         this.message = message;

@@ -286,7 +286,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
                 }
             }
             controllerUser.updateUser(usersEntity);
-            Notification.show(EnumMessages.MESSAGES_EDIT.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+            Notification.show(EnumMessages.MESSAGE_SUCESS_UPDATE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
             refreshInformationGrid();
             emptySetValue();
             hideFields();

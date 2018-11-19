@@ -31,7 +31,9 @@ public enum EnumLabel {
     EMAIL_LABEL("Email"),
     LICENSEPLATE_LABEL("Placa"),
     ROUTE_NAME_LABEL("Ruta"),
-    CANCELAR_LABEL("Cancelar");
+    CANCELAR_LABEL("Cancelar"),
+    NAME_ROUTE("Nombre de Ruta"),
+    DESCRIPTION_ROUTE("Descripcion de Ruta");
 
     EnumLabel(String label) {
         this.label = label;
