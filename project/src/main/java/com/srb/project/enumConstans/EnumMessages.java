@@ -16,7 +16,9 @@ public enum EnumMessages {
     EXIST_ROL("Introduzca un nombre distinto para el rol. El nombre del rol ya existe"),
     EXIST_VEHICLE("Introduzca una matricula distinta, el vehiculo ya se encuentra registrado"),
     EXIST_DEVICE("Introduzca un IMEI distinto, el IMEI del dispositivo ya existe"),
-    EXIST_ROUTES("Introduzca un nombre de ruta distinto, el nombre de la ruta ya se encuentra registrada");
+    EXIST_ROUTES("Introduzca un nombre de ruta distinto, el nombre de la ruta ya se encuentra registrada"),
+    EXIST_USERNAME("Introduzca un username distinto, el usarname ya se encuentra asignado"),
+    EXIST_IDENTITYDOCUMENT("Introduzca un documento de identidad distinto, la persona ya se encuentra registrada");
 
     EnumMessages(String message) {
         this.message = message;

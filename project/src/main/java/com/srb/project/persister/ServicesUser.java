@@ -45,4 +45,21 @@ public class ServicesUser {
 
         return usersEntities;
     }
+
+    public int loadUserByUserName(String username) {
+        Query existRol = entityManager.createQuery("from UsersEntity where  upper(username)=:username and  statedelete=:state");
+        existRol.setParameter("username", username.toUpperCase());
+        existRol.setParameter("state", (byte)1);
+        int value = existRol.getResultList().size();
+        return value;
+    }
+
+    public int loadUserByIdentityDocument(String identitydocument) {
+        Query existRol = entityManager.createQuery("from UsersEntity where  upper(identitydocument)=:identitydocument and  statedelete=:state");
+        existRol.setParameter("identitydocument", identitydocument.toUpperCase());
+        existRol.setParameter("state", (byte)1);
+        int value = existRol.getResultList().size();
+        return value;
+
+    }
 }

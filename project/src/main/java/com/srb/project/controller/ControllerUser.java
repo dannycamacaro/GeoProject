@@ -119,4 +119,41 @@ public class ControllerUser {
     public void setServicesRol(ServicesRol servicesRol) {
         this.servicesRol = servicesRol;
     }
+
+    public boolean validateUserByUserName(String username) {
+
+        boolean expresion = false;
+        if (!existUserByUserName(username)) {
+            expresion = true;
+        }
+        return expresion;
+    }
+
+    private boolean existUserByUserName(String username) {
+        boolean existe = false;
+        if (servicesUser.loadUserByUserName(username) > 0) {
+            existe = true;
+        }
+        return existe;
+
+    }
+
+    public boolean validateUserByIdentityDocument(String identitydocument) {
+        boolean expresion = false;
+        if (!existUserByIdentityDocument(identitydocument)) {
+            expresion = true;
+        }
+        return expresion;
+    }
+
+    private boolean existUserByIdentityDocument(String identitydocument) {
+        boolean existe = false;
+        if (servicesUser.loadUserByIdentityDocument(identitydocument) > 0) {
+            existe = true;
+        }
+        return existe;
+
+    }
+
+
 }

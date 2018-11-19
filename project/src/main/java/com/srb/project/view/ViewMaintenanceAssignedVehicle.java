@@ -32,7 +32,7 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
     //Layouts
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
-    private VerticalLayout leftlayout = new VerticalLayout();
+    private VerticalLayout leftLayout = new VerticalLayout();
     private VerticalLayout rightLayout = new VerticalLayout();
     private HorizontalLayout buttonsPrincipalLayout = new HorizontalLayout();
     private GridLayout fieldsLayout = new GridLayout(2, 2);
@@ -296,10 +296,10 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
 
     private void setLeftPanel() {
         principalLayout.setSizeFull();
-        leftlayout.setSizeFull();
+        leftLayout.setSizeFull();
         createGrid();
-        leftlayout.addComponent(grid);
-        principalLayout.addComponent(leftlayout);
+        leftLayout.addComponent(grid);
+        principalLayout.addComponent(leftLayout);
     }
 
     private void createGrid() {
