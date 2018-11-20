@@ -1,7 +1,6 @@
 package com.srb.project.controller;
 
 import com.srb.project.model.LocationEntity;
-import com.srb.project.model.RoutedetailEntity;
 import com.srb.project.model.VehicleEntity;
 import com.srb.project.persister.ServicesAudit;
 import com.srb.project.persister.ServicesLocation;
@@ -10,10 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -28,6 +25,17 @@ public class ControllerLocation {
 
     @Autowired
     private ApplicationContext appContext;
+
+    public void save(LocationEntity locationEntity) {
+        LocationEntity auditsEntity = new LocationEntity();
+        try {
+            servicesLocation.save(locationEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            servicesAudit.save(auditsEntity);
+        }
+
+    }
 
     public Collection<LocationEntity> findRoutesDetailByIdVehicle(Integer id) {
 

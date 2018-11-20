@@ -57,8 +57,8 @@ public class LocationEntity {
         return idlocation;
     }
 
-    public void setIdlocation(int idlocation) {
-        this.idlocation = idlocation;
+    public void setIdvehicle(int idvehicle) {
+        this.idvehicle= idvehicle;
     }
 
     public String getLocationlatitude() {

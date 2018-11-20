@@ -4,8 +4,10 @@ package com.srb.project;
 import com.google.gwt.resources.client.ImageResource;
 import com.srb.project.controller.ControllerLogin;
 import com.srb.project.enumConstans.EnumMessages;
+import com.srb.project.model.UsersEntity;
 import com.srb.project.navigator.UniverseNavigator;
 import com.srb.project.persister.ServicesLogin;
+import com.srb.project.view.ViewDriverDemo;
 import com.srb.project.view.ViewMenu;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Widgetset;
@@ -85,8 +87,9 @@ public class ViewLogin extends UI implements View{
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 //                if (loginServices.validateInfo(txtUser.getValue(), txtPassword.getValue(),usersEntity)) {
-                if (controllerLogin.validateLogin(txtUser.getValue(), txtPassword.getValue())) {
-                    iniNavigator();
+                UsersEntity entity = controllerLogin.validateLogin(txtUser.getValue(), txtPassword.getValue());
+                if (entity!=null) {
+                    iniNavigator(entity);
                 } else {
                     Notification.show("Verificar sus datos.", Notification.Type.ERROR_MESSAGE);
                 }
@@ -117,10 +120,17 @@ public class ViewLogin extends UI implements View{
 
     }
 
-    private void iniNavigator() {
+    private void iniNavigator(UsersEntity entity) {
         UniverseNavigator navigator = new UniverseNavigator(this,this);
         applicationContext.getAutowireCapableBeanFactory().autowireBean(navigator);
         navigator.addProvider(viewProvider);
-        navigator.navigateTo(ViewMenu.VIEW_NAME);
+        if (this.getUI() != null && entity!= null)
+            this.getUI().getSession().setAttribute(UsersEntity.class, entity);
+
+        if (entity.getIdrol()==2){
+            navigator.navigateTo(ViewDriverDemo.VIEW_NAME);
+        }else {
+            navigator.navigateTo(ViewMenu.VIEW_NAME);
+        }
     }
 }

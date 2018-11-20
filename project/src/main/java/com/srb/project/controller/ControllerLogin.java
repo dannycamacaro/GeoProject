@@ -14,13 +14,13 @@ public class ControllerLogin {
 
     private UsersEntity usersEntity;
 
-    public boolean validateLogin(String txtUser, String txtPassword) {
+    public UsersEntity validateLogin(String txtUser, String txtPassword) {
         UsersEntity entity = loginServices.validateInfo(txtUser, txtPassword);
         if (entity != null) {
             setUsersEntity(entity);
-            return true;
+            return entity;
         } else {
-            return false;
+            return entity;
         }
     }
 

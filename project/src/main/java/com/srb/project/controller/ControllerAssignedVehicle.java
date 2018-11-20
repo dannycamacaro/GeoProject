@@ -4,6 +4,7 @@ package com.srb.project.controller;
 import com.srb.project.enumConstans.EnumOperation;
 import com.srb.project.model.AssignedvehicleEntity;
 import com.srb.project.model.AuditsEntity;
+import com.srb.project.model.UsersEntity;
 import com.srb.project.model.VehicleEntity;
 import com.srb.project.persister.ServicesAssignedVehicle;
 import com.srb.project.persister.ServicesAudit;
@@ -104,6 +105,11 @@ public class ControllerAssignedVehicle {
 
     public AssignedvehicleEntity findUserByVehicleID(VehicleEntity vehicleEntity) {
         AssignedvehicleEntity asignedVehicle = servicesAssignedVehicle.findById(vehicleEntity.getIdvehicle());
+        return asignedVehicle;
+    }
+
+    public AssignedvehicleEntity findUserByUserID(UsersEntity userEntity) {
+        AssignedvehicleEntity asignedVehicle = servicesAssignedVehicle.findByIdUsers(userEntity.getIdusers());
         return asignedVehicle;
     }
 }

@@ -49,6 +49,13 @@ public class ControllerVehicle {
 
         return vehicleEntities;
     }
+    public VehicleEntity findAllVehicleById(Integer id) {
+
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity = servicesVehicle.findById(id);
+
+        return vehicleEntity;
+    }
 
     public VehicleEntity updateVehicle(VehicleEntity vehicleEntity) {
         VehicleEntity vehicleEntityBd = null;
