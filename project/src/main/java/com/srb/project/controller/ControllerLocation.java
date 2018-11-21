@@ -27,12 +27,10 @@ public class ControllerLocation {
     private ApplicationContext appContext;
 
     public void save(LocationEntity locationEntity) {
-        LocationEntity auditsEntity = new LocationEntity();
         try {
             servicesLocation.save(locationEntity);
         } catch (Exception e) {
             e.printStackTrace();
-            servicesAudit.save(auditsEntity);
         }
 
     }

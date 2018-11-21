@@ -127,7 +127,7 @@ public class ViewLogin extends UI implements View{
         if (this.getUI() != null && entity!= null)
             this.getUI().getSession().setAttribute(UsersEntity.class, entity);
 
-        if (entity.getIdrol()==2){
+        if (entity != null && entity.getRolesByIdrol().getNamerole().equalsIgnoreCase("Chofer") || entity.getRolesByIdrol().getNamerole().equalsIgnoreCase("Conductor")){
             navigator.navigateTo(ViewDriverDemo.VIEW_NAME);
         }else {
             navigator.navigateTo(ViewMenu.VIEW_NAME);

@@ -16,6 +16,7 @@ import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.events.MapClickListener;
 import com.vaadin.tapio.googlemaps.client.events.MarkerClickListener;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.VerticalLayout;
@@ -43,8 +44,6 @@ public class ViewDriverDemo extends VerticalLayout implements View {
     private ArrayList<LatLon> detailLatLon = new ArrayList<>();
     GoogleMap googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc", null, "spanish");
     private HorizontalLayout menuLayout = new HorizontalLayout();
-    private HorizontalLayout principalLayout = new HorizontalLayout();
-    private VerticalLayout leftPanel = new VerticalLayout();
     private VerticalLayout rightPanel = new VerticalLayout();
     private MenuBar menuBar;
 
@@ -66,14 +65,16 @@ public class ViewDriverDemo extends VerticalLayout implements View {
         rightPanel.setSizeFull();
         buildMap(rightPanel);
         this.addComponents(menuLayout, rightPanel);
+        this.setComponentAlignment(menuLayout, Alignment.MIDDLE_CENTER);
+        this.setComponentAlignment(rightPanel, Alignment.MIDDLE_CENTER);
     }
 
 
     private void buildMap(VerticalLayout rightPanel) {
         LatLon latLon;
         detailLatLon.clear();
-        googleMap.setWidth("600px");
-        googleMap.setHeight("600px");
+        googleMap.setWidth("800px");
+        googleMap.setHeight("500px");
         googleMap.setVisible(true);
         googleMap.setZoom(14);
 
@@ -123,6 +124,7 @@ public class ViewDriverDemo extends VerticalLayout implements View {
         });
 
         rightPanel.addComponent(googleMap);
+        rightPanel.setComponentAlignment(googleMap, Alignment.MIDDLE_CENTER);
     }
     @Override
     public void attach() {
