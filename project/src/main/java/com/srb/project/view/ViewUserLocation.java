@@ -150,6 +150,8 @@ public class ViewUserLocation extends VerticalLayout implements View {
     }
 
     private void createMarkersLocation(Collection<LocationEntity> entityCollection) {
+        detailLatLon.clear();
+        googleMap.clearMarkers();
         for (LocationEntity coordenas : entityCollection) {
             detailLatLon.add(new LatLon(Double.valueOf(coordenas.getLocationlatitude()), Double.valueOf(coordenas.getLocationlength())));
         }
