@@ -27,7 +27,7 @@ public class LocationEntity {
     @Column(name = "LOCATIONDATE", nullable = true)
     private Date locationdate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDVEHICLE", referencedColumnName = "IDVEHICLE",insertable = false, updatable = false, nullable = false)
     private VehicleEntity vehicleByIdvehicle;
 
