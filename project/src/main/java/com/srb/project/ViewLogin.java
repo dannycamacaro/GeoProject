@@ -51,14 +51,17 @@ public class ViewLogin extends UI implements View{
         HorizontalLayout root = new HorizontalLayout();
         VerticalLayout visitantes = new VerticalLayout();
         ExternalResource externalResource = new ExternalResource("VAADIN/img/logo.png");
-        visitantes.setIcon(externalResource);
+        Image image = new Image();
+        image.setIcon(externalResource);
+        image.setSizeFull();
+        visitantes.addComponent(image);
+        visitantes.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
         VerticalLayout login = new VerticalLayout();
-        Resource resource= new ThemeResource("VAADIN/img/logo.png");
         visitantes.setHeight("100%");
-        visitantes.setWidth("50%");
+        visitantes.setWidth("100%");
 
         login.setHeight("100%");
-        login.setWidth("50%");
+        login.setWidth("100%");
 
         root.addStyleName(ValoTheme.PANEL_BORDERLESS);
         //Formulario de login

@@ -16,10 +16,7 @@ import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.events.MapClickListener;
 import com.vaadin.tapio.googlemaps.client.events.MarkerClickListener;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -118,6 +115,11 @@ public class ViewDriverDemo extends VerticalLayout implements View {
                     entity.setVehicleByIdvehicle(vehicleEntity);
                     entity.setIdvehicle(vehicleEntity.getIdvehicle());
                     controllerLocation.save(entity);
+                    LatLon mark = new LatLon(position.getLat(),position.getLon());
+                    GoogleMapMarker marker = new GoogleMapMarker();
+                    marker.setPosition(mark);
+                    marker.setAnimationEnabled(true);
+                    googleMap.addMarker(marker);
                 }
 
             }
