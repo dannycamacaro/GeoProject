@@ -70,6 +70,7 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
     private Collection<UsersEntity> collectionsUsers;
     private Collection<String> arrayUsers = new ArrayList<>();
     private String action;
+    private UsersEntity usersEntitySelect;
 
     public ViewMaintenanceAssignedVehicle() {
 
@@ -216,16 +217,21 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
                     if (usersEntity.getUsername().equalsIgnoreCase(cmbUsers.getValue())) {
                         assignedvehicleEntity.setIdusers(usersEntity.getIdusers());
                         assignedvehicleEntity.setUsersByIdusers(usersEntity);
+                        usersEntitySelect = usersEntity;
                         break;
                     }
                 }
                 assignedvehicleEntity.setInitialdate(txtInitDate.getValue());
                 assignedvehicleEntity.setFinishdate(txtFinishDate.getValue());
+                if (controllerAssignedVehicle.validateUserAssignedVehicle(usersEntitySelect.getIdusers())) {
                 controllerAssignedVehicle.save(assignedvehicleEntity);
                 Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
                 refreshInformationGrid();
                 clearFields();
                 showFields(false);
+            }else{
+                    Notification.show(EnumMessages.EXIST_ASSIGNEDVEHICLE.getMessage(), Notification.Type.ERROR_MESSAGE);
+                }
             } catch (Exception e) {
                 Notification.show(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.ERROR_MESSAGE);
             }

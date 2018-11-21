@@ -60,4 +60,13 @@ public class ServicesAssignedVehicle {
         return assignedvehicleEntity;
     }
 
+    public int loadAssignedVehicle( Integer idusers) {
+        Query query = entityManager.createQuery(" from AssignedvehicleEntity  av where av.idusers=:idusers",AssignedvehicleEntity.class);
+
+        query.setParameter("idusers",idusers);
+        int value = query.getResultList().size();
+        return value;
+    }
+
+
 }

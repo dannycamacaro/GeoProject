@@ -19,6 +19,7 @@ public enum EnumMessages {
     EXIST_DEVICE("Introduzca un IMEI distinto, el IMEI del dispositivo ya existe"),
     EXIST_ROUTES("Introduzca un nombre de ruta distinto, el nombre de la ruta ya se encuentra registrada"),
     EXIST_USERNAME("Introduzca un username distinto, el usarname ya se encuentra asignado"),
+    EXIST_ASSIGNEDVEHICLE("El usuario ya cuenta con un vehiculo asignado, introduzca otro usuario"),
     EXIST_IDENTITYDOCUMENT("Introduzca un documento de identidad distinto, la persona ya se encuentra registrada");
 
     EnumMessages(String message) {
