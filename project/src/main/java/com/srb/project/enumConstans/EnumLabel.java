@@ -37,7 +37,7 @@ public enum EnumLabel {
     ROL_LABEL("Roles"), 
     MATRICULA_LABEL("Matricula"),
     YEAR_LABEL("Año"),
-    TONELADAS_LABEL("Toneladas");
+    TONELADAS_LABEL("Toneladas"), DOWNLOAD("Descargar");
 
     EnumLabel(String label) {
         this.label = label;
