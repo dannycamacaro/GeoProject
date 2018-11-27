@@ -4,45 +4,45 @@ package com.srb.project.enumConstans;
 public enum EnumOperation {
 
     //MODULO USER
-    ADD_USER("1", "Add user"),
-    EDIT_USER("2", "Edit user"),
-    DELETE_USER("3", "Delete user"),
+    ADD_USER("1", "Agregar usuario"),
+    EDIT_USER("2", "Editar usuario"),
+    DELETE_USER("3", "Eliminar usuario"),
     //MODULO DEVICE
-    ADD_DEVICE("4", "Add device"),
-    EDIT_DEVICE("5", "Edit device"),
-    DELETE_DEVICE("6", "Delete device"),
+    ADD_DEVICE("4", "Agregar dispositivo"),
+    EDIT_DEVICE("5", "Editar dispositivo"),
+    DELETE_DEVICE("6", "Eliminar dispositivo"),
     //MODULO DRIVER
-    ADD_DRIVER("7", "Add driver"),
-    EDIT_DRIVER("8", "Edit driver"),
-    DELETE_DRIVER("9", "Delete driver"),
+    ADD_DRIVER("7", "Agregar chofer"),
+    EDIT_DRIVER("8", "Editar chofer"),
+    DELETE_DRIVER("9", "Eliminar chofer"),
     //MODULO LOCATION
-    ADD_LOCATION("10", "Add location"),
-    EDIT_LOCATION("11", "Edit location"),
-    DELETE_LOCATION("12", "Delete location"),
+    ADD_LOCATION("10", "Agregar locacion"),
+    EDIT_LOCATION("11", "Editar locacion"),
+    DELETE_LOCATION("12", "Eliminar locacion"),
     //MODULO ROL
-    ADD_ROL("13", "Add rol"),
-    EDIT_ROL("14", "Edit rol"),
-    DELETE_ROL("15", "Delete rol"),
+    ADD_ROL("13", "Agregar rol"),
+    EDIT_ROL("14", "Editar rol"),
+    DELETE_ROL("15", "Eliminar rol"),
     //MODULO ROUTES
-    ADD_ROUTES("16", "Add routes"),
-    EDIT_ROUTES("17", "Edit routes"),
-    DELETE_ROUTES("18", "Delete routes"),
+    ADD_ROUTES("16", "Agregar rutas"),
+    EDIT_ROUTES("17", "Editar rutas"),
+    DELETE_ROUTES("18", "Eliminar rutas"),
     //MODULO ROUTES_DETAIL
-    ADD_ROUTES_DETAIL("19", "Add routes_detail"),
-    EDIT_ROUTES_DETAIL("20", "Edit routes_detail"),
-    DELETE_ROUTES_DETAIL("21", "Delete routes_detail"),
+    ADD_ROUTES_DETAIL("19", "Agregar detalle de rutas"),
+    EDIT_ROUTES_DETAIL("20", "Editar detalle de rutas"),
+    DELETE_ROUTES_DETAIL("21", "Eliminar detalle de rutas"),
     //MODULO VEHICLE
-    ADD_VEHICLE("22", "Add vehicle"),
-    EDIT_VEHICLE("23", "Edit vehicle"),
-    DELETE_VEHICLE("24", "Delete vehicle"),
+    ADD_VEHICLE("22", "Agregar vehiculos"),
+    EDIT_VEHICLE("23", "Editar vehiculos"),
+    DELETE_VEHICLE("24", "Eliminar vehiculos"),
     //MODULO ASSIGNEDVEHICLE
-    ADD_ASSIGNEDVEHICLE("25", "Add assignedvehicle"),
-    EDIT_ASSIGNEDVEHICLE("26", "Edit assignedvehicle"),
-    DELETE_ASSIGNEDVEHICLE("27", "Delete assignedvehicle"),
+    ADD_ASSIGNEDVEHICLE("25", "Agregar asignar vehiculos"),
+    EDIT_ASSIGNEDVEHICLE("26", "Editar asignar vehiculos"),
+    DELETE_ASSIGNEDVEHICLE("27", "Eliminar asignar vehiculos"),
     //MODULO ASSIGNEDROUTES
-    ADD_ASSIGNEDROUTES("28", "Add assignedroutes"),
-    EDIT_ASSIGNEDROUTES("29", "Edit assignedroutes"),
-    DELETE_ASSIGNEDROUTES("30", "Delete assignedroutes");
+    ADD_ASSIGNEDROUTES("28", "Agregar asignar rutas"),
+    EDIT_ASSIGNEDROUTES("29", "Editar asignar rutas"),
+    DELETE_ASSIGNEDROUTES("30", "Eliminar asignar rutas");
 
     EnumOperation(String idOperation, String operationName) {
         this.idOperation = idOperation;
