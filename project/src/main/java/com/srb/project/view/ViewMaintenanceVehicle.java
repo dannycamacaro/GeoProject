@@ -5,6 +5,7 @@ import com.srb.project.controller.ControllerVehicle;
 import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.VehicleEntity;
+import com.srb.project.util.ValidationsString;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
@@ -160,19 +161,25 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
 
     private boolean isValidationAllField(String message) {
         if (isValidationFieldEmpty(txtTon.getValue())) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Toneladas", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtYear.getValue())) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Año", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtMark.getValue())) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Marca", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtLicense.getValue())) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Matricula", Notification.Type.ERROR_MESSAGE);
             return true;
         }
-
+        if (ValidationsString.onlyNumbers(txtTon.getValue())) {
+            Notification.show("Tonelada solo puede ser numerico", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (ValidationsString.onlyNumbers(txtYear.getValue())) {
+            Notification.show("Año solo puede ser numerico", Notification.Type.ERROR_MESSAGE);
+            return true;
+        }
         return false;
     }
 

@@ -8,6 +8,7 @@ import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.RolesEntity;
 import com.srb.project.model.UsersEntity;
 import com.srb.project.persister.ServicesRol;
+import com.srb.project.util.ValidationsString;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
@@ -188,6 +189,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
     }
 
     private void buildFields() {
+        txtEmail.setPlaceholder("RamonSuarez@conors.com");
         fieldsLayout.addComponents(txtUserName, txtPassword, txtFirstName, txtLastName, txtIdentityDocument, txtAge, txtPhoneNumber, txtEmail, cmbRol);
         rightLayout.addComponent(fieldsLayout);
     }
@@ -347,28 +349,46 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
 
     private boolean isValidationAllField(String message) {
         if (isValidationFieldEmpty(txtUserName)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Usuario", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtPassword)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Contraseña", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtFirstName)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Nombre", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtLastName)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Apellido", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtIdentityDocument)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Documento de Identidad", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtAge)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Edad", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtPhoneNumber)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Numero Telefonico", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(txtEmail)) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Email", Notification.Type.ERROR_MESSAGE);
+            return true;
+        }else if (ValidationsString.onlyString(txtFirstName.getValue())) {
+            Notification.show("Nombre solo puede ser letras", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (ValidationsString.onlyString(txtLastName.getValue())) {
+            Notification.show("Apellido solo puede ser letras", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (ValidationsString.onlyNumbers(txtIdentityDocument.getValue())) {
+            Notification.show("Documento de Identidad solo puede ser numerico", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (ValidationsString.onlyNumbers(txtAge.getValue())) {
+            Notification.show("Edad solo puede ser numerico", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (ValidationsString.onlyNumbers(txtPhoneNumber.getValue())) {
+            Notification.show("Numero Telefonico solo puede ser numerico", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (ValidationsString.validEmail(txtEmail.getValue())) {
+            Notification.show("El formato de Email es invalido", Notification.Type.ERROR_MESSAGE);
             return true;
         }
         return false;

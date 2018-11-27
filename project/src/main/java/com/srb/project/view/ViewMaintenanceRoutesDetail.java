@@ -2,7 +2,6 @@ package com.srb.project.view;
 
 
 import com.srb.project.controller.ControllerRoutesDetail;
-import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.model.RoutedetailEntity;
 import com.srb.project.model.RoutesEntity;
 import com.srb.project.navigator.UniverseNavigator;
@@ -23,16 +22,12 @@ import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolyline;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.crudui.crud.CrudListener;
-import org.vaadin.crudui.crud.CrudOperation;
 import org.vaadin.crudui.crud.impl.GridCrud;
 import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
 
 @UIScope
 @Widgetset(value = "WidgetSet")
@@ -75,13 +70,14 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
     }
 
     private void buildForm() {
+        cleanComponents();
         this.setWidth("100%");
         this.setHeightUndefined();
 
         if (menuBar == null)
             menuBar = ViewMenu.buildMenu();
         menuLayout.addComponent(menuBar);
-
+        googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc", null, "spanish");
         // verificar si existen detalles de rutas
         if (route != null & route.getIdroutes() > 0) {
             routes.clear();
@@ -104,6 +100,15 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
 
         principalLayout.addComponents(leftPanel,rightPanel);
         this.addComponents(menuLayout,principalLayout);
+        this.setComponentAlignment(menuLayout, Alignment.MIDDLE_CENTER);
+    }
+
+    private void cleanComponents() {
+        routes.clear();
+        this.removeAllComponents();
+        principalLayout.removeAllComponents();
+        leftPanel.removeAllComponents();
+        rightPanel.removeAllComponents();
     }
 
     private void buildFormDetail(VerticalLayout leftPanel) {

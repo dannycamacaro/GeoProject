@@ -4,8 +4,14 @@ import com.srb.project.controller.ControllerRol;
 import com.srb.project.enumConstans.EnumLabel;
 import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.RolesEntity;
+import com.srb.project.util.ValidationsString;
+import com.vaadin.data.Binder;
+import com.vaadin.data.BinderValidationStatus;
+import com.vaadin.data.Validator;
+import com.vaadin.data.converter.StringToDateConverter;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
@@ -21,8 +27,8 @@ import java.util.Collection;
 @SpringView(name = ViewMaintenanceRol.VIEW_NAME)
 public class ViewMaintenanceRol extends VerticalLayout implements View {
     public static final String VIEW_NAME = "rol";
-    private TextField txtDescription;
-    private TextField txtNameRol;
+    private TextField txtDescription = new TextField();
+    private TextField txtNameRol = new TextField();
     private Button btnNew;
     private Button btnAccept;
     private Button btnEdit;
@@ -43,6 +49,7 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
     private Grid<RolesEntity> grid = new Grid<>();
     private ListDataProvider<RolesEntity> dataProvider;
     private Collection<RolesEntity> collectionRol;
+    private Binder<RolesEntity> rolesEntityBinder;
 
     @Autowired
     ControllerRol controllerRol;
@@ -56,7 +63,6 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
     public void buildForm() {
         this.setWidth("100%");
         this.setHeightUndefined();
-
         if (menuBar == null)
             menuBar = ViewMenu.buildMenu();
         menuLayout.addComponent(menuBar);
@@ -249,9 +255,25 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
 
     private boolean isValidationFieldEmpty() {
         boolean validation = false;
-        if (txtNameRol.getValue().isEmpty() || txtDescription.getValue().isEmpty()) {
-            Notification.show(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage(), Notification.Type.ERROR_MESSAGE);
-            validation = true;
+        if (txtNameRol.getValue() != null && !txtNameRol.getValue().isEmpty()) {
+            validation = ValidationsString.onlyString(txtNameRol.getValue());
+            if (validation == true) {
+                Notification.show("Nombre de rol no debe contener numeros", Notification.Type.HUMANIZED_MESSAGE);
+                return true;
+            }
+        } else {
+            Notification.show("Debe llenar el campo Nombre de Rol", Notification.Type.HUMANIZED_MESSAGE);
+            return true;
+        }
+        if (txtDescription.getValue() != null && !txtDescription.getValue().isEmpty()) {
+            validation = ValidationsString.onlyString(txtDescription.getValue());
+            if (validation == true) {
+                Notification.show("Descripcion de rol no debe contener numeros", Notification.Type.HUMANIZED_MESSAGE);
+                return true;
+            }
+        } else {
+            Notification.show("Debe llenar el campo Descripcion de Rol", Notification.Type.HUMANIZED_MESSAGE);
+            return true;
         }
         return validation;
     }
@@ -274,5 +296,6 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
         });
 
     }
+
 
 }

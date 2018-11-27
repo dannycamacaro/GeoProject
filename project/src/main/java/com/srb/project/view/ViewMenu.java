@@ -119,6 +119,12 @@ public class ViewMenu extends VerticalLayout implements View {
                 UniverseNavigator.navigate(ViewUserLocation.VIEW_NAME);
             }
         });
+//        MenuBar.MenuItem salir = consulta.addItem("Salir", null, new MenuBar.Command() {
+//            @Override
+//            public void menuSelected(MenuBar.MenuItem selectedItem) {
+//                UniverseNavigator.navigate(ViewLogin.APP_ROOT);
+//            }
+//        });
 
         return mainMenu;
     }

@@ -1,7 +1,6 @@
 package com.srb.project;
 
 
-import com.google.gwt.resources.client.ImageResource;
 import com.srb.project.controller.ControllerLogin;
 import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.UsersEntity;
@@ -11,10 +10,10 @@ import com.srb.project.view.ViewDriverDemo;
 import com.srb.project.view.ViewMenu;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.server.ExternalResource;
-import com.vaadin.server.Resource;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringView;
@@ -53,7 +52,11 @@ public class ViewLogin extends UI implements View{
         ExternalResource externalResource = new ExternalResource("VAADIN/img/logo.png");
         Image image = new Image();
         image.setIcon(externalResource);
-        image.setSizeFull();
+        image.setResponsive(true);
+        image.setHeight("1000px");
+        image.setWidth("1000px");
+        image.setStyleName(ValoTheme.LAYOUT_CARD);
+        visitantes.setStyleName(ValoTheme.PANEL_WELL);
         visitantes.addComponent(image);
         visitantes.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
         VerticalLayout login = new VerticalLayout();
@@ -81,6 +84,7 @@ public class ViewLogin extends UI implements View{
         PasswordField txtPassword = new PasswordField();
         txtUser.addStyleName(ValoTheme.TEXTFIELD_LARGE);
         txtPassword.setCaption("Contraseña");
+        txtPassword.setIcon(VaadinIcons.PASSWORD);
 
         txtUser.setValue("");
         txtPassword.setValue("");

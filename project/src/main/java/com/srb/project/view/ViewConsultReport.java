@@ -15,10 +15,7 @@ import com.vaadin.server.SerializableSupplier;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.reports.PrintPreviewReport;
@@ -54,11 +51,10 @@ public class ViewConsultReport extends VerticalLayout implements View {
     private VerticalLayout rightLayout = new VerticalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
     private HorizontalLayout gridLayout = new HorizontalLayout();
-    private HorizontalLayout buttonLayout = new HorizontalLayout();
     private ListDataProvider<RoutesEntity> dataProvider;
     private RoutesEntity routesEntitySelected;
     private Collection collectionRoutes;
-
+    private MenuBar menuBar;
 
     public ViewConsultReport() {
 
@@ -66,7 +62,16 @@ public class ViewConsultReport extends VerticalLayout implements View {
 
     @PostConstruct
     private void buildForm() {
+        if (menuBar == null)
+            menuBar = ViewMenu.buildMenu();
 
+        menuLayout.addComponent(menuBar);
+        menuLayout.setHeightUndefined();
+        menuLayout.setWidth("100%");
+        this.addComponent(menuLayout);
+        this.setComponentAlignment(menuLayout, Alignment.MIDDLE_CENTER);
+
+        this.setSizeFull();
         createLeftLayout();
         createRightLayout();
         showFields(false);
