@@ -9,6 +9,7 @@ import com.srb.project.enumConstans.EnumMessages;
 import com.srb.project.model.AssignedvehicleEntity;
 import com.srb.project.model.UsersEntity;
 import com.srb.project.model.VehicleEntity;
+import com.srb.project.util.ValidationsString;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
@@ -224,12 +225,12 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
                 assignedvehicleEntity.setInitialdate(txtInitDate.getValue());
                 assignedvehicleEntity.setFinishdate(txtFinishDate.getValue());
                 if (controllerAssignedVehicle.validateUserAssignedVehicle(usersEntitySelect.getIdusers())) {
-                controllerAssignedVehicle.save(assignedvehicleEntity);
-                Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
-                refreshInformationGrid();
-                clearFields();
-                showFields(false);
-            }else{
+                    controllerAssignedVehicle.save(assignedvehicleEntity);
+                    Notification.show(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
+                    refreshInformationGrid();
+                    clearFields();
+                    showFields(false);
+                } else {
                     Notification.show(EnumMessages.EXIST_ASSIGNEDVEHICLE.getMessage(), Notification.Type.ERROR_MESSAGE);
                 }
             } catch (Exception e) {
@@ -358,10 +359,16 @@ public class ViewMaintenanceAssignedVehicle extends VerticalLayout implements Vi
 
     private boolean isValidationAllField(String message) {
         if (isValidationFieldEmpty(cmbUsers.getValue())) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Usuario", Notification.Type.ERROR_MESSAGE);
             return true;
         } else if (isValidationFieldEmpty(cmbVehicle.getValue())) {
-            Notification.show(message, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Debe llenar el campo Usuario", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (txtInitDate.getValue() == null || ValidationsString.isEmptyOrNull(txtInitDate.getValue().toString())) {
+            Notification.show("Debe llenar el campo Fecha Inicial", Notification.Type.ERROR_MESSAGE);
+            return true;
+        } else if (txtFinishDate.getValue() == null || ValidationsString.isEmptyOrNull(txtFinishDate.getValue().toString())) {
+            Notification.show("Debe llenar el campo Fecha Final", Notification.Type.ERROR_MESSAGE);
             return true;
         }
         return false;

@@ -36,7 +36,7 @@ public class ViewConsultReportVehicleActive extends VerticalLayout implements Vi
     private PrintPreviewReport<VehicleEntity> reportVehicleActive = new PrintPreviewReport<>(VehicleEntity.class, "idvehicle", "mark", "licenseplate");
     private Button buttonDownload = new Button(EnumLabel.DOWNLOAD.getLabel());;
     private Grid<VehicleEntity> grid = new Grid<>();
-    private HorizontalLayout principalLayout = new HorizontalLayout();
+    private VerticalLayout principalLayout = new VerticalLayout();
     private HorizontalLayout gridLayout = new HorizontalLayout();
     private HorizontalLayout buttonLayout = new HorizontalLayout();
     private ListDataProvider<VehicleEntity> dataProvider;
@@ -58,6 +58,10 @@ public class ViewConsultReportVehicleActive extends VerticalLayout implements Vi
         generateReportVehicleActive();
         generateGrid();
         buttonLayout.addComponent(buttonDownload);
+        principalLayout.setHeightUndefined();
+        principalLayout.setWidth("100%");
+        gridLayout.setHeight("90%");
+        gridLayout.setWidth("100%");
         principalLayout.addComponent(gridLayout);
         principalLayout.addComponent(buttonLayout);
         this.addComponents(menuLayout, principalLayout);
