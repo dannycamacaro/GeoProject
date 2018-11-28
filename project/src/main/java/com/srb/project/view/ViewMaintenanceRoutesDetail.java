@@ -4,7 +4,6 @@ package com.srb.project.view;
 import com.srb.project.controller.ControllerRoutesDetail;
 import com.srb.project.model.RoutedetailEntity;
 import com.srb.project.model.RoutesEntity;
-import com.srb.project.navigator.UniverseNavigator;
 import com.srb.project.util.ValidationsString;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.data.provider.DataProvider;
@@ -77,15 +76,12 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
         if (menuBar == null)
             menuBar = ViewMenu.buildMenu();
         menuLayout.addComponent(menuBar);
+
         googleMap = new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc", null, "spanish");
         // verificar si existen detalles de rutas
         if (route != null & route.getIdroutes() > 0) {
             routes.clear();
             routes = controllerRoutesDetail.findRoutesDetailByIdRoute(route.getIdroutes());
-        }
-
-        if (routes.size() > 0) {
-
         }
         // creacion de formuladrio de detalle
         leftPanel.setWidth("100%");
@@ -98,8 +94,8 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
         rightPanel.setWidth("100%");
         buildMap(rightPanel);
 
-        principalLayout.addComponents(leftPanel,rightPanel);
-        this.addComponents(menuLayout,principalLayout);
+        principalLayout.addComponents(leftPanel, rightPanel);
+        this.addComponents(menuLayout, principalLayout);
         this.setComponentAlignment(menuLayout, Alignment.MIDDLE_CENTER);
     }
 
@@ -190,14 +186,20 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
         btnSaveDetails.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                Boolean operationState = false;
                 for (RoutedetailEntity detail : routes) {
                     try {
                         controllerRoutesDetail.save(detail);
-                        Notification.show("Ruta Guardada con Exito.", Notification.Type.HUMANIZED_MESSAGE);
-                        UniverseNavigator.navigate(ViewSelectRoute.VIEW_NAME);
+                        operationState = true;
                     } catch (Exception e) {
-                        Notification.show("No se pudo guardar la ruta.", Notification.Type.HUMANIZED_MESSAGE);
+                        e.printStackTrace();
+                        operationState = false;
                     }
+                }
+                if (operationState) {
+                    Notification.show("Ruta Guardada con Exito.", Notification.Type.HUMANIZED_MESSAGE);
+                } else {
+                    Notification.show("No se pudo guardar la ruta.", Notification.Type.HUMANIZED_MESSAGE);
                 }
             }
         });
@@ -259,7 +261,7 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
             grid.setDataProvider(dataProvider);
 
         } else {
-            latLon = new LatLon(10.4159194,-66.9022335);
+            latLon = new LatLon(10.4159194, -66.9022335);
         }
         googleMap.setCenter(latLon);
         googleMap.setWidth("600px");

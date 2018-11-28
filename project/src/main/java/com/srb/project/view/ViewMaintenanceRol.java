@@ -18,6 +18,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +28,7 @@ import java.util.Collection;
 @SpringView(name = ViewMaintenanceRol.VIEW_NAME)
 public class ViewMaintenanceRol extends VerticalLayout implements View {
     public static final String VIEW_NAME = "rol";
+    private Label namePage = new Label("Mantenimiento de Roles");
     private TextField txtDescription = new TextField();
     private TextField txtNameRol = new TextField();
     private Button btnNew;
@@ -70,10 +72,12 @@ public class ViewMaintenanceRol extends VerticalLayout implements View {
         setPropertiesField();
         setLeftPanel();
         setRightPanel();
-
-        this.addComponents(menuLayout, principalLayout);
+        namePage.addStyleNames("background-color:#ACACAC");
+        menuLayout.addStyleName(ValoTheme.LAYOUT_WELL);
+        this.addComponents(menuLayout,namePage, principalLayout);
         showFields(false);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
+        this.setComponentAlignment(namePage, Alignment.TOP_CENTER);
     }
 
     private void setLeftPanel() {

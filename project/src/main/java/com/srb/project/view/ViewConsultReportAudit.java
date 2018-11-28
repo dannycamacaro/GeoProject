@@ -12,6 +12,7 @@ import com.vaadin.server.SerializableSupplier;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.reports.PrintPreviewReport;
 
@@ -28,7 +29,7 @@ public class ViewConsultReportAudit extends VerticalLayout implements View {
     @Autowired
     ControllerConsultReport controllerConsultReport;
 
-
+    private Label namePage = new Label("Reporte de Auditorias");
     //Layouts
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private MenuBar menuBar;
@@ -63,8 +64,10 @@ public class ViewConsultReportAudit extends VerticalLayout implements View {
         gridLayout.setWidth("100%");
         principalLayout.addComponent(gridLayout);
         principalLayout.addComponent(buttonLayout);
-        this.addComponents(menuLayout, principalLayout);
+        namePage.addStyleNames(ValoTheme.PANEL_BORDERLESS,ValoTheme.LABEL_BOLD);
+        this.addComponents(menuLayout,namePage, principalLayout);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
+        this.setComponentAlignment(namePage, Alignment.TOP_CENTER);
 
     }
 

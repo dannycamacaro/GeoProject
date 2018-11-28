@@ -31,7 +31,6 @@ public class ControllerRoutesDetail {
 
         try {
             auditsEntity = ControllerAudit.loadInformationAudit(routesDetail.toString(), EnumOperation.ADD_ROUTES_DETAIL.getIdOperation(), "controllerLogin", appContext);
-            routesDetail.setIdroutes(1); //TODO AJUSTAR CON LA LISTA DE RUTAS
             servicesRouteDetail.save(routesDetail);
             auditsEntity.setStatusoperation(AuditsEntity.OPERATION_SUCCESSFUL);
             servicesAudit.save(auditsEntity);
