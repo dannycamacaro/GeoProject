@@ -5,10 +5,12 @@ import com.srb.project.navigator.UniverseNavigator;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.VerticalLayout;
 
@@ -28,7 +30,14 @@ public class ViewMenu extends VerticalLayout implements View {
         } else {
             addComponent(mainMenu);
         }
-        this.setSizeFull();
+        this.setWidth("100%");
+        this.setHeightUndefined();
+        ExternalResource externalResource = new ExternalResource("VAADIN/img/menuLogo.jpeg");
+        Image image = new Image();
+        image.setSource(externalResource);
+        image.setResponsive(true);
+        image.setSizeFull();
+        addComponent(image);
         this.setComponentAlignment(mainMenu, Alignment.TOP_CENTER);
     }
 

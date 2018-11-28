@@ -51,10 +51,9 @@ public class ViewLogin extends UI implements View{
         VerticalLayout visitantes = new VerticalLayout();
         ExternalResource externalResource = new ExternalResource("VAADIN/img/logo.png");
         Image image = new Image();
-        image.setIcon(externalResource);
+        image.setSource(externalResource);
         image.setResponsive(true);
-        image.setHeight("1000px");
-        image.setWidth("1000px");
+        image.setSizeFull();
         image.setStyleName(ValoTheme.LAYOUT_CARD);
         visitantes.setStyleName(ValoTheme.PANEL_WELL);
         visitantes.addComponent(image);
@@ -122,7 +121,6 @@ public class ViewLogin extends UI implements View{
 //        root.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
         root.addStyleNames(ValoTheme.LAYOUT_WELL);
         panelPrincipal.setContent(root);
-        panelPrincipal.setStyleName("Background-color: white");
         setContent(panelPrincipal);
 
     }
