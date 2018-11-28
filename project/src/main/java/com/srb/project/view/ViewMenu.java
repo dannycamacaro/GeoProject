@@ -127,6 +127,13 @@ public class ViewMenu extends VerticalLayout implements View {
             }
         });
 
+        MenuBar.MenuItem reportRoutes = consulta.addItem("Consulta de rutas", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewConsultReportRoutes.VIEW_NAME);
+            }
+        });
+
         MenuBar.MenuItem ubicarVehiculo = consulta.addItem("Ubicar Vehiculo", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {

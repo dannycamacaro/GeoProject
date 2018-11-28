@@ -10,6 +10,7 @@ import com.srb.project.persister.ServicesVehicle;
 import com.srb.project.pojo.ConsultReportAssignedDevice;
 import com.srb.project.pojo.ConsultReportAudit;
 import com.srb.project.pojo.ConsultReportDetailRoute;
+import com.srb.project.pojo.ConsultReportRoutes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -124,4 +125,23 @@ public class ControllerConsultReport {
 
         return consultReportDetailRoutes;
     }
+
+    public Collection loadAllRoute() {
+
+        Collection<RoutesEntity> routesEntityCollection = new ArrayList<>();
+        Collection<ConsultReportRoutes> reportRoutes = new ArrayList<>();
+        routesEntityCollection = servicesRoutes.findAllRoutes();
+
+        for (RoutesEntity routesEntity : routesEntityCollection) {
+            ConsultReportRoutes consultReportRoutes = new ConsultReportRoutes();
+            consultReportRoutes.setNombreRuta(routesEntity.getNameroutes());
+            consultReportRoutes.setDescripcion(routesEntity.getDescription());
+
+            reportRoutes.add(consultReportRoutes);
+        }
+
+
+        return reportRoutes;
+    }
+
 }
