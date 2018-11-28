@@ -38,6 +38,7 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
     private Button btnCancel = new Button(EnumLabel.CANCELAR_LABEL.getLabel());
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
+    private Panel principalPanel = new Panel("Mantenimiento de Ruta");
     private VerticalLayout leftLayout = new VerticalLayout();
     private VerticalLayout rightLayout = new VerticalLayout();
     private GridLayout fieldsLayout = new GridLayout(1, 1);
@@ -72,8 +73,10 @@ public class ViewMaintenanceRoutes extends VerticalLayout implements View {
         hideFields();
         createLeftLayout();
         createRightLayout();
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
         principalLayout.setSizeFull();
-        this.addComponent(principalLayout);
+        this.addComponent(principalPanel);
     }
 
     private void createLeftLayout() {

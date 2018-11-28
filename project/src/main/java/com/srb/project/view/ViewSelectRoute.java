@@ -31,6 +31,7 @@ public class ViewSelectRoute extends VerticalLayout implements View {
     private TextField txtFilter = new TextField("Filtro por nombre de ruta");
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout= new HorizontalLayout();
+    private Panel principalPanel = new Panel("Seleccione una Ruta");
     private VerticalLayout leftLayout = new VerticalLayout();
     private VerticalLayout rightLayout = new VerticalLayout();
 
@@ -53,7 +54,9 @@ public class ViewSelectRoute extends VerticalLayout implements View {
 
         this.setMargin(new MarginInfo(true,true,true,true));
         this.setSpacing(false);
-        this.addComponents(menuLayout,principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
+        this.addComponents(menuLayout,principalPanel);
         this.setComponentAlignment(menuLayout, Alignment.MIDDLE_CENTER);
     }
 

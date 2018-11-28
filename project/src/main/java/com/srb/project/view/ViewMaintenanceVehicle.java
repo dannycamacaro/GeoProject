@@ -28,6 +28,7 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
     //Layouts
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
+    private Panel principalPanel = new Panel("Mantenimiento de Vehiculo");
     private VerticalLayout leftLayout = new VerticalLayout();
     private VerticalLayout rightLayout = new VerticalLayout();
     private HorizontalLayout buttonsPrincipalLayout = new HorizontalLayout();
@@ -73,8 +74,9 @@ public class ViewMaintenanceVehicle extends VerticalLayout implements View {
         setLeftPanel();
         setRightPanel();
 
-
-        this.addComponents(menuLayout, principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
+        this.addComponents(menuLayout, principalPanel);
         showFields(false);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
     }

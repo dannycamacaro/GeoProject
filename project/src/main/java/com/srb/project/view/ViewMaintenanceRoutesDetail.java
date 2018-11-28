@@ -59,6 +59,7 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
 
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
+    private Panel principalPanel = new Panel("Detalle de Ruta");
     private VerticalLayout leftPanel = new VerticalLayout();
     private VerticalLayout rightPanel = new VerticalLayout();
     private MenuBar menuBar;
@@ -93,9 +94,11 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
         rightPanel.setHeight("100%");
         rightPanel.setWidth("100%");
         buildMap(rightPanel);
-
         principalLayout.addComponents(leftPanel, rightPanel);
-        this.addComponents(menuLayout, principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
+
+        this.addComponents(menuLayout, principalPanel);
         this.setComponentAlignment(menuLayout, Alignment.MIDDLE_CENTER);
     }
 

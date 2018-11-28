@@ -32,6 +32,7 @@ public class ViewMaintenanceAssignedRoutes extends VerticalLayout implements Vie
     //Layouts
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
+    private Panel principalPanel = new Panel("Asignar Ruta");
     private VerticalLayout leftlayout = new VerticalLayout();
     private VerticalLayout rightLayout = new VerticalLayout();
     private HorizontalLayout buttonsPrincipalLayout = new HorizontalLayout();
@@ -85,8 +86,10 @@ public class ViewMaintenanceAssignedRoutes extends VerticalLayout implements Vie
         setLeftPanel();
         setRightPanel();
 
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
 
-        this.addComponents(menuLayout, principalLayout);
+        this.addComponents(menuLayout, principalPanel);
         showFields(false);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
     }

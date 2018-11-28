@@ -48,6 +48,7 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
     private VerticalLayout leftLayout = new VerticalLayout();
     private VerticalLayout rightLayout = new VerticalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
+    private Panel principalPanel = new Panel("Mantenimiento de Usuario");
     private HorizontalLayout operationButtons = new HorizontalLayout();
     private HorizontalLayout operationButtonsFooter = new HorizontalLayout();
     private HorizontalLayout buttonsSecondaryLayout = new HorizontalLayout();
@@ -92,8 +93,9 @@ public class ViewMaintenanceUser extends VerticalLayout implements View {
         setLeftPanel();
         setRightPanel();
 
-
-        this.addComponents(menuBar, principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
+        this.addComponents(menuBar, principalPanel);
         showFields(false);
         this.setComponentAlignment(menuBar, Alignment.TOP_CENTER);
     }

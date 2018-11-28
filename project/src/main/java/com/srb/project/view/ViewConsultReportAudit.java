@@ -29,7 +29,6 @@ public class ViewConsultReportAudit extends VerticalLayout implements View {
     @Autowired
     ControllerConsultReport controllerConsultReport;
 
-    private Label namePage = new Label("Reporte de Auditorias");
     //Layouts
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private MenuBar menuBar;
@@ -37,6 +36,7 @@ public class ViewConsultReportAudit extends VerticalLayout implements View {
     private Button buttonDownload = new Button(EnumLabel.DOWNLOAD.getLabel());;
     private Grid<ConsultReportAudit> grid = new Grid<>();
     private VerticalLayout principalLayout = new VerticalLayout();
+    private Panel principalPanel = new Panel("Reporte de Auditoria de Operaciones");
     private HorizontalLayout gridLayout = new HorizontalLayout();
     private HorizontalLayout buttonLayout = new HorizontalLayout();
     private ListDataProvider<ConsultReportAudit> dataProvider;
@@ -64,10 +64,10 @@ public class ViewConsultReportAudit extends VerticalLayout implements View {
         gridLayout.setWidth("100%");
         principalLayout.addComponent(gridLayout);
         principalLayout.addComponent(buttonLayout);
-        namePage.addStyleNames(ValoTheme.PANEL_BORDERLESS,ValoTheme.LABEL_BOLD);
-        this.addComponents(menuLayout,namePage, principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
+        this.addComponents(menuLayout, principalPanel);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
-        this.setComponentAlignment(namePage, Alignment.TOP_CENTER);
 
     }
 

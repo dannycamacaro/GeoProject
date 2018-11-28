@@ -34,6 +34,7 @@ public class ViewConsultReportAssignedDevice extends VerticalLayout implements V
     private Button buttonDownload = new Button(EnumLabel.DOWNLOAD.getLabel());;
     private Grid<ConsultReportAssignedDevice> grid = new Grid<>();
     private VerticalLayout principalLayout = new VerticalLayout();
+    private Panel principalPanel = new Panel("Reporte de Dispositivos");
     private HorizontalLayout gridLayout = new HorizontalLayout();
     private HorizontalLayout buttonLayout = new HorizontalLayout();
     private ListDataProvider<ConsultReportAssignedDevice> dataProvider;
@@ -61,7 +62,10 @@ public class ViewConsultReportAssignedDevice extends VerticalLayout implements V
         gridLayout.setWidth("100%");
         principalLayout.addComponent(gridLayout);
         principalLayout.addComponent(buttonLayout);
-        this.addComponents(menuLayout, principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
+
+        this.addComponents(menuLayout, principalPanel);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
 
     }

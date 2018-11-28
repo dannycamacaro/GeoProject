@@ -22,6 +22,9 @@ public class ViewMapsUbication extends VerticalLayout implements View {
     public static final String  VIEW_NAME = "mapa";
     private ArrayList<LatLon> detailRoute = new ArrayList<>();
     GoogleMap googleMap =  new GoogleMap("AIzaSyB4I-w7Yl9c69j-tP2p-0XTqFusc8snvvc",null,"spanish");
+
+
+
     public ViewMapsUbication() {
         HorizontalLayout main = new HorizontalLayout();
 

@@ -68,6 +68,7 @@ public class ViewUserLocation extends VerticalLayout implements View {
     //Layouts
     private HorizontalLayout menuLayout = new HorizontalLayout();
     private HorizontalLayout principalLayout = new HorizontalLayout();
+    private Panel principalPanel = new Panel("Ubicar Vehiculo");
     private VerticalLayout leftlayout = new VerticalLayout();
     private VerticalLayout rightLayout = new VerticalLayout();
     private HorizontalLayout buttonsPrincipalLayout = new HorizontalLayout();
@@ -99,14 +100,16 @@ public class ViewUserLocation extends VerticalLayout implements View {
         principalLayout.setHeight("100%");
         createLeftLayout();
         principalLayout.addComponent(rightLayout);
-        this.addComponents(menuLayout, principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);
+        this.addComponents(menuLayout, principalPanel);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
     }
 
     private void createLeftLayout() {
         leftlayout.setHeight("100%");
         leftlayout.setWidthUndefined();
-        cmbVehicle.setCaption("Usuarios");
+        cmbVehicle.setCaption("Vehiculos");
         cmbRoutes.setCaption("Rutas");
         defineBehavior();
         loadData();

@@ -13,6 +13,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.reports.PrintPreviewReport;
 
@@ -37,6 +38,7 @@ public class ViewConsultReportVehicleActive extends VerticalLayout implements Vi
     private Button buttonDownload = new Button(EnumLabel.DOWNLOAD.getLabel());;
     private Grid<VehicleEntity> grid = new Grid<>();
     private VerticalLayout principalLayout = new VerticalLayout();
+    private Panel principalPanel = new Panel("Reporte de Vehiculos Activos");
     private HorizontalLayout gridLayout = new HorizontalLayout();
     private HorizontalLayout buttonLayout = new HorizontalLayout();
     private ListDataProvider<VehicleEntity> dataProvider;
@@ -64,7 +66,10 @@ public class ViewConsultReportVehicleActive extends VerticalLayout implements Vi
         gridLayout.setWidth("100%");
         principalLayout.addComponent(gridLayout);
         principalLayout.addComponent(buttonLayout);
-        this.addComponents(menuLayout, principalLayout);
+        principalPanel.setSizeFull();
+        principalPanel.setContent(principalLayout);principalPanel.setStyleName(ValoTheme.LABEL_SUCCESS);
+
+        this.addComponents(menuLayout, principalPanel);
         this.setComponentAlignment(menuLayout, Alignment.TOP_CENTER);
 
     }
