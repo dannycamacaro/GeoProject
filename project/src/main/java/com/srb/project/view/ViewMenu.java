@@ -1,8 +1,10 @@
 package com.srb.project.view;
 
 import com.srb.project.ViewLogin;
+import com.srb.project.model.UsersEntity;
 import com.srb.project.navigator.UniverseNavigator;
 import com.vaadin.annotations.Title;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ExternalResource;
@@ -60,60 +62,53 @@ public class ViewMenu extends VerticalLayout implements View {
             }
         });
 
-        MenuBar.MenuItem mantenimientoDeVehiculo = mainMenu.addItem("Mantenimiento de Vehiculo", null, null);
+            MenuBar.MenuItem mantenimientoDeVehiculo = mainMenu.addItem("Mantenimiento de Vehiculo", null, null);
 
-        MenuBar.MenuItem vehiculo = mantenimientoDeVehiculo.addItem("Vehiculo", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceVehicle.VIEW_NAME);
-            }
-        });
+            MenuBar.MenuItem vehiculo = mantenimientoDeVehiculo.addItem("Vehiculo", null, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem selectedItem) {
+                    UniverseNavigator.navigate(ViewMaintenanceVehicle.VIEW_NAME);
+                }
+            });
 
-        MenuBar.MenuItem asignarVehiculo = mantenimientoDeVehiculo.addItem("Asignar Vehiculo", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceAssignedVehicle.VIEW_NAME);
-            }
-        });
+            MenuBar.MenuItem asignarVehiculo = mantenimientoDeVehiculo.addItem("Asignar Vehiculo", null, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem selectedItem) {
+                    UniverseNavigator.navigate(ViewMaintenanceAssignedVehicle.VIEW_NAME);
+                }
+            });
 
-        MenuBar.MenuItem dispositivo = mantenimientoDeVehiculo.addItem("Dispositivo", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceDevice.VIEW_NAME);
-            }
-        });
+            MenuBar.MenuItem dispositivo = mantenimientoDeVehiculo.addItem("Dispositivo", null, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem selectedItem) {
+                    UniverseNavigator.navigate(ViewMaintenanceDevice.VIEW_NAME);
+                }
+            });
 
-        MenuBar.MenuItem mantenimientoDeRutas = mainMenu.addItem("Mantenimiento de Rutas", null, null);
+            MenuBar.MenuItem mantenimientoDeRutas = mainMenu.addItem("Mantenimiento de Rutas", null, null);
 
-        MenuBar.MenuItem rutas = mantenimientoDeRutas.addItem("Rutas", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceRoutes.VIEW_NAME);
-            }
-        });
+            MenuBar.MenuItem rutas = mantenimientoDeRutas.addItem("Rutas", null, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem selectedItem) {
+                    UniverseNavigator.navigate(ViewMaintenanceRoutes.VIEW_NAME);
+                }
+            });
 
-        MenuBar.MenuItem detalleRutas = mantenimientoDeRutas.addItem("Detalle de Rutas", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewSelectRoute.VIEW_NAME);
-            }
-        });
+            MenuBar.MenuItem detalleRutas = mantenimientoDeRutas.addItem("Detalle de Rutas", null, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem selectedItem) {
+                    UniverseNavigator.navigate(ViewSelectRoute.VIEW_NAME);
+                }
+            });
 
-        MenuBar.MenuItem asignarRutas = mantenimientoDeRutas.addItem("Asignar  Rutas", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewMaintenanceAssignedRoutes.VIEW_NAME);
-            }
-        });
+            MenuBar.MenuItem asignarRutas = mantenimientoDeRutas.addItem("Asignar  Rutas", null, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem selectedItem) {
+                    UniverseNavigator.navigate(ViewMaintenanceAssignedRoutes.VIEW_NAME);
+                }
+            });
 
         MenuBar.MenuItem consulta = mainMenu.addItem("Consulta", null, null);
-
-        MenuBar.MenuItem reportes = consulta.addItem("Reportes", null, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewConsultReport.VIEW_NAME);
-            }
-        });
 
         MenuBar.MenuItem reportVehicleActive = consulta.addItem("Consulta de vehiculos activos", null, new MenuBar.Command() {
             @Override
@@ -149,12 +144,12 @@ public class ViewMenu extends VerticalLayout implements View {
                 UniverseNavigator.navigate(ViewUserLocation.VIEW_NAME);
             }
         });
-//        MenuBar.MenuItem salir = consulta.addItem("Salir", null, new MenuBar.Command() {
-//            @Override
-//            public void menuSelected(MenuBar.MenuItem selectedItem) {
-//                UniverseNavigator.navigate(ViewLogin.APP_ROOT);
-//            }
-//        });
+        MenuBar.MenuItem  salir = mainMenu.addItem("Salir", null, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                UniverseNavigator.navigate(ViewLogin.APP_ROOT);
+            }
+        });
 
         return mainMenu;
     }

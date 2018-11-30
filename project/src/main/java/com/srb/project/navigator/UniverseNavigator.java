@@ -1,5 +1,6 @@
 package com.srb.project.navigator;
 
+import com.srb.project.ViewLogin;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.SingleComponentContainer;
 import com.vaadin.ui.UI;
@@ -21,6 +22,7 @@ public class UniverseNavigator extends Navigator {
         try {
             UniverseNavigator.getNavigator().navigateTo(path);
         }catch (Exception e){
+            UniverseNavigator.getNavigator().addView("", ViewLogin.class);
             e.printStackTrace();
         }
     }

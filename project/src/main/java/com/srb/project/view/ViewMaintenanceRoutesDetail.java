@@ -20,6 +20,7 @@ import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolyline;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.impl.GridCrud;
 import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
@@ -87,7 +88,7 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
         // creacion de formuladrio de detalle
         leftPanel.setWidth("100%");
         leftPanel.setMargin(new MarginInfo(true, false, false, true));
-        leftPanel.setSpacing(false);
+        leftPanel.setSpacing(true);
         buildFormDetail(leftPanel);
 
         // creacion formulario de mapa
@@ -132,6 +133,7 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
         });
 
         txtDescription = new TextField("Descripcion");
+        txtDescription.setWidth("400px");
         txtLatitud = new TextField("Latitud");
         txtLatitud.setEnabled(false);
         txtLongitud = new TextField("Longitud");
@@ -267,8 +269,8 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
             latLon = new LatLon(10.4159194, -66.9022335);
         }
         googleMap.setCenter(latLon);
-        googleMap.setWidth("600px");
-        googleMap.setHeight("600px");
+        googleMap.setWidth("500px");
+        googleMap.setHeight("500px");
         googleMap.setVisible(true);
         googleMap.setZoom(10);
 

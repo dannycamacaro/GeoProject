@@ -83,7 +83,6 @@ public class ViewLogin extends UI implements View{
         PasswordField txtPassword = new PasswordField();
         txtUser.addStyleName(ValoTheme.TEXTFIELD_LARGE);
         txtPassword.setCaption("Contraseña");
-        txtPassword.setIcon(VaadinIcons.PASSWORD);
 
         txtUser.setValue("");
         txtPassword.setValue("");
@@ -121,6 +120,7 @@ public class ViewLogin extends UI implements View{
 //        root.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
         root.addStyleNames(ValoTheme.LAYOUT_WELL);
         panelPrincipal.setContent(root);
+        panelPrincipal.setStyleName("Background-color: white");
         setContent(panelPrincipal);
 
     }
