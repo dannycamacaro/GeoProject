@@ -269,8 +269,8 @@ public class ViewMaintenanceRoutesDetail extends VerticalLayout implements View 
             latLon = new LatLon(10.4159194, -66.9022335);
         }
         googleMap.setCenter(latLon);
-        googleMap.setWidth("500px");
-        googleMap.setHeight("500px");
+        googleMap.setWidth("650px");
+        googleMap.setHeight("650px");
         googleMap.setVisible(true);
         googleMap.setZoom(10);
 

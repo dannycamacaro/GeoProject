@@ -47,7 +47,13 @@ public class ServicesDevice {
         Query query = entityManager.createQuery("from DeviceEntity device where idvehicle=:idVehicle and statedelete=:state");
         query.setParameter("idVehicle", idVehicle);
         query.setParameter("state",(byte)1);
-        deviceEntity = (DeviceEntity) query.getSingleResult();
+        try{
+            deviceEntity = (DeviceEntity) query.getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            deviceEntity = null;
+        }
+
         return deviceEntity;
     }
 

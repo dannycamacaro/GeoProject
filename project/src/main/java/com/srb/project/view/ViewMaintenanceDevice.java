@@ -16,7 +16,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.ItemClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -285,7 +284,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
     }
 
     private void processAddDevice() {
-
+        Boolean validateVehicle = false;
         if (!isValidationAllField(EnumMessages.MESSAGE_REQUIRED_FIELD.getMessage())) {
             DeviceEntity deviceEntity = new DeviceEntity();
             deviceEntity.setStatedelete(Byte.valueOf("1"));
@@ -298,18 +297,26 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
                     deviceEntity.setIdvehicle(vehicle.getIdvehicle());
                     deviceEntity.setIdvehicle(vehicle.getIdvehicle());
                     deviceEntity.setVehicleByIdvehicle(vehicle);
+                    if (controllerDevice.findDeviceByIdVehicle(vehicle.getIdvehicle()) != null) {
+                        validateVehicle = true;
+                    }
                     break;
                 }
             }
+
             try {
-                if (controllerDevice.validateDevice(deviceEntity.getImei())) {
+                if (controllerDevice.validateDevice(deviceEntity.getImei()) && !validateVehicle) {
                     controllerDevice.save(deviceEntity);
                     showMessage(EnumMessages.MESSAGES_SUCESS_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
                     refreshInformationGrid();
                     clearFields();
                     showFields(false);
                 } else {
-                    Notification.show(EnumMessages.EXIST_DEVICE.getMessage(), Notification.Type.ERROR_MESSAGE);
+                    if (validateVehicle) {
+                        Notification.show("Ya existe un dispositivo con este vehiculo", Notification.Type.ERROR_MESSAGE);
+                    } else {
+                        Notification.show(EnumMessages.EXIST_DEVICE.getMessage(), Notification.Type.ERROR_MESSAGE);
+                    }
                 }
             } catch (Exception e) {
                 showMessage(EnumMessages.MESSAGES_ERROR_SAVE.getMessage(), Notification.Type.HUMANIZED_MESSAGE);
@@ -372,6 +379,7 @@ public class ViewMaintenanceDevice extends VerticalLayout implements View {
         txtPhoneNumber.setEnabled(value);
 
     }
+
     private void loadAllData() {
         collectionDevice = controllerDevice.findAllDevice();
         collectionVehicles = controllerVehicle.findAllVehicle();

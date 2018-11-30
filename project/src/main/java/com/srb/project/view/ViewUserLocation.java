@@ -145,9 +145,19 @@ public class ViewUserLocation extends VerticalLayout implements View {
             public void buttonClick(Button.ClickEvent event) {
                 LocalDate fecha = txtDateTime.getValue();
                 VehicleEntity vehicleEntity = cmbVehicle.getValue();
-                Collection<LocationEntity> entityCollection = controllerLocation.findByVehicleAndDate(vehicleEntity, fecha);
-                googleMap.clearMarkers();
-                createMarkersLocation(entityCollection);
+                if (fecha !=null){
+                    Collection<LocationEntity> entityCollection = controllerLocation.findByVehicleAndDate(vehicleEntity, fecha);
+                    if (entityCollection!= null && !entityCollection.isEmpty()){
+                        googleMap.clearMarkers();
+                        createMarkersLocation(entityCollection);
+                    }else {
+                        Notification.show("No se encontraron ubicaciones con los datos suministrados", Notification.Type.HUMANIZED_MESSAGE);
+                    }
+
+                }else {
+                    Notification.show("Debe Ingregar una fecha valida", Notification.Type.HUMANIZED_MESSAGE);
+                }
+
             }
         });
     }
@@ -209,6 +219,10 @@ public class ViewUserLocation extends VerticalLayout implements View {
     private void findDetailRoutes(VehicleEntity vehicleEntity) {
         DeviceEntity deviceEntity = controllerDevice.findDeviceByIdVehicle(vehicleEntity.getIdvehicle());
         Collection<AssignedroutesEntity> assignedroutesEntities = controllerAssignedRoutes.findAllAssignedRoutesByIdDevice(deviceEntity.getIddevice());
+        if (collectionRoutes!= null){
+            collectionRoutes.clear();
+        }
+
         for (AssignedroutesEntity assignes : assignedroutesEntities) {
             collectionRoutes.add(controllerRoutes.findRouteById(assignes.getIdroutes()));
         }
