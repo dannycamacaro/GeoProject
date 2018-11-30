@@ -147,7 +147,7 @@ public class ViewMenu extends VerticalLayout implements View {
         MenuBar.MenuItem  salir = mainMenu.addItem("Salir", null, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UniverseNavigator.navigate(ViewLogin.APP_ROOT);
+                UniverseNavigator.getNavigator().getUI().getPage().setLocation("http://localhost:8080/project/");
             }
         });
 

@@ -12,7 +12,7 @@ public class UniverseNavigator extends Navigator {
         super(ui,componentContainer);
     }
 
-    private static UniverseNavigator getNavigator(){
+    public static UniverseNavigator getNavigator(){
         UI ui = UI.getCurrent();
         Navigator navigator = ui.getNavigator();
         return (UniverseNavigator) navigator;
